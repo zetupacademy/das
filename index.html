@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zetup - Plataforma</title>
+<title>Kim Neon Tattoo</title>
 
 <style>
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: #020617;
+    background: #0a0a0a;
     color: white;
 }
 
@@ -17,108 +17,111 @@ body {
 header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     padding: 20px 40px;
-    background: #020617;
-    border-bottom: 1px solid #1e293b;
+    background: black;
+    border-bottom: 1px solid #222;
 }
 
 .logo {
-    font-size: 26px;
+    font-size: 24px;
     font-weight: bold;
-    color: #38bdf8;
+    color: #ff00ff;
 }
 
-.menu button {
-    background: none;
-    border: none;
-    color: #94a3b8;
+.menu a {
+    color: #aaa;
     margin-left: 20px;
-    cursor: pointer;
+    text-decoration: none;
 }
 
-.menu button:hover {
+.menu a:hover {
     color: white;
 }
 
 /* HERO */
 .hero {
-    padding: 60px 40px;
-    background: linear-gradient(to right, #020617, #020617cc), 
-    url('https://images.unsplash.com/photo-1555066931-4365d14bab8c');
+    padding: 100px 40px;
+    background: linear-gradient(rgba(0,0,0,0.8), black),
+    url('https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28');
     background-size: cover;
 }
 
 .hero h1 {
-    font-size: 40px;
+    font-size: 48px;
+    color: #ff00ff;
+}
+
+.hero p {
+    max-width: 500px;
 }
 
 .hero button {
     margin-top: 20px;
     padding: 12px 25px;
-    background: #38bdf8;
+    background: #ff00ff;
     border: none;
-    border-radius: 8px;
+    color: white;
     cursor: pointer;
+    border-radius: 8px;
 }
 
-/* GRID */
-.container {
-    padding: 30px 40px;
+/* SECTIONS */
+.section {
+    padding: 60px 40px;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
 }
 
 .card {
-    background: #020617;
+    background: #111;
+    padding: 20px;
     border-radius: 12px;
-    overflow: hidden;
-    cursor: pointer;
     transition: 0.3s;
 }
 
 .card:hover {
     transform: scale(1.05);
+    box-shadow: 0 0 15px #ff00ff;
 }
 
-.card img {
+.card h3 {
+    color: #ff00ff;
+}
+
+/* GALERIA */
+.gallery img {
     width: 100%;
-    height: 150px;
+    border-radius: 10px;
+    height: 200px;
     object-fit: cover;
 }
 
-.card-content {
-    padding: 10px;
+/* CTA */
+.cta {
+    text-align: center;
+    padding: 60px;
+    background: #111;
 }
 
-/* MODAL */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.9);
-    justify-content: center;
-    align-items: center;
-}
-
-.modal iframe {
-    width: 80%;
-    height: 60%;
-}
-
-.close {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    font-size: 30px;
+.cta button {
+    padding: 15px 30px;
+    background: #00ffff;
+    border: none;
+    color: black;
+    font-weight: bold;
     cursor: pointer;
+    border-radius: 8px;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #777;
 }
 </style>
 
@@ -126,68 +129,88 @@ header {
 <body>
 
 <header>
-    <div class="logo">ZETUP</div>
+    <div class="logo">Kim Neon Tattoo</div>
     <div class="menu">
-        <button>Inicio</button>
-        <button>Mis Clases</button>
-        <button>Perfil</button>
+        <a href="#">Inicio</a>
+        <a href="#">Servicios</a>
+        <a href="#">Promos</a>
+        <a href="#">Contacto</a>
     </div>
 </header>
 
 <div class="hero">
-    <h1>Aprende a vender con anuncios</h1>
-    <p>Accede a todas tus clases grabadas</p>
-    <button onclick="scrollToClasses()">Ver clases</button>
+    <h1>Tatuajes que brillan en la oscuridad</h1>
+    <p>Arte corporal único + servicio a domicilio. También realizamos pintura a brocha gorda para espacios con estilo.</p>
+    <button onclick="scrollToSection()">Agendar ahora</button>
 </div>
 
-<div class="container">
-    <h2>Clases disponibles</h2>
-
+<div class="section">
+    <h2>Servicios</h2>
     <div class="grid">
-
-        <div class="card" onclick="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ')">
-            <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
-            <div class="card-content">Clase 1 - Mentalidad</div>
+        <div class="card">
+            <h3>Tatuajes a domicilio</h3>
+            <p>Llevamos el estudio hasta tu casa. Comodidad, higiene y estilo.</p>
         </div>
 
-        <div class="card" onclick="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ')">
-            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71">
-            <div class="card-content">Clase 2 - Segmentación</div>
+        <div class="card">
+            <h3>Pintura a brocha gorda</h3>
+            <p>Transforma tus espacios con acabados únicos y modernos.</p>
         </div>
 
-        <div class="card" onclick="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ')">
-            <img src="https://images.unsplash.com/photo-1532619675605-1ede6c2ed2b0">
-            <div class="card-content">Clase 3 - Creativos</div>
+        <div class="card">
+            <h3>Diseños personalizados</h3>
+            <p>Creamos tatuajes únicos basados en tu idea.</p>
         </div>
-
-        <div class="card" onclick="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ')">
-            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f">
-            <div class="card-content">Clase 4 - Ventas</div>
-        </div>
-
     </div>
 </div>
 
-<!-- MODAL -->
-<div class="modal" id="modal">
-    <span class="close" onclick="closeModal()">✖</span>
-    <iframe id="videoFrame" src=""></iframe>
+<div class="section">
+    <h2>Promociones</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>🔥 20% OFF</h3>
+            <p>En tu primer tatuaje</p>
+        </div>
+
+        <div class="card">
+            <h3>🎯 Pack Parejas</h3>
+            <p>2 tatuajes con descuento especial</p>
+        </div>
+
+        <div class="card">
+            <h3>🏠 Domicilio GRATIS</h3>
+            <p>En zonas seleccionadas</p>
+        </div>
+    </div>
 </div>
 
+<div class="section gallery">
+    <h2>Galería</h2>
+    <div class="grid">
+        <img src="https://images.unsplash.com/photo-1542728928-1413d1894ed1">
+        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9">
+        <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9">
+    </div>
+</div>
+
+<div class="cta">
+    <h2>Agenda tu tatuaje ahora</h2>
+    <p>Responde rápido por WhatsApp</p>
+    <button onclick="contact()">Hablar por WhatsApp</button>
+</div>
+
+<footer>
+    © 2026 Kim Neon Tattoo
+</footer>
+
 <script>
-function openVideo(link) {
-    document.getElementById("modal").style.display = "flex";
-    document.getElementById("videoFrame").src = link;
+function contact() {
+    window.open("https://wa.me/51999999999", "_blank");
 }
 
-function closeModal() {
-    document.getElementById("modal").style.display = "none";
-    document.getElementById("videoFrame").src = "";
-}
-
-function scrollToClasses() {
+function scrollToSection() {
     window.scrollTo({
-        top: document.querySelector('.container').offsetTop,
+        top: document.querySelector('.cta').offsetTop,
         behavior: 'smooth'
     });
 }
