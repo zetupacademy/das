@@ -2,82 +2,194 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>ZETUP IA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zetup - Plataforma</title>
+
 <style>
 body {
-margin: 0;
-font-family: Arial, sans-serif;
-background: #ffffff;
-display: flex;
-justify-content: center;
-align-items: center;
-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #020617;
+    color: white;
 }
 
+/* HEADER */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: #020617;
+    border-bottom: 1px solid #1e293b;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: bold;
+    color: #38bdf8;
+}
+
+.menu button {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.menu button:hover {
+    color: white;
+}
+
+/* HERO */
+.hero {
+    padding: 60px 40px;
+    background: linear-gradient(to right, #020617, #020617cc), 
+    url('https://images.unsplash.com/photo-1555066931-4365d14bab8c');
+    background-size: cover;
+}
+
+.hero h1 {
+    font-size: 40px;
+}
+
+.hero button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    background: #38bdf8;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* GRID */
 .container {
-width: 100%;
-max-width: 500px;
-text-align: center;
+    padding: 30px 40px;
 }
 
-h1 {
-color: #6C5CE7;
-margin-bottom: 10px;
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
 }
 
-p {
-color: #888;
-margin-bottom: 30px;
+.card {
+    background: #020617;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-input {
-width: 100%;
-padding: 15px;
-border-radius: 30px;
-border: 1px solid #ddd;
-outline: none;
-font-size: 16px;
+.card:hover {
+    transform: scale(1.05);
 }
 
-button {
-margin-top: 15px;
-width: 100%;
-padding: 15px;
-border: none;
-border-radius: 30px;
-background: linear-gradient(90deg, #6C5CE7, #00CEC9);
-color: white;
-font-size: 16px;
-cursor: pointer;
+.card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
 }
 
-.response {
-margin-top: 25px;
-padding: 20px;
-border-radius: 15px;
-background: #f5f5f5;
-display: none;
+.card-content {
+    padding: 10px;
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal iframe {
+    width: 80%;
+    height: 60%;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 30px;
+    cursor: pointer;
 }
 </style>
+
 </head>
 <body>
 
-<div class="container">
-<h1>ZETUP IA</h1>
-<p>Pregunta sobre campañas publicitarias</p>
+<header>
+    <div class="logo">ZETUP</div>
+    <div class="menu">
+        <button>Inicio</button>
+        <button>Mis Clases</button>
+        <button>Perfil</button>
+    </div>
+</header>
 
-<input type="text" id="question" placeholder="Escribe tu pregunta...">
-
-<button onclick="responder()">Preguntar</button>
-
-<div class="response" id="response">
-HOLA, SOY DAVID ESTA ES MI PRIMERA PAGINA WEB, BICHT!!!
+<div class="hero">
+    <h1>Aprende a vender con anuncios</h1>
+    <p>Accede a todas tus clases grabadas</p>
+    <button onclick="scrollToClasses()">Ver clases</button>
 </div>
+
+<div class="container">
+    <h2>Clases disponibles</h2>
+
+    <div class="grid">
+
+        <div class="card" onclick="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ')">
+            <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
+            <div class="card-content">Clase 1 - Mentalidad</div>
+        </div>
+
+        <div class="card" onclick="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ')">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71">
+            <div class="card-content">Clase 2 - Segmentación</div>
+        </div>
+
+        <div class="card" onclick="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ')">
+            <img src="https://images.unsplash.com/photo-1532619675605-1ede6c2ed2b0">
+            <div class="card-content">Clase 3 - Creativos</div>
+        </div>
+
+        <div class="card" onclick="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ')">
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f">
+            <div class="card-content">Clase 4 - Ventas</div>
+        </div>
+
+    </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+    <span class="close" onclick="closeModal()">✖</span>
+    <iframe id="videoFrame" src=""></iframe>
 </div>
 
 <script>
-function responder() {
-document.getElementById("response").style.display = "block";
+function openVideo(link) {
+    document.getElementById("modal").style.display = "flex";
+    document.getElementById("videoFrame").src = link;
+}
+
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
+    document.getElementById("videoFrame").src = "";
+}
+
+function scrollToClasses() {
+    window.scrollTo({
+        top: document.querySelector('.container').offsetTop,
+        behavior: 'smooth'
+    });
 }
 </script>
 
