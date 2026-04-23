@@ -1,101 +1,792 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zetup Academy - Asistente Zeta</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #fcfcfc; }
-        .gradient-text {
-            background: linear-gradient(90deg, #8B5CF6, #6D28D9);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .card-hover:hover {
-            transform: translateY(-5px);
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 390px;
+    background: #F4F6FA;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  .phone {
+    width: 390px;
+    background: #F4F6FA;
+    min-height: 900px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ── STATUS BAR ── */
+  .sbar {
+    background: #0F2A4A;
+    color: rgba(255,255,255,0.85);
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 22px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: #0F2A4A;
+    padding: 14px 22px 22px;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .logo-wrap { display: flex; flex-direction: column; }
+
+  .logo {
+    font-size: 30px;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+
+  .logo span { color: #4ECBA5; }
+
+  .logo-tag {
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+
+  .hdr-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .notif-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .review-btn {
+    background: #4ECBA5;
+    color: #0A1F35;
+    border: none;
+    border-radius: 10px;
+    padding: 9px 18px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: inherit;
+    letter-spacing: 0.3px;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4ECBA5, #2AB082);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+  }
+
+  /* Hero card inside header */
+  .hero-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 16px 18px;
+  }
+
+  .loc-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .loc-dot {
+    width: 8px;
+    height: 8px;
+    background: #4ECBA5;
+    border-radius: 50%;
+  }
+
+  .loc-txt {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 500;
+  }
+
+  .loc-name {
+    font-size: 11px;
+    color: rgba(255,255,255,0.85);
+    font-weight: 700;
+  }
+
+  .hero-headline {
+    font-size: 20px;
+    font-weight: 700;
+    color: #FFFFFF;
+    line-height: 1.3;
+    margin-bottom: 14px;
+  }
+
+  .hero-headline em {
+    color: #4ECBA5;
+    font-style: normal;
+  }
+
+  .search-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  .search-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 10px;
+    padding: 10px 14px;
+  }
+
+  .search-placeholder {
+    font-size: 12px;
+    color: #9CA3AF;
+    font-weight: 500;
+  }
+
+  .filter-btn {
+    width: 40px;
+    height: 40px;
+    background: #4ECBA5;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ── STATS ROW ── */
+  .stats-row {
+    display: flex;
+    gap: 10px;
+    padding: 16px 20px;
+    background: #fff;
+    border-bottom: 1px solid #EEF0F5;
+  }
+
+  .stat-item {
+    flex: 1;
+    text-align: center;
+    padding: 10px 8px;
+    background: #F8FAFF;
+    border-radius: 12px;
+    border: 1px solid #EEF0F5;
+  }
+
+  .stat-num {
+    font-size: 18px;
+    font-weight: 800;
+    color: #0F2A4A;
+    display: block;
+  }
+
+  .stat-lbl {
+    font-size: 9px;
+    color: #9CA3AF;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ── CATEGORIES ── */
+  .cat-section {
+    background: white;
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid #EEF0F5;
+  }
+
+  .sec-hdr {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  .sec-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0F2A4A;
+    letter-spacing: -0.2px;
+  }
+
+  .sec-link {
+    font-size: 11px;
+    color: #4ECBA5;
+    font-weight: 700;
+  }
+
+  .cats {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    border: 1.5px solid;
+    cursor: pointer;
+  }
+
+  .chip-active { background: #0F2A4A; color: white; border-color: #0F2A4A; }
+  .chip-rest { background: #FFF0F0; color: #C0392B; border-color: #FBBCBC; }
+  .chip-tech { background: #EFF4FF; color: #2563EB; border-color: #BFCFFD; }
+  .chip-viaje { background: #FFFBEB; color: #D97706; border-color: #FDE68A; }
+  .chip-night { background: #F5F0FF; color: #7C3AED; border-color: #DDD6FE; }
+  .chip-entret { background: #FFF0F9; color: #BE185D; border-color: #FBCFE8; }
+  .chip-event { background: #F0FDF4; color: #15803D; border-color: #BBF7D0; }
+
+  /* ── FEATURED ── */
+  .feat-section {
+    background: #F4F6FA;
+    padding: 20px 0;
+  }
+
+  .feat-section .sec-hdr { padding: 0 20px; margin-bottom: 14px; }
+
+  .feat-scroll {
+    display: flex;
+    gap: 12px;
+    padding: 2px 20px 4px;
+    overflow: hidden;
+  }
+
+  .feat-card {
+    flex-shrink: 0;
+    width: 162px;
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #EEF0F5;
+    overflow: hidden;
+  }
+
+  .feat-img {
+    height: 105px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 44px;
+    position: relative;
+  }
+
+  .fi-rest { background: linear-gradient(145deg, #FFF0F0, #FFE0DF); }
+  .fi-tech { background: linear-gradient(145deg, #EFF4FF, #DDE7FD); }
+  .fi-viaje { background: linear-gradient(145deg, #F0FDF4, #D1FAE5); }
+
+  .rank-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: #0F2A4A;
+    color: white;
+    font-size: 9px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .heart {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 26px;
+    height: 26px;
+    background: white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    border: 1px solid #EEF0F5;
+  }
+
+  .feat-body { padding: 10px 12px 12px; }
+
+  .feat-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #0F2A4A;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .feat-cat {
+    font-size: 10px;
+    color: #9CA3AF;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .rating-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .stars-wrap { display: flex; flex-direction: column; gap: 2px; }
+
+  .stars { display: flex; gap: 1.5px; }
+
+  .star {
+    width: 9px;
+    height: 9px;
+    background: #F59E0B;
+    clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+  }
+
+  .star-empty { background: #E5E7EB; }
+
+  .revs { font-size: 9px; color: #9CA3AF; font-weight: 500; }
+
+  .score-badge {
+    background: #0F2A4A;
+    color: white;
+    font-size: 13px;
+    font-weight: 800;
+    padding: 5px 10px;
+    border-radius: 10px;
+  }
+
+  /* ── LIST SECTION ── */
+  .list-section { background: white; padding: 20px 0 0; }
+  .list-section .sec-hdr { padding: 0 20px; margin-bottom: 16px; }
+
+  .list-card {
+    display: flex;
+    gap: 14px;
+    padding: 0 20px 16px;
+    align-items: flex-start;
+  }
+
+  .li-img {
+    width: 74px;
+    height: 74px;
+    border-radius: 14px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    border: 1px solid #EEF0F5;
+  }
+
+  .lia { background: linear-gradient(135deg, #F0FDF4, #D1FAE5); }
+  .lib { background: linear-gradient(135deg, #EFF4FF, #DDE7FD); }
+  .lic { background: linear-gradient(135deg, #FFFBEB, #FDE68A40); }
+
+  .li-info { flex: 1; min-width: 0; }
+
+  .li-namrow {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 2px;
+  }
+
+  .li-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #0F2A4A;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+  }
+
+  .verified {
+    width: 16px;
+    height: 16px;
+    background: #4ECBA5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .li-subcat {
+    font-size: 10px;
+    color: #9CA3AF;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 7px;
+  }
+
+  .li-rrow {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 6px;
+  }
+
+  .rpill {
+    background: #F0FDF7;
+    border: 1.5px solid #4ECBA5;
+    color: #0D8F6B;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 2px 9px;
+    border-radius: 20px;
+  }
+
+  .rcount {
+    font-size: 10px;
+    color: #9CA3AF;
+    font-weight: 600;
+  }
+
+  .li-desc {
+    font-size: 11px;
+    color: #6B7280;
+    line-height: 1.55;
+    font-weight: 500;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .li-sep { height: 1px; background: #F4F6FA; margin: 0 20px 16px; }
+
+  /* ── BOTTOM NAV ── */
+  .bnav {
+    background: white;
+    border-top: 1px solid #EEF0F5;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0 18px;
+    margin-top: 8px;
+  }
+
+  .ni {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .ni-ico {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ni-ico-on { background: #0F2A4A; }
+  .ni-ico-off { background: #F4F6FA; }
+
+  .ni-lbl { font-size: 9px; font-weight: 700; color: #9CA3AF; letter-spacing: 0.3px; }
+  .ni-lbl-on { color: #0F2A4A; }
+
+  /* SVG icons inline */
+  .icon { display: block; }
+</style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-6 text-gray-800">
+<body>
+<div class="phone">
 
-    <header class="w-full max-w-6xl flex justify-between items-center mb-12">
-        <div class="flex items-center">
-            <span class="text-2xl font-black text-slate-900">zet<span class="text-violet-500">up</span></span>
-            <span class="text-[10px] font-bold tracking-widest ml-1 mt-1 text-slate-400">ACADEMY</span>
+  <!-- Status Bar -->
+  <div class="sbar">
+    <span>9:41</span>
+    <span style="display:flex;gap:6px;align-items:center;">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><rect x="2" y="8" width="3" height="13" rx="1"/><rect x="8.5" y="5" width="3" height="16" rx="1"/><rect x="15" y="2" width="3" height="19" rx="1"/><rect x="21.5" y="0" width="2.5" height="21" rx="1" opacity=".3"/></svg>
+      <svg width="14" height="12" viewBox="0 0 24 20" fill="white"><path d="M12 4C7 4 2.5 6.5 0 10.5L3 13c1.8-2.8 5.1-4.5 9-4.5s7.2 1.7 9 4.5l3-2.5C21.5 6.5 17 4 12 4z"/><path d="M12 10c-3.3 0-6.2 1.5-8.1 3.9L7 17c1.2-1.8 3.2-3 5-3s3.8 1.2 5 3l3.1-3.1C18.2 11.5 15.3 10 12 10z"/><circle cx="12" cy="19" r="2.5"/></svg>
+      <span>100%</span>
+    </span>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-top">
+      <div class="logo-wrap">
+        <div class="logo">Valio<span>.</span></div>
+        <div class="logo-tag">Solo lo mejor</div>
+      </div>
+      <div class="hdr-right">
+        <div class="notif-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
         </div>
-        <div class="flex items-center gap-2 text-sm text-gray-500 font-medium">
-            <span class="w-2 h-2 bg-emerald-400 rounded-full"></span>
-            David Cruz hizo esto
+        <button class="review-btn">+ Reseñar</button>
+        <div class="avatar">M</div>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <div class="loc-row">
+        <div class="loc-dot"></div>
+        <span class="loc-txt">Ubicación actual —</span>
+        <span class="loc-name">Moquegua, Perú</span>
+        <svg style="margin-left:auto" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="hero-headline">
+        Descubre los mejores<br>lugares <em>cerca de ti</em>
+      </div>
+      <div class="search-row">
+        <div class="search-box">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <span class="search-placeholder">Buscar restaurantes, servicios…</span>
         </div>
-    </header>
-
-    <main class="w-full max-w-4xl flex flex-col items-center text-center mt-8">
-        
-        <div class="relative w-32 h-32 mb-6">
-            <div class="absolute inset-0 bg-violet-100 rounded-full opacity-50 blur-xl"></div>
-            <img src="https://via.placeholder.com/150/8B5CF6/FFFFFF?text=Z" alt="Zeta AI" class="relative z-10 w-full h-full rounded-full border-4 border-white shadow-lg">
+        <div class="filter-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A1F35" stroke-width="2.5" stroke-linecap="round"><path d="M4 6h16M8 12h8M11 18h2"/></svg>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <h1 class="text-4xl font-bold mb-3">Hola, soy <span class="text-violet-600">Zeta</span> 👋</h1>
-        <p class="text-gray-500 max-w-lg mb-10 leading-relaxed">
-            Tu asistente IA para ayudarte a aprender y crecer con META Ads. <br>
-            <span class="font-semibold italic">¿Qué necesitas hoy?</span>
-        </p>
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-item">
+      <span class="stat-num">4.8K</span>
+      <span class="stat-lbl">Negocios</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">128K</span>
+      <span class="stat-lbl">Reseñas</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">97%</span>
+      <span class="stat-lbl">Verificadas</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">4.9★</span>
+      <span class="stat-lbl">Promedio</span>
+    </div>
+  </div>
 
-        <div class="relative w-full max-w-3xl mb-16">
-            <input type="text" placeholder="Escribe tu pregunta..." 
-                class="w-full py-5 px-8 rounded-full border border-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-200 transition-all text-lg pr-16">
-            <button class="absolute right-3 top-2.5 bg-violet-600 hover:bg-violet-700 text-white p-3 rounded-full transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                </svg>
-            </button>
+  <!-- Categories -->
+  <div class="cat-section">
+    <div class="sec-hdr">
+      <span class="sec-title">Explorar por categoría</span>
+      <span class="sec-link">Ver todas →</span>
+    </div>
+    <div class="cats">
+      <div class="chip chip-active">🔥 Todo</div>
+      <div class="chip chip-rest">🍽️ Restaurantes</div>
+      <div class="chip chip-tech">💻 Tecnología</div>
+      <div class="chip chip-viaje">✈️ Viajes</div>
+      <div class="chip chip-night">🎶 Noche</div>
+      <div class="chip chip-entret">🎬 Ocio</div>
+      <div class="chip chip-event">📅 Eventos</div>
+    </div>
+  </div>
+
+  <!-- Featured -->
+  <div class="feat-section">
+    <div class="sec-hdr">
+      <span class="sec-title">⭐ Destacados del mes</span>
+      <span class="sec-link">Ver todos →</span>
+    </div>
+    <div class="feat-scroll">
+
+      <div class="feat-card">
+        <div class="feat-img fi-rest">
+          🍽️
+          <div class="rank-badge">Top #1</div>
+          <div class="heart">🤍</div>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 w-full">
-            
-            <div class="bg-white border border-gray-100 p-6 rounded-3xl card-hover cursor-pointer text-left flex flex-col h-full">
-                <div class="bg-violet-50 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
-                    <svg class="w-6 h-6 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                </div>
-                <h3 class="font-bold text-sm mb-2">Generar imágenes</h3>
-                <p class="text-xs text-gray-400 leading-normal">Crea imágenes únicas para tus anuncios o contenidos.</p>
+        <div class="feat-body">
+          <div class="feat-name">La Cantina de María</div>
+          <div class="feat-cat">Restaurante · Cocina criolla</div>
+          <div class="rating-row">
+            <div class="stars-wrap">
+              <div class="stars">
+                <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+              </div>
+              <span class="revs">1,204 reseñas</span>
             </div>
-
-            <div class="bg-white border border-gray-100 p-6 rounded-3xl card-hover cursor-pointer text-left flex flex-col h-full">
-                <div class="bg-blue-50 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
-                    <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                </div>
-                <h3 class="font-bold text-sm mb-2">Crear guiones de venta</h3>
-                <p class="text-xs text-gray-400 leading-normal">Guiones persuasivos para videos, webinars o llamadas.</p>
-            </div>
-
-            <div class="bg-white border border-gray-100 p-6 rounded-3xl card-hover cursor-pointer text-left flex flex-col h-full">
-                <div class="bg-cyan-50 w-12 h-12 rounded-xl flex items-center justify-center mb-6 text-cyan-500 font-bold">Aa</div>
-                <h3 class="font-bold text-sm mb-2">Crear textos para anuncios</h3>
-                <p class="text-xs text-gray-400 leading-normal">Textos que convierten para tus campañas en META.</p>
-            </div>
-
-            <div class="bg-white border border-gray-100 p-6 rounded-3xl card-hover cursor-pointer text-left flex flex-col h-full">
-                <div class="bg-purple-50 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
-                    <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                </div>
-                <h3 class="font-bold text-sm mb-2">Generar prompts</h3>
-                <p class="text-xs text-gray-400 leading-normal">Prompts efectivos para obtener mejores resultados.</p>
-            </div>
-
+            <div class="score-badge">4.9</div>
+          </div>
         </div>
-    </main>
+      </div>
 
-    <footer class="mt-auto py-10 w-full max-w-4xl border-t border-gray-100 text-center">
-        <p class="text-xs text-gray-400 font-medium flex items-center justify-center gap-1">
-            Hecho para emprendedores que quieren resultados. <span class="text-violet-500 text-base">💜</span>
-        </p>
-    </footer>
+      <div class="feat-card">
+        <div class="feat-img fi-tech">
+          💻
+          <div class="rank-badge">Top #2</div>
+          <div class="heart">🤍</div>
+        </div>
+        <div class="feat-body">
+          <div class="feat-name">TechSur Solutions</div>
+          <div class="feat-cat">Tecnología · Soporte IT</div>
+          <div class="rating-row">
+            <div class="stars-wrap">
+              <div class="stars">
+                <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+              </div>
+              <span class="revs">876 reseñas</span>
+            </div>
+            <div class="score-badge">4.8</div>
+          </div>
+        </div>
+      </div>
 
+      <div class="feat-card">
+        <div class="feat-img fi-viaje">
+          ✈️
+          <div class="rank-badge">Top #3</div>
+          <div class="heart">🤍</div>
+        </div>
+        <div class="feat-body">
+          <div class="feat-name">Moquegua Tours</div>
+          <div class="feat-cat">Viajes · Tours locales</div>
+          <div class="rating-row">
+            <div class="stars-wrap">
+              <div class="stars">
+                <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star star-empty"></div>
+              </div>
+              <span class="revs">543 reseñas</span>
+            </div>
+            <div class="score-badge">4.7</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Best rated list -->
+  <div class="list-section">
+    <div class="sec-hdr">
+      <span class="sec-title">🏅 Mejor valorados</span>
+      <span class="sec-link">Ver todos →</span>
+    </div>
+
+    <div class="list-card">
+      <div class="li-img lia">🌿</div>
+      <div class="li-info">
+        <div class="li-namrow">
+          <span class="li-name">Clínica San José</span>
+          <div class="verified">
+            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+        <div class="li-subcat">Salud · Clínica General</div>
+        <div class="li-rrow">
+          <span class="rpill">★ 4.9</span>
+          <span class="rcount">2,104 reseñas verificadas</span>
+        </div>
+        <div class="li-desc">Atención rápida y profesional con tecnología de punta. El centro de salud más recomendado de la región sur.</div>
+      </div>
+    </div>
+
+    <div class="li-sep"></div>
+
+    <div class="list-card">
+      <div class="li-img lib">⚖️</div>
+      <div class="li-info">
+        <div class="li-namrow">
+          <span class="li-name">Estudio Jurídico Ríos</span>
+          <div class="verified">
+            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+        <div class="li-subcat">Servicios · Asesoría Legal</div>
+        <div class="li-rrow">
+          <span class="rpill">★ 4.8</span>
+          <span class="rcount">987 reseñas verificadas</span>
+        </div>
+        <div class="li-desc">Expertos en derecho civil y comercial. Resolución de casos con total transparencia y precios accesibles.</div>
+      </div>
+    </div>
+
+    <div class="li-sep"></div>
+
+    <div class="list-card">
+      <div class="li-img lic">🎬</div>
+      <div class="li-info">
+        <div class="li-namrow">
+          <span class="li-name">Cinema VIP Moquegua</span>
+          <div class="verified">
+            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+        <div class="li-subcat">Entretenimiento · Cine</div>
+        <div class="li-rrow">
+          <span class="rpill">★ 4.7</span>
+          <span class="rcount">1,456 reseñas verificadas</span>
+        </div>
+        <div class="li-desc">Sonido Dolby Atmos y pantalla 4K. La mejor experiencia cinematográfica del sur del país.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <div class="bnav">
+    <div class="ni">
+      <div class="ni-ico ni-ico-on">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      </div>
+      <span class="ni-lbl ni-lbl-on">Inicio</span>
+    </div>
+    <div class="ni">
+      <div class="ni-ico ni-ico-off">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </div>
+      <span class="ni-lbl">Explorar</span>
+    </div>
+    <div class="ni">
+      <div class="ni-ico ni-ico-off">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <span class="ni-lbl">Reseñas</span>
+    </div>
+    <div class="ni">
+      <div class="ni-ico ni-ico-off">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <span class="ni-lbl">Mi cuenta</span>
+    </div>
+  </div>
+
+</div>
 </body>
 </html>
