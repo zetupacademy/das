@@ -269,7 +269,7 @@ const GROUND = H - 80;
 // ══════════════════════════════════════════════════════════
 let gameRunning = false, missionComplete = false;
 let score = 0, kills = 0;
-let gameTime = 1800, lastTs = 0, fr = 0, screenShake = 0;
+let gameTime = 18, lastTs = 0, fr = 0, screenShake = 0;
 let missionAnim = 0;
 
 const player = {
@@ -287,7 +287,7 @@ let stars = [], groundHats = [], corvettoBanners = [];
 let corvettoTimer = 0, enemySpawnTimer = 0;
 const SPAWN_BASE = 230;
 
-for (let i = 0; i < 90; i++)
+for (let i = 0; i < 900; i++)
   stars.push({ x: Math.random()*W, y: Math.random()*GROUND, r: Math.random()*1.8+0.3, t: Math.random()*6.28 });
 
 for (let i = 0; i < 18; i++)
