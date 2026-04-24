@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Z vs Mario SPACE 🔥🚀</title>
+<title>Z vs Mario CONSTELACIÓN 🌌</title>
 
 <style>
 body {
@@ -20,12 +20,10 @@ canvas {
 
 <canvas id="gameCanvas" width="1000" height="600"></canvas>
 
-<!-- Música -->
-<audio id="music" autoplay loop>
+<audio id="music" loop>
 <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
 </audio>
 
-<!-- Sonidos -->
 <audio id="hitSound">
 <source src="https://www.soundjay.com/button/beep-07.wav">
 </audio>
@@ -38,31 +36,29 @@ canvas {
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// CENTRAR CANCHA
+// CANCHA CENTRADA
 const field = {
-    x: 150,
-    y: 50,
     w: 700,
-    h: 500
+    h: 400
 };
+field.x = (canvas.width - field.w) / 2;
+field.y = (canvas.height - field.h) / 2;
 
-// Nombres
-let name1 = prompt("Jugador Z:");
-let name2 = prompt("Jugador Mario:");
-
-if (!name1) name1 = "Z";
-if (!name2) name2 = "Mario";
-
-// Sonidos
+// AUDIO
+const music = document.getElementById("music");
 const hitSound = document.getElementById("hitSound");
 const goalSound = document.getElementById("goalSound");
+
+// Nombres
+let name1 = prompt("Jugador Z:") || "Z";
+let name2 = prompt("Jugador Mario:") || "Mario";
 
 // Estado fuego
 let fireMode = false;
 
 // Jugadores
-const playerZ = { x: field.x + 20, y: 250, w: 15, h: 100, score: 0 };
-const playerMario = { x: field.x + field.w - 35, y: 250, w: 15, h: 100, score: 0 };
+const playerZ = { x: field.x + 20, y: field.y + 150, w: 15, h: 100, score: 0 };
+const playerMario = { x: field.x + field.w - 35, y: field.y + 150, w: 15, h: 100, score: 0 };
 
 // Pelota
 const ball = {
@@ -73,18 +69,33 @@ const ball = {
     dy: 4
 };
 
-// Partículas fuego
+// Partículas
 let particles = [];
 
-// Controles
+// CONSTELACIONES
+const stars = [];
+for (let i = 0; i < 40; i++) {
+    stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height
+    });
+}
+
+// CONTROLES
 let keys = {};
 document.addEventListener("keydown", e => {
     keys[e.key] = true;
+
     if (e.key === "Enter") fireMode = !fireMode;
+
+    // 🎵 ACTIVAR MUSICA CON "5"
+    if (e.key === "5") {
+        if (music.paused) music.play();
+    }
 });
 document.addEventListener("keyup", e => keys[e.key] = false);
 
-// Movimiento
+// MOVIMIENTO
 function movePlayers() {
     if (keys["w"] && playerZ.y > field.y) playerZ.y -= 6;
     if (keys["s"] && playerZ.y < field.y + field.h - playerZ.h) playerZ.y += 6;
@@ -93,14 +104,13 @@ function movePlayers() {
     if (keys["ArrowDown"] && playerMario.y < field.y + field.h - playerMario.h) playerMario.y += 6;
 }
 
-// Pelota
+// PELOTA
 function updateBall() {
     ball.x += ball.dx;
     ball.y += ball.dy;
 
     if (ball.y < field.y || ball.y > field.y + field.h) ball.dy *= -1;
 
-    // Colisiones
     if (
         ball.x - ball.r < playerZ.x + playerZ.w &&
         ball.y > playerZ.y &&
@@ -119,7 +129,6 @@ function updateBall() {
         hitSound.play();
     }
 
-    // GOL
     if (ball.x < field.x) {
         playerMario.score++;
         goalSound.play();
@@ -135,7 +144,7 @@ function updateBall() {
     }
 }
 
-// Ganador
+// GANADOR
 function checkWinner() {
     if (playerZ.score >= 20 || playerMario.score >= 20) {
         alert("🏆 Ganó " + (playerZ.score > playerMario.score ? name1 : name2));
@@ -144,7 +153,7 @@ function checkWinner() {
     }
 }
 
-// Reset
+// RESET
 function resetBall() {
     ball.x = field.x + field.w / 2;
     ball.y = field.y + field.h / 2;
@@ -152,47 +161,53 @@ function resetBall() {
     ball.dy = Math.random() * 4 - 2;
 }
 
-// Partículas fuego
+// FUEGO
 function createFire() {
     if (!fireMode) return;
     particles.push({
         x: ball.x,
         y: ball.y,
-        size: Math.random() * 5,
         life: 20
     });
 }
 
-// Dibujar fuego
 function drawFire() {
     particles.forEach((p, i) => {
         ctx.fillStyle = "orange";
-        ctx.fillRect(p.x, p.y, p.size, p.size);
-        p.life--;
+        ctx.fillRect(p.x, p.y, 3, 3);
         p.y -= 1;
+        p.life--;
         if (p.life <= 0) particles.splice(i, 1);
     });
 }
 
-// Fondo espacio
-function drawSpace() {
+// 🌌 CONSTELACIÓN
+function drawConstellation() {
     ctx.fillStyle = "black";
     ctx.fillRect(0,0,canvas.width,canvas.height);
 
-    // estrellas
-    for (let i = 0; i < 100; i++) {
-        ctx.fillStyle = "white";
-        ctx.fillRect(Math.random()*1000, Math.random()*600, 2, 2);
-    }
+    // puntos
+    ctx.fillStyle = "white";
+    stars.forEach(s => {
+        ctx.fillRect(s.x, s.y, 2, 2);
+    });
 
-    // cohete
-    ctx.fillStyle = "gray";
-    ctx.fillRect(850, 100, 20, 60);
-    ctx.fillStyle = "orange";
-    ctx.fillRect(855, 160, 10, 20);
+    // líneas (conectar cercanos)
+    ctx.strokeStyle = "rgba(255,255,255,0.3)";
+    stars.forEach(a => {
+        stars.forEach(b => {
+            let dist = Math.hypot(a.x - b.x, a.y - b.y);
+            if (dist < 120) {
+                ctx.beginPath();
+                ctx.moveTo(a.x, a.y);
+                ctx.lineTo(b.x, b.y);
+                ctx.stroke();
+            }
+        });
+    });
 }
 
-// Cancha
+// CANCHA
 function drawField() {
     ctx.fillStyle = fireMode ? "#552200" : "#2e7d32";
     ctx.fillRect(field.x, field.y, field.w, field.h);
@@ -205,24 +220,22 @@ function drawField() {
     ctx.stroke();
     ctx.setLineDash([]);
 
-    ctx.fillStyle = "white";
-    ctx.fillRect(field.x, field.y + 150, 5, 200);
-    ctx.fillRect(field.x + field.w - 5, field.y + 150, 5, 200);
+    ctx.fillRect(field.x, field.y + 120, 5, 160);
+    ctx.fillRect(field.x + field.w - 5, field.y + 120, 5, 160);
 }
 
-// Dibujar
+// DIBUJAR
 function draw() {
-    drawSpace();
+    drawConstellation();
     drawField();
 
-    // Jugadores
     ctx.fillStyle = fireMode ? "orange" : "blue";
-    ctx.fillText("Z", playerZ.x - 10, playerZ.y + 70);
+    ctx.font = "60px Arial";
+    ctx.fillText("Z", playerZ.x - 10, playerZ.y + 60);
 
     ctx.fillStyle = fireMode ? "orange" : "red";
     ctx.fillRect(playerMario.x, playerMario.y, 15, 100);
 
-    // Pelota
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI*2);
     ctx.fillStyle = fireMode ? "orange" : "white";
@@ -231,14 +244,13 @@ function draw() {
     createFire();
     drawFire();
 
-    // Score
     ctx.fillStyle = "white";
     ctx.font = "20px Arial";
     ctx.fillText(name1 + ": " + playerZ.score, 200, 30);
     ctx.fillText(name2 + ": " + playerMario.score, 700, 30);
 }
 
-// Loop
+// LOOP
 function gameLoop() {
     movePlayers();
     updateBall();
