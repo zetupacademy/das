@@ -3,88 +3,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora de Presupuesto — CAC</title>
+<title>Calculadora de Presupuesto — Zetup Academy</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,sans-serif;background:#f4f4f0;padding:2rem 1rem}
-.app{max-width:720px;margin:0 auto;padding:0 0 2rem}
-.hero{background:#0F6E56;border-radius:12px;padding:1.5rem 1.75rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1rem}
-.hero-icon{width:44px;height:44px;background:#1D9E75;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.hero-icon i{font-size:22px;color:#9FE1CB}
-.hero-title{font-size:18px;font-weight:500;color:#E1F5EE;line-height:1.3}
-.hero-sub{font-size:12px;color:#5DCAA5;margin-top:2px}
-.currency-pill{margin-left:auto;display:flex;align-items:center;gap:8px;background:#085041;border-radius:8px;padding:6px 10px}
-.currency-pill select{background:transparent;border:none;color:#9FE1CB;font-size:13px;font-weight:500;cursor:pointer;outline:none;max-width:190px}
-.currency-pill select option{background:#085041;color:#E1F5EE}
-.currency-flag{font-size:16px}
-.step{background:#fff;border:0.5px solid #e0e0d8;border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:0.75rem}
-.step-head{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
-.step-num{width:24px;height:24px;border-radius:50%;background:#E1F5EE;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:#0F6E56;flex-shrink:0}
-.step-title{font-size:13px;font-weight:500;color:#1a1a18}
-.step-icon{font-size:16px;color:#1D9E75;margin-left:auto}
-.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f0f0ec;min-height:100vh;padding:2rem 1.25rem}
+.app{max-width:860px;margin:0 auto}
+
+.hero{background:#085041;border-radius:19px;padding:1.35rem 1.7rem;margin-bottom:1rem;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.hero-icon{width:51px;height:51px;background:#0F6E56;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hero-icon i{font-size:27px;color:#5DCAA5}
+.hero-text{flex:1;min-width:120px}
+.hero-title{font-size:20px;font-weight:600;color:#E1F5EE}
+.hero-sub{font-size:14px;color:#5DCAA5;margin-top:2px}
+.cpill{display:flex;align-items:center;gap:8px;background:#0F6E56;border-radius:11px;padding:7px 12px}
+.cpill select{background:transparent;border:none;color:#9FE1CB;font-size:15px;font-weight:500;cursor:pointer;outline:none}
+.cpill select option{background:#085041;color:#E1F5EE}
+.cflag{font-size:18px}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:0.8rem}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+
+.card{background:#fff;border:0.5px solid #ddddd5;border-radius:16px;padding:1.2rem 1.35rem}
+.card-head{display:flex;align-items:center;gap:9px;margin-bottom:1rem}
+.snum{width:27px;height:27px;border-radius:50%;background:#E1F5EE;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#0F6E56;flex-shrink:0}
+.stitle{font-size:16px;font-weight:600;color:#1a1a18}
+.sicon{font-size:18px;color:#1D9E75;margin-left:auto}
+
+.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:11px}
 .f{display:flex;flex-direction:column;gap:4px}
-.f label{font-size:11px;color:#888780;letter-spacing:0.03em}
-.f input{width:100%;padding:7px 10px;border:0.5px solid #d3d1c7;border-radius:8px;font-size:14px;color:#1a1a18;background:#fff;outline:none}
-.f input:focus{border-color:#1D9E75;box-shadow:0 0 0 2px #E1F5EE}
-.seg{display:flex;border:0.5px solid #d3d1c7;border-radius:8px;overflow:hidden;width:fit-content}
-.seg button{padding:6px 13px;font-size:12px;background:transparent;border:none;cursor:pointer;color:#888780;transition:all 0.12s;white-space:nowrap}
-.seg button.on{background:#0F6E56;color:#E1F5EE}
-.tax-wrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.tax-pct{display:flex;align-items:center;gap:6px;font-size:12px;color:#888780}
-.tax-pct input{width:72px;padding:7px 10px;border:0.5px solid #d3d1c7;border-radius:8px;font-size:14px;color:#1a1a18;background:#fff;outline:none}
-.tax-pct input:focus{border-color:#1D9E75;box-shadow:0 0 0 2px #E1F5EE}
-.hint{font-size:11px;color:#b4b2a9;margin-top:3px}
-.seller-extra{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:10px}
-.results-wrap{margin-top:0.5rem}
-.results-label{font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:#888780;margin-bottom:10px}
-.rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px;margin-bottom:8px}
-.mc{border-radius:8px;padding:0.9rem 1rem;border:0.5px solid #e0e0d8;background:#f4f4f0}
-.mc.info{background:#E6F1FB;border-color:#B5D4F4}
-.mc.warn{background:#FAEEDA;border-color:#FAC775}
-.mc.danger{background:#FCEBEB;border-color:#F7C1C1}
-.mc.success{background:#EAF3DE;border-color:#C0DD97}
-.mc .ml{font-size:10px;color:#888780;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.04em}
-.mc.info .ml{color:#185FA5}
-.mc.warn .ml{color:#854F0B}
-.mc.danger .ml{color:#A32D2D}
-.mc.success .ml{color:#3B6D11}
-.mc .mv{font-size:17px;font-weight:500;color:#1a1a18}
-.mc.info .mv{color:#0C447C}
-.mc.warn .mv{color:#633806}
-.mc.danger .mv{color:#791F1F}
-.mc.success .mv{color:#27500A}
-.mc .ms{font-size:10px;color:#b4b2a9;margin-top:2px}
-.mc.info .ms{color:#378ADD}
-.mc.warn .ms{color:#BA7517}
-.mc.danger .ms{color:#E24B4A}
-.mc.success .ms{color:#639922}
-.final{border-radius:12px;padding:1.5rem 1.75rem;margin-top:0.75rem;display:flex;align-items:center;gap:1rem;border:0.5px solid #e0e0d8}
-.final.win{background:#EAF3DE;border-color:#97C459}
-.final.lose{background:#FCEBEB;border-color:#F09595}
-.final.even{background:#FAEEDA;border-color:#EF9F27}
-.final-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.final.win .final-icon{background:#C0DD97}
-.final.lose .final-icon{background:#F7C1C1}
-.final.even .final-icon{background:#FAC775}
-.final-icon i{font-size:20px}
-.final.win .final-icon i{color:#27500A}
-.final.lose .final-icon i{color:#791F1F}
-.final.even .final-icon i{color:#633806}
-.final-body{flex:1}
-.final-tag{font-size:10px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:2px}
-.final.win .final-tag{color:#3B6D11}
-.final.lose .final-tag{color:#A32D2D}
-.final.even .final-tag{color:#854F0B}
-.final-amount{font-size:28px;font-weight:500}
-.final.win .final-amount{color:#27500A}
-.final.lose .final-amount{color:#791F1F}
-.final.even .final-amount{color:#633806}
-.final-desc{font-size:12px;margin-top:3px}
-.final.win .final-desc{color:#3B6D11}
-.final.lose .final-desc{color:#A32D2D}
-.final.even .final-desc{color:#854F0B}
+.f label{font-size:13px;color:#888780;letter-spacing:0.02em}
+.f input{width:100%;padding:7px 10px;border:0.5px solid #d3d1c7;border-radius:9px;font-size:15px;color:#1a1a18;background:#fff;outline:none;transition:border-color 0.15s,box-shadow 0.15s;font-family:inherit}
+.f input:focus{border-color:#1D9E75;box-shadow:0 0 0 3px #E1F5EE}
+
+.seg{display:flex;border:0.5px solid #d3d1c7;border-radius:11px;overflow:hidden;flex-wrap:wrap}
+.seg button{padding:7px 14px;font-size:13px;background:transparent;border:none;cursor:pointer;color:#888780;transition:all 0.12s;white-space:nowrap;line-height:1.5;font-family:inherit}
+.seg button.on{background:#0F6E56;color:#E1F5EE;font-weight:500}
+.seg button:hover:not(.on){background:#f0f0ec}
+
+.trow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tpct{display:flex;align-items:center;gap:7px;font-size:13px;color:#888780}
+.tpct input{width:80px;padding:7px 10px;border:0.5px solid #d3d1c7;border-radius:9px;font-size:15px;color:#1a1a18;background:#fff;outline:none;font-family:inherit}
+.tpct input:focus{border-color:#1D9E75;box-shadow:0 0 0 3px #E1F5EE}
+.hint{font-size:12px;color:#b4b2a9;margin-top:3px}
+.sx{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:11px;margin-top:12px}
+
+.rlabel{font-size:13px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:#888780;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.rg{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:11px}
+@media(max-width:600px){.rg{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:320px){.rg{grid-template-columns:1fr 1fr}}
+
+.mc{border-radius:13px;padding:1rem 1.15rem;position:relative;overflow:hidden;transition:transform 0.1s}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.mc:hover{transform:translateY(-2px)}
+.mc.neu{background:#f4f4f0;border:0.5px solid #ddddd5}.mc.neu::before{background:#c4c2b8}
+.mc.blue{background:#E6F1FB;border:0.5px solid #85B7EB}.mc.blue::before{background:#185FA5}
+.mc.red{background:#FCEBEB;border:0.5px solid #F09595}.mc.red::before{background:#A32D2D}
+.mc.green{background:#EAF3DE;border:0.5px solid #97C459}.mc.green::before{background:#3B6D11}
+.mc.amber{background:#FAEEDA;border:0.5px solid #EF9F27}.mc.amber::before{background:#854F0B}
+.mc.teal{background:#E1F5EE;border:0.5px solid #5DCAA5}.mc.teal::before{background:#0F6E56}
+
+.mc .ml{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px}
+.mc.neu .ml{color:#888780}
+.mc.blue .ml{color:#185FA5}.mc.red .ml{color:#A32D2D}.mc.green .ml{color:#3B6D11}.mc.amber .ml{color:#854F0B}.mc.teal .ml{color:#0F6E56}
+
+.mc .mv{font-size:19px;font-weight:600;line-height:1.2}
+.mc.neu .mv{color:#2C2C2A}
+.mc.blue .mv{color:#0C447C}.mc.red .mv{color:#791F1F}.mc.green .mv{color:#27500A}.mc.amber .mv{color:#633806}.mc.teal .mv{color:#085041}
+
+.mc .ms{font-size:11px;margin-top:4px}
+.mc.neu .ms{color:#b4b2a9}
+.mc.blue .ms{color:#378ADD}.mc.red .ms{color:#E24B4A}.mc.green .ms{color:#639922}.mc.amber .ms{color:#BA7517}.mc.teal .ms{color:#1D9E75}
+
+.final{border-radius:16px;padding:1.5rem 1.7rem;display:flex;align-items:center;gap:16px;margin-top:0.7rem}
+.final.win{background:#EAF3DE;border:1.5px solid #97C459}
+.final.lose{background:#FCEBEB;border:1.5px solid #F09595}
+.final.even{background:#FAEEDA;border:1.5px solid #EF9F27}
+.ficon{width:49px;height:49px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.final.win .ficon{background:#C0DD97}.final.lose .ficon{background:#F7C1C1}.final.even .ficon{background:#FAC775}
+.ficon i{font-size:24px}
+.final.win .ficon i{color:#27500A}.final.lose .ficon i{color:#791F1F}.final.even .ficon i{color:#633806}
+.fbody{flex:1;min-width:0}
+.ftag{font-size:11px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase}
+.final.win .ftag{color:#3B6D11}.final.lose .ftag{color:#A32D2D}.final.even .ftag{color:#854F0B}
+.famt{font-size:32px;font-weight:700;line-height:1.2}
+.final.win .famt{color:#27500A}.final.lose .famt{color:#791F1F}.final.even .famt{color:#633806}
+.fdesc{font-size:13px;margin-top:3px}
+.final.win .fdesc{color:#3B6D11}.final.lose .fdesc{color:#A32D2D}.final.even .fdesc{color:#854F0B}
+
+.byline{text-align:center;margin-top:2rem;padding-top:1.5rem;border-top:0.5px solid #ddddd5}
+.byline-name{font-size:15px;font-weight:600;color:#5F5E5A;letter-spacing:0.02em}
+.byline-url{font-size:13px;color:#1D9E75;margin-top:4px;letter-spacing:0.01em}
 </style>
 </head>
 <body>
@@ -92,12 +101,12 @@ body{font-family:system-ui,sans-serif;background:#f4f4f0;padding:2rem 1rem}
 
 <div class="hero">
   <div class="hero-icon"><i class="ti ti-chart-bar"></i></div>
-  <div>
+  <div class="hero-text">
     <div class="hero-title">Calculadora de presupuesto</div>
     <div class="hero-sub">CAC · Rentabilidad · Costos operativos</div>
   </div>
-  <div class="currency-pill">
-    <span class="currency-flag" id="cFlag">🇵🇪</span>
+  <div class="cpill">
+    <span class="cflag" id="cFlag">🇵🇪</span>
     <select id="currencySelect" onchange="setCurrency()">
       <option value="PEN">Sol peruano — S/.</option>
       <option value="USD">Dólar — USD $</option>
@@ -119,216 +128,95 @@ body{font-family:system-ui,sans-serif;background:#f4f4f0;padding:2rem 1rem}
   </div>
 </div>
 
-<div class="step">
-  <div class="step-head">
-    <div class="step-num">1</div>
-    <div class="step-title">Tu producto o servicio</div>
-    <i class="ti ti-package step-icon"></i>
+<div class="grid2">
+  <div class="card">
+    <div class="card-head"><div class="snum">1</div><div class="stitle">Producto o servicio</div><i class="ti ti-package sicon"></i></div>
+    <div class="fg">
+      <div class="f"><label id="lPrice">Precio de venta (S/.)</label><input type="number" id="price" value="500" min="0" step="1"></div>
+      <div class="f"><label id="lCogs">Costo del producto (S/.)</label><input type="number" id="cogs" value="150" min="0" step="1"></div>
+      <div class="f"><label>Unidades a vender</label><input type="number" id="units" value="30" min="1" step="1"></div>
+    </div>
   </div>
-  <div class="fg">
-    <div class="f"><label id="lPrice">Precio de venta (S/.)</label><input type="number" id="price" value="500" min="0" step="1"></div>
-    <div class="f"><label id="lCogs">Costo del producto (S/.)</label><input type="number" id="cogs" value="150" min="0" step="1"></div>
-    <div class="f"><label>Unidades a vender</label><input type="number" id="units" value="30" min="1" step="1"></div>
+  <div class="card">
+    <div class="card-head"><div class="snum">2</div><div class="stitle">Proceso de ventas</div><i class="ti ti-messages sicon"></i></div>
+    <div class="fg">
+      <div class="f"><label>Mensajes para cerrar 1 venta</label><input type="number" id="msgsPerSale" value="17" min="1" step="1"></div>
+      <div class="f"><label id="lMsgCost">Costo por mensaje (S/.)</label><input type="number" id="msgCost" value="0.80" min="0" step="0.01"></div>
+    </div>
+    <div style="margin-top:13px">
+      <div class="f" style="margin-bottom:8px"><label>Impuesto</label></div>
+      <div class="trow">
+        <div class="seg">
+          <button class="on" id="btn-none" onclick="setTax('none')">Sin impuesto</button>
+          <button id="btn-tax" onclick="setTax('tax')">Con impuesto</button>
+        </div>
+        <div class="tpct" id="taxPctWrap" style="display:none">
+          <input type="number" id="taxPct" value="18" min="0" max="100" step="0.1" placeholder="18">
+          <span>%</span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="step">
-  <div class="step-head">
-    <div class="step-num">2</div>
-    <div class="step-title">Impuesto</div>
-    <i class="ti ti-receipt-tax step-icon"></i>
+<div class="card" style="margin-bottom:0.8rem">
+  <div class="card-head"><div class="snum">3</div><div class="stitle">Costos operativos</div><i class="ti ti-users sicon"></i></div>
+  <div class="f" style="margin-bottom:9px"><label>Tipo de sueldo del vendedor</label></div>
+  <div class="seg">
+    <button class="on" id="btn-fixed" onclick="setSellerMode('fixed')">Fijo / mes</button>
+    <button id="btn-commission" onclick="setSellerMode('commission')">Por venta</button>
+    <button id="btn-both" onclick="setSellerMode('both')">Ambos</button>
+    <button id="btn-noseller" onclick="setSellerMode('none')">Sin vendedor</button>
   </div>
-  <div class="tax-wrap">
-    <div class="seg">
-      <button class="on" id="btn-none" onclick="setTax('none')">Sin impuesto</button>
-      <button id="btn-tax" onclick="setTax('tax')">Con impuesto</button>
-    </div>
-    <div class="tax-pct" id="taxPctWrap" style="display:none">
-      <input type="number" id="taxPct" value="18" min="0" max="100" step="0.1" placeholder="ej. 18">
-      <span>%</span>
-    </div>
-  </div>
-</div>
-
-<div class="step">
-  <div class="step-head">
-    <div class="step-num">3</div>
-    <div class="step-title">Tu proceso de ventas</div>
-    <i class="ti ti-messages step-icon"></i>
-  </div>
-  <div class="fg">
-    <div class="f"><label>Mensajes para cerrar 1 venta</label><input type="number" id="msgsPerSale" value="17" min="1" step="1"></div>
-    <div class="f"><label id="lMsgCost">Costo por mensaje (S/.)</label><input type="number" id="msgCost" value="0.80" min="0" step="0.01"></div>
-  </div>
-</div>
-
-<div class="step">
-  <div class="step-head">
-    <div class="step-num">4</div>
-    <div class="step-title">Costos operativos</div>
-    <i class="ti ti-users step-icon"></i>
-  </div>
-  <div style="margin-bottom:10px">
-    <div class="f" style="margin-bottom:8px"><label>Tipo de sueldo del vendedor</label></div>
-    <div class="seg">
-      <button class="on" id="btn-fixed" onclick="setSellerMode('fixed')">Fijo / mes</button>
-      <button id="btn-commission" onclick="setSellerMode('commission')">Por venta</button>
-      <button id="btn-both" onclick="setSellerMode('both')">Ambos</button>
-      <button id="btn-noseller" onclick="setSellerMode('none')">Sin vendedor</button>
-    </div>
-  </div>
-  <div id="sellerInputs" class="seller-extra">
+  <div id="sellerInputs" class="sx">
     <div class="f" id="fixedWrap"><label id="lSalary">Sueldo fijo / mes (S/.)</label><input type="number" id="sellerSalary" value="1200" min="0" step="50"></div>
     <div class="f" id="commissionWrap" style="display:none"><label id="lComm">Comisión por venta (S/.)</label><input type="number" id="commissionPerSale" value="30" min="0" step="1"><span class="hint" id="commissionTotal"></span></div>
-  </div>
-  <div class="fg" style="margin-top:10px">
     <div class="f"><label id="lOther">Otros costos fijos / mes (S/.)</label><input type="number" id="otherFixed" value="300" min="0" step="50"></div>
   </div>
 </div>
 
-<div class="results-wrap">
-  <div class="results-label"><i class="ti ti-chart-pie" style="font-size:12px;margin-right:4px"></i>Resultados del mes</div>
+<div style="margin-top:1rem">
+  <div class="rlabel"><i class="ti ti-chart-pie" style="font-size:14px"></i>Resultados del mes</div>
   <div class="rg">
-    <div class="mc info"><div class="ml">% conversión</div><div class="mv" id="rConv">—</div><div class="ms" id="rConvSub">—</div></div>
-    <div class="mc info"><div class="ml">CAC</div><div class="mv" id="rCac">—</div><div class="ms">por cliente nuevo</div></div>
-    <div class="mc"><div class="ml">Prospectos necesarios</div><div class="mv" id="rProspects">—</div><div class="ms">mensajes totales</div></div>
-    <div class="mc"><div class="ml">Inversión publicitaria</div><div class="mv" id="rMsgInv">—</div><div class="ms">costo de contacto</div></div>
+    <div class="mc teal"><div class="ml">% Conversión</div><div class="mv" id="rConv">—</div><div class="ms" id="rConvSub">—</div></div>
+    <div class="mc blue"><div class="ml">CAC</div><div class="mv" id="rCac">—</div><div class="ms">por cliente nuevo</div></div>
+    <div class="mc neu"><div class="ml">Prospectos</div><div class="mv" id="rProspects">—</div><div class="ms">mensajes totales</div></div>
+    <div class="mc neu"><div class="ml">Inv. publicitaria</div><div class="mv" id="rMsgInv">—</div><div class="ms">costo de contacto</div></div>
   </div>
   <div class="rg">
-    <div class="mc danger"><div class="ml">Costo total producto</div><div class="mv" id="rTotalCogs">—</div><div class="ms" id="rTotalCogsSub">—</div></div>
-    <div class="mc"><div class="ml">Costo operativo</div><div class="mv" id="rOpCost">—</div><div class="ms" id="rOpCostSub">—</div></div>
-    <div class="mc"><div class="ml">Ingresos brutos</div><div class="mv" id="rRevenue">—</div><div class="ms">ventas × precio</div></div>
-    <div class="mc" id="unitCard"><div class="ml" id="unitLbl">Ganancia por unidad</div><div class="mv" id="rUnitResult">—</div><div class="ms">después de todos los costos</div></div>
+    <div class="mc red"><div class="ml">Costo total producto</div><div class="mv" id="rTotalCogs">—</div><div class="ms" id="rTotalCogsSub">—</div></div>
+    <div class="mc neu"><div class="ml">Costo operativo</div><div class="mv" id="rOpCost">—</div><div class="ms" id="rOpCostSub">—</div></div>
+    <div class="mc neu"><div class="ml">Ingresos brutos</div><div class="mv" id="rRevenue">—</div><div class="ms">ventas × precio</div></div>
+    <div class="mc" id="unitCard"><div class="ml" id="unitLbl">Ganancia / unidad</div><div class="mv" id="rUnitResult">—</div><div class="ms">después de costos</div></div>
   </div>
   <div class="rg" id="taxRow" style="display:none">
-    <div class="mc warn"><div class="ml" id="taxLbl">Impuesto a pagar</div><div class="mv" id="rTax">—</div><div class="ms">incluido en el precio</div></div>
+    <div class="mc amber"><div class="ml" id="taxLbl">Impuesto a pagar</div><div class="mv" id="rTax">—</div><div class="ms">incluido en precio</div></div>
   </div>
   <div class="final" id="finalCard">
-    <div class="final-icon"><i id="finalIcon" class="ti ti-trending-up"></i></div>
-    <div class="final-body">
-      <div class="final-tag" id="finalTag">Resultado neto del mes</div>
-      <div class="final-amount" id="finalAmount">—</div>
-      <div class="final-desc" id="finalDesc"></div>
+    <div class="ficon"><i id="finalIcon" class="ti ti-trending-up"></i></div>
+    <div class="fbody">
+      <div class="ftag" id="finalTag">Resultado neto del mes</div>
+      <div class="famt" id="finalAmount">—</div>
+      <div class="fdesc" id="finalDesc"></div>
     </div>
   </div>
 </div>
 
+<div class="byline">
+  <div class="byline-name">By Zetup Academy</div>
+  <div class="byline-url">www.zetupacademy.com</div>
 </div>
 
+</div>
 <script>
 const CURR={PEN:{s:'S/.',f:'🇵🇪',l:'es-PE',d:2},USD:{s:'$',f:'🇺🇸',l:'en-US',d:2},COP:{s:'$',f:'🇨🇴',l:'es-CO',d:0},MXN:{s:'$',f:'🇲🇽',l:'es-MX',d:2},ARS:{s:'$',f:'🇦🇷',l:'es-AR',d:2},CLP:{s:'$',f:'🇨🇱',l:'es-CL',d:0},BOB:{s:'Bs.',f:'🇧🇴',l:'es-BO',d:2},PYG:{s:'₲',f:'🇵🇾',l:'es-PY',d:0},UYU:{s:'$U',f:'🇺🇾',l:'es-UY',d:2},VES:{s:'Bs.',f:'🇻🇪',l:'es-VE',d:2},GTQ:{s:'Q',f:'🇬🇹',l:'es-GT',d:2},HNL:{s:'L',f:'🇭🇳',l:'es-HN',d:2},NIO:{s:'C$',f:'🇳🇮',l:'es-NI',d:2},CRC:{s:'₡',f:'🇨🇷',l:'es-CR',d:0},DOP:{s:'RD$',f:'🇩🇴',l:'es-DO',d:2},EUR:{s:'€',f:'🇪🇸',l:'es-ES',d:2}};
 let cc='PEN',taxMode='none',sellerMode='fixed';
-
-function fmt(n){const c=CURR[cc];const abs=Math.abs(n).toLocaleString(c.l,{minimumFractionDigits:c.d,maximumFractionDigits:c.d});return(n<0?'-':'')+c.s+' '+abs;}
+function fmt(n){const c=CURR[cc];const a=Math.abs(n).toLocaleString(c.l,{minimumFractionDigits:c.d,maximumFractionDigits:c.d});return(n<0?'-':'')+c.s+' '+a;}
 function fmtI(n){return n.toLocaleString(CURR[cc].l);}
-
-function setCurrency(){
-  cc=document.getElementById('currencySelect').value;
-  const c=CURR[cc];
-  document.getElementById('cFlag').textContent=c.f;
-  const sym=c.s;
-  document.getElementById('lPrice').textContent='Precio de venta ('+sym+')';
-  document.getElementById('lCogs').textContent='Costo del producto ('+sym+')';
-  document.getElementById('lMsgCost').textContent='Costo por mensaje ('+sym+')';
-  document.getElementById('lSalary').textContent='Sueldo fijo / mes ('+sym+')';
-  document.getElementById('lComm').textContent='Comisión por venta ('+sym+')';
-  document.getElementById('lOther').textContent='Otros costos fijos / mes ('+sym+')';
-  calc();
-}
-
-function setTax(m){
-  taxMode=m;
-  document.getElementById('btn-none').classList.toggle('on',m==='none');
-  document.getElementById('btn-tax').classList.toggle('on',m==='tax');
-  document.getElementById('taxPctWrap').style.display=m==='tax'?'flex':'none';
-  calc();
-}
-
-function setSellerMode(m){
-  sellerMode=m;
-  ['fixed','commission','both','noseller'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('on',x===m));
-  const si=document.getElementById('sellerInputs');
-  if(m==='none'){si.style.display='none';}
-  else{si.style.display='grid';
-    document.getElementById('fixedWrap').style.display=(m==='fixed'||m==='both')?'flex':'none';
-    document.getElementById('commissionWrap').style.display=(m==='commission'||m==='both')?'flex':'none';}
-  calc();
-}
-
-function calc(){
-  const price=parseFloat(document.getElementById('price').value)||0;
-  const cogs=parseFloat(document.getElementById('cogs').value)||0;
-  const units=parseInt(document.getElementById('units').value)||0;
-  const msgs=parseFloat(document.getElementById('msgsPerSale').value)||1;
-  const msgCost=parseFloat(document.getElementById('msgCost').value)||0;
-  const other=parseFloat(document.getElementById('otherFixed').value)||0;
-  const taxPct=taxMode==='none'?0:(parseFloat(document.getElementById('taxPct').value)||0);
-
-  let sellerCost=0,opSub='';
-  if(sellerMode==='fixed'){sellerCost=parseFloat(document.getElementById('sellerSalary').value)||0;opSub='sueldo fijo + otros';}
-  else if(sellerMode==='commission'){const c=parseFloat(document.getElementById('commissionPerSale').value)||0;sellerCost=c*units;document.getElementById('commissionTotal').textContent='Total: '+fmt(sellerCost)+' ('+fmtI(units)+' ventas)';opSub='comisión + otros';}
-  else if(sellerMode==='both'){const sal=parseFloat(document.getElementById('sellerSalary').value)||0;const c=parseFloat(document.getElementById('commissionPerSale').value)||0;const ct=c*units;sellerCost=sal+ct;document.getElementById('commissionTotal').textContent='Comisión total: '+fmt(ct);opSub='fijo + comisión + otros';}
-  else{opSub='sin vendedor';}
-
-  const conv=(1/msgs)*100;
-  const cac=msgs*msgCost;
-  const prospects=Math.ceil(units*msgs);
-  const msgInv=units*msgs*msgCost;
-  const opCost=sellerCost+other;
-  const revenue=units*price;
-  const totalCogs=cogs*units;
-  const tax=taxMode==='none'?0:(revenue*taxPct/(100+taxPct));
-  const margin=price-cogs;
-  const gross=margin*units;
-  const net=gross-tax-msgInv-opCost;
-  const netPU=units>0?net/units:0;
-
-  document.getElementById('rConv').textContent=conv.toFixed(2)+'%';
-  document.getElementById('rConvSub').textContent='1 venta cada '+Math.round(msgs)+' mensajes';
-  document.getElementById('rCac').textContent=fmt(cac);
-  document.getElementById('rProspects').textContent=fmtI(prospects)+' msg';
-  document.getElementById('rMsgInv').textContent=fmt(msgInv);
-  document.getElementById('rTotalCogs').textContent=fmt(totalCogs);
-  document.getElementById('rTotalCogsSub').textContent=fmt(cogs)+' × '+fmtI(units)+' unid.';
-  document.getElementById('rOpCost').textContent=fmt(opCost);
-  document.getElementById('rOpCostSub').textContent=opSub;
-  document.getElementById('rRevenue').textContent=fmt(revenue);
-
-  const uCard=document.getElementById('unitCard');
-  const uLbl=document.getElementById('unitLbl');
-  document.getElementById('rUnitResult').textContent=fmt(netPU);
-  if(netPU>=0){uCard.className='mc success';uLbl.textContent='Ganancia por unidad';}
-  else{uCard.className='mc danger';uLbl.textContent='Pérdida por unidad';}
-
-  if(taxMode==='tax'&&taxPct>0){
-    document.getElementById('taxRow').style.display='grid';
-    document.getElementById('taxLbl').textContent='Impuesto a pagar ('+taxPct+'%)';
-    document.getElementById('rTax').textContent=fmt(tax);
-  }else{document.getElementById('taxRow').style.display='none';}
-
-  const fc=document.getElementById('finalCard');
-  const fa=document.getElementById('finalAmount');
-  const fd=document.getElementById('finalDesc');
-  const ft=document.getElementById('finalTag');
-  const fi=document.getElementById('finalIcon');
-  fa.textContent=fmt(net);
-
-  if(net>0){
-    fc.className='final win';ft.textContent='Ganancia neta del mes';
-    fi.className='ti ti-trending-up';
-    fd.textContent='Margen neto: '+((net/revenue)*100).toFixed(1)+'% sobre ingresos totales';
-  }else if(net===0){
-    fc.className='final even';ft.textContent='Punto de equilibrio';
-    fi.className='ti ti-equal';
-    fd.textContent='Cubres exactamente todos tus costos.';
-  }else{
-    fc.className='final lose';ft.textContent='Pérdida neta del mes';
-    fi.className='ti ti-trending-down';
-    const need=margin>0?Math.ceil((opCost+msgInv+tax)/margin):'∞';
-    fd.textContent='Necesitas vender al menos '+(typeof need==='number'?fmtI(need):need)+' unidades para no perder.';
-  }
-}
-
+function setCurrency(){cc=document.getElementById('currencySelect').value;const c=CURR[cc];document.getElementById('cFlag').textContent=c.f;const s=c.s;document.getElementById('lPrice').textContent='Precio de venta ('+s+')';document.getElementById('lCogs').textContent='Costo del producto ('+s+')';document.getElementById('lMsgCost').textContent='Costo por mensaje ('+s+')';document.getElementById('lSalary').textContent='Sueldo fijo / mes ('+s+')';document.getElementById('lComm').textContent='Comisión por venta ('+s+')';document.getElementById('lOther').textContent='Otros costos fijos / mes ('+s+')';calc();}
+function setTax(m){taxMode=m;document.getElementById('btn-none').classList.toggle('on',m==='none');document.getElementById('btn-tax').classList.toggle('on',m==='tax');document.getElementById('taxPctWrap').style.display=m==='tax'?'flex':'none';calc();}
+function setSellerMode(m){sellerMode=m;['fixed','commission','both','noseller'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('on',x===m));const si=document.getElementById('sellerInputs');if(m==='none'){si.style.display='none';}else{si.style.display='grid';document.getElementById('fixedWrap').style.display=(m==='fixed'||m==='both')?'flex':'none';document.getElementById('commissionWrap').style.display=(m==='commission'||m==='both')?'flex':'none';}calc();}
+function calc(){const price=parseFloat(document.getElementById('price').value)||0;const cogs=parseFloat(document.getElementById('cogs').value)||0;const units=parseInt(document.getElementById('units').value)||0;const msgs=parseFloat(document.getElementById('msgsPerSale').value)||1;const msgCost=parseFloat(document.getElementById('msgCost').value)||0;const other=parseFloat(document.getElementById('otherFixed').value)||0;const taxPct=taxMode==='none'?0:(parseFloat(document.getElementById('taxPct').value)||0);let sellerCost=0,opSub='';if(sellerMode==='fixed'){sellerCost=parseFloat(document.getElementById('sellerSalary').value)||0;opSub='fijo + otros';}else if(sellerMode==='commission'){const c=parseFloat(document.getElementById('commissionPerSale').value)||0;sellerCost=c*units;document.getElementById('commissionTotal').textContent='Total: '+fmt(sellerCost)+' ('+fmtI(units)+' ventas)';opSub='comisión + otros';}else if(sellerMode==='both'){const sal=parseFloat(document.getElementById('sellerSalary').value)||0;const c=parseFloat(document.getElementById('commissionPerSale').value)||0;const ct=c*units;sellerCost=sal+ct;document.getElementById('commissionTotal').textContent='Comisión total: '+fmt(ct);opSub='fijo + comisión + otros';}else{opSub='sin vendedor';}const conv=(1/msgs)*100;const cac=msgs*msgCost;const prospects=Math.ceil(units*msgs);const msgInv=units*msgs*msgCost;const opCost=sellerCost+other;const revenue=units*price;const totalCogs=cogs*units;const tax=taxMode==='none'?0:(revenue*taxPct/(100+taxPct));const margin=price-cogs;const gross=margin*units;const net=gross-tax-msgInv-opCost;const netPU=units>0?net/units:0;document.getElementById('rConv').textContent=conv.toFixed(2)+'%';document.getElementById('rConvSub').textContent='1 venta c/'+Math.round(msgs)+' msg';document.getElementById('rCac').textContent=fmt(cac);document.getElementById('rProspects').textContent=fmtI(prospects)+' msg';document.getElementById('rMsgInv').textContent=fmt(msgInv);document.getElementById('rTotalCogs').textContent=fmt(totalCogs);document.getElementById('rTotalCogsSub').textContent=fmt(cogs)+' × '+fmtI(units);document.getElementById('rOpCost').textContent=fmt(opCost);document.getElementById('rOpCostSub').textContent=opSub;document.getElementById('rRevenue').textContent=fmt(revenue);const uCard=document.getElementById('unitCard');const uLbl=document.getElementById('unitLbl');document.getElementById('rUnitResult').textContent=fmt(netPU);if(netPU>=0){uCard.className='mc green';uLbl.textContent='Ganancia / unidad';}else{uCard.className='mc red';uLbl.textContent='Pérdida / unidad';}if(taxMode==='tax'&&taxPct>0){document.getElementById('taxRow').style.display='grid';document.getElementById('taxLbl').textContent='Impuesto ('+taxPct+'%)';document.getElementById('rTax').textContent=fmt(tax);}else{document.getElementById('taxRow').style.display='none';}const fc=document.getElementById('finalCard');const fa=document.getElementById('finalAmount');const fd=document.getElementById('finalDesc');const ft=document.getElementById('finalTag');const fi=document.getElementById('finalIcon');fa.textContent=fmt(net);if(net>0){fc.className='final win';ft.textContent='Ganancia neta del mes';fi.className='ti ti-trending-up';fd.textContent='Margen neto: '+((net/revenue)*100).toFixed(1)+'% sobre ingresos totales';}else if(net===0){fc.className='final even';ft.textContent='Punto de equilibrio';fi.className='ti ti-equal';fd.textContent='Cubres exactamente todos tus costos.';}else{fc.className='final lose';ft.textContent='Pérdida neta del mes';fi.className='ti ti-trending-down';const need=margin>0?Math.ceil((opCost+msgInv+tax)/margin):'∞';fd.textContent='Necesitas vender al menos '+(typeof need==='number'?fmtI(need):need)+' unidades para no perder.';}}
 document.querySelectorAll('input').forEach(el=>el.addEventListener('input',calc));
 calc();
 </script>
