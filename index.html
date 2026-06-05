@@ -31,12 +31,12 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f0ec;min-heigh
 .f input:focus{border-color:#1D9E75;box-shadow:0 0 0 3px #E1F5EE}
 .flabel{display:flex;align-items:center;gap:5px;font-size:12px;color:#888780}
 .divider{border:none;border-top:.5px solid #ddddd5;margin:10px 0}
-.tip-wrap{position:relative;display:inline-flex;align-items:center;flex-shrink:0}
 .tip-btn{width:15px;height:15px;border-radius:50%;background:#C3E8DA;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;transition:background .15s;-webkit-tap-highlight-color:transparent;flex-shrink:0}
 .tip-btn:hover,.tip-btn:focus,.tip-btn.on{background:#1D9E75;outline:none}
 .tip-btn i{font-size:10px;color:#1D9E75;pointer-events:none}
 .tip-btn:hover i,.tip-btn:focus i,.tip-btn.on i{color:#fff}
-.tipbox{display:none;position:absolute;left:20px;top:-4px;z-index:99;background:#085041;color:#E1F5EE;font-size:11px;line-height:1.55;padding:9px 12px;border-radius:10px;width:210px;white-space:normal;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.tipbox{display:none;position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 8px);z-index:9999;background:#085041;color:#E1F5EE;font-size:11px;line-height:1.55;padding:9px 12px;border-radius:10px;width:200px;max-width:70vw;white-space:normal;box-shadow:0 4px 16px rgba(0,0,0,.25)}
+.tipbox::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#085041}
 .tip-wrap:hover .tipbox,.tip-btn.on+.tipbox{display:block}
 .tipbox.left{left:auto;right:20px}
 .seg{display:flex;border:.5px solid #d3d1c7;border-radius:10px;overflow:hidden;flex-wrap:wrap}
@@ -61,9 +61,9 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f0ec;min-heigh
 .add-btn i{font-size:13px}
 .extra-total{font-size:11px;color:#888780;margin-top:5px}
 .rlabel{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#888780;margin-bottom:10px;display:flex;align-items:center;gap:5px}
-.top3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-bottom:9px}
+.top3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-bottom:9px;overflow:visible}
 @media(max-width:520px){.top3{grid-template-columns:1fr 1fr}}
-.mc-big{border-radius:14px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:5px}
+.mc-big{border-radius:14px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:5px;position:relative;overflow:visible}
 .mc-big.green{background:#2D7D2A;border:.5px solid #3B9C38}
 .mc-big.red{background:#C0392B;border:.5px solid #E74C3C}
 .mc-big.purple{background:#534AB7;border:.5px solid #7B72D8}
@@ -77,10 +77,10 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f0ec;min-heigh
 .mc-big .tip-btn i{color:rgba(255,255,255,.85);font-size:9px}
 .mc-big .tip-btn:hover,.mc-big .tip-btn.on{background:rgba(255,255,255,.4)}
 .mc-big .tip-btn:hover i,.mc-big .tip-btn.on i{color:#fff}
-.rg{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:9px}
-@media(max-width:600px){.rg{grid-template-columns:repeat(2,1fr)}}
-.mc{border-radius:12px;padding:.8rem .9rem;position:relative;overflow:hidden;transition:transform .1s}
-.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:3px 3px 0 0}
+.rg{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:9px;overflow:visible}
+
+.mc{border-radius:12px;padding:.8rem .9rem;position:relative;transition:transform .1s;overflow:visible}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:12px 12px 0 0}
 .mc:hover{transform:translateY(-2px)}
 .mc-lrow{display:flex;align-items:center;gap:4px;margin-bottom:4px}
 .mc .ml{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
@@ -183,8 +183,6 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f0ec;min-heigh
     <div class="mc-big purple"><div class="bicon"><i class="ti ti-speakerphone"></i></div><div class="blrow"><div class="bl">Inv. publicitaria</div><span class="tip-wrap"><button class="tip-btn"><i class="ti ti-info-circle"></i></button><div class="tipbox left">Cuánto gastas para conseguir clientes: mensajes × costo × unidades.</div></span></div><div class="bv" id="rMsgInv">—</div><div class="bs">costo de contacto</div></div>
   </div>
   <div class="rg">
-    <div class="mc teal"><div class="mc-lrow"><div class="ml">% Conversión</div><span class="tip-wrap"><button class="tip-btn"><i class="ti ti-info-circle"></i></button><div class="tipbox">De cada 100 personas que te contactan, ¿cuántas compran? Cuanto más alto, más eficiente eres vendiendo.</div></span></div><div class="mv" id="rConv">—</div><div class="ms" id="rConvSub">—</div></div>
-    <div class="mc sky"><div class="mc-lrow"><div class="ml">CAC</div><span class="tip-wrap"><button class="tip-btn"><i class="ti ti-info-circle"></i></button><div class="tipbox">Costo de Adquisición de Cliente: cuánto te cuesta conseguir un comprador. Si supera tu ganancia por venta, pierdes dinero.</div></span></div><div class="mv" id="rCac">—</div><div class="ms">por cliente nuevo</div></div>
     <div class="mc red2"><div class="mc-lrow"><div class="ml">Costo producto</div><span class="tip-wrap"><button class="tip-btn"><i class="ti ti-info-circle"></i></button><div class="tipbox">Costo de fabricar o comprar todos los productos del mes. Costo unitario × unidades a vender.</div></span></div><div class="mv" id="rTotalCogs">—</div><div class="ms" id="rTotalCogsSub">—</div></div>
     <div class="mc slate"><div class="mc-lrow"><div class="ml">Costo vendedor</div><span class="tip-wrap"><button class="tip-btn"><i class="ti ti-info-circle"></i></button><div class="tipbox">Lo que pagas a tu equipo de ventas. Un sueldo fijo existe aunque no vendas nada.</div></span></div><div class="mv" id="rOpCost">—</div><div class="ms" id="rOpCostSub">—</div></div>
   </div>
@@ -201,10 +199,17 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f0ec;min-heigh
 </div>
 
 <script>
+// Tooltip simple: toggle clase .on, CSS hace el resto
 document.querySelectorAll('.tip-btn').forEach(btn=>{
-  btn.addEventListener('click',e=>{e.stopPropagation();const on=btn.classList.contains('on');document.querySelectorAll('.tip-btn.on').forEach(b=>b.classList.remove('on'));if(!on)btn.classList.add('on');});
+  btn.addEventListener('click',e=>{
+    e.stopPropagation();
+    const isOn=btn.classList.contains('on');
+    document.querySelectorAll('.tip-btn.on').forEach(b=>b.classList.remove('on'));
+    if(!isOn) btn.classList.add('on');
+  });
 });
 document.addEventListener('click',()=>document.querySelectorAll('.tip-btn.on').forEach(b=>b.classList.remove('on')));
+document.addEventListener('touchstart',e=>{if(!e.target.closest('.tip-btn'))document.querySelectorAll('.tip-btn.on').forEach(b=>b.classList.remove('on'));},{passive:true});
 
 const CURR={PEN:{s:'S/.',f:'🇵🇪',l:'es-PE',d:2},USD:{s:'$',f:'🇺🇸',l:'en-US',d:2},COP:{s:'$',f:'🇨🇴',l:'es-CO',d:0},MXN:{s:'$',f:'🇲🇽',l:'es-MX',d:2},ARS:{s:'$',f:'🇦🇷',l:'es-AR',d:2},CLP:{s:'$',f:'🇨🇱',l:'es-CL',d:0},BOB:{s:'Bs.',f:'🇧🇴',l:'es-BO',d:2},PYG:{s:'₲',f:'🇵🇾',l:'es-PY',d:0},UYU:{s:'$U',f:'🇺🇾',l:'es-UY',d:2},VES:{s:'Bs.',f:'🇻🇪',l:'es-VE',d:2},GTQ:{s:'Q',f:'🇬🇹',l:'es-GT',d:2},HNL:{s:'L',f:'🇭🇳',l:'es-HN',d:2},NIO:{s:'C$',f:'🇳🇮',l:'es-NI',d:2},CRC:{s:'₡',f:'🇨🇷',l:'es-CR',d:0},DOP:{s:'RD$',f:'🇩🇴',l:'es-DO',d:2},EUR:{s:'€',f:'🇪🇸',l:'es-ES',d:2}};
 let cc='PEN',taxMode='none',sellerMode='fixed',extraId=0;
@@ -246,10 +251,7 @@ function calc(){
   document.getElementById('rRevenue').textContent=fmt(revenue);
   document.getElementById('rEgresos').textContent=fmt(egresos);
   document.getElementById('rMsgInv').textContent=fmt(msgInv);
-  document.getElementById('rConv').textContent=conv.toFixed(2)+'%';
   if(document.getElementById('previewConv')){document.getElementById('previewConv').textContent=conv.toFixed(2)+'%';document.getElementById('previewConvSub').textContent='1 de cada '+Math.round(msgs)+' te compra';document.getElementById('previewCac').textContent=fmt(cac);}
-  document.getElementById('rConvSub').textContent='1 venta c/'+Math.round(msgs)+' msg';
-  document.getElementById('rCac').textContent=fmt(cac);
   document.getElementById('rTotalCogs').textContent=fmt(totalCogs);
   document.getElementById('rTotalCogsSub').textContent=fmt(cogs)+' × '+fmtI(units);
   document.getElementById('rOpCost').textContent=fmt(sellerCost);
@@ -267,5 +269,6 @@ document.querySelectorAll('input').forEach(el=>el.addEventListener('input',calc)
 addExtra('Otros fijos','300');
 calc();
 </script>
+
 </body>
 </html>
