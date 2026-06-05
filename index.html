@@ -31,13 +31,13 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f0ec;min-heigh
 .f input:focus{border-color:#1D9E75;box-shadow:0 0 0 3px #E1F5EE}
 .flabel{display:flex;align-items:center;gap:5px;font-size:12px;color:#888780}
 .divider{border:none;border-top:.5px solid #ddddd5;margin:10px 0}
-.tip-btn{width:15px;height:15px;border-radius:50%;background:#C3E8DA;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;transition:background .15s;-webkit-tap-highlight-color:transparent;flex-shrink:0}
-.tip-btn:hover,.tip-btn:focus,.tip-btn.on{background:#1D9E75;outline:none}
-.tip-btn i{font-size:10px;color:#1D9E75;pointer-events:none}
-.tip-btn:hover i,.tip-btn:focus i,.tip-btn.on i{color:#fff}
-.tipbox{display:none;position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 8px);z-index:9999;background:#085041;color:#E1F5EE;font-size:11px;line-height:1.55;padding:9px 12px;border-radius:10px;width:200px;max-width:70vw;white-space:normal;box-shadow:0 4px 16px rgba(0,0,0,.25)}
+
+
+
+
+.tipbox{display:none;position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 8px);z-index:9999;background:#085041;color:#E1F5EE;font-size:13px;line-height:1.65;padding:13px 15px;border-radius:12px;width:250px;max-width:80vw;white-space:normal;box-shadow:0 4px 16px rgba(0,0,0,.25)}
 .tipbox::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#085041}
-.tip-wrap:hover .tipbox,.tip-btn.on+.tipbox{display:block}
+.tip-wrap:hover .tipbox,.tip-btn.on+.tipbox{display:block !important}
 .tipbox.left{left:auto;right:20px}
 .seg{display:flex;border:.5px solid #d3d1c7;border-radius:10px;overflow:hidden;flex-wrap:wrap}
 .seg button{padding:6px 12px;font-size:12px;background:transparent;border:none;cursor:pointer;color:#888780;transition:all .12s;white-space:nowrap;line-height:1.5;font-family:inherit}
@@ -113,15 +113,20 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f0ec;min-heigh
 .byline{text-align:center;margin-top:1.5rem;padding-top:1.25rem;border-top:.5px solid #ddddd5}
 .byline-name{font-size:14px;font-weight:600;color:#5F5E5A}
 .byline-url{font-size:12px;color:#1D9E75;margin-top:3px}
+.tip-wrap{position:relative;display:inline-flex;align-items:center;flex-shrink:0}
+.tip-btn{width:16px;height:16px;border-radius:50%;background:#C3E8DA;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0;flex-shrink:0;vertical-align:middle}
+.tip-btn i{font-size:10px;color:#0F6E56;pointer-events:none}
+#tooltip-global{display:none;position:fixed;background:#085041;color:#fff;font-size:13px;line-height:1.6;padding:13px 15px;border-radius:12px;width:250px;max-width:80vw;white-space:normal;box-shadow:0 6px 24px rgba(0,0,0,.3);z-index:99999;pointer-events:none}
 </style>
 </head>
 <body>
+<div id="tooltip-global"></div>
 <div class="app">
 
 <div class="hero">
   <div class="hero-icon"><i class="ti ti-chart-bar"></i></div>
   <div class="hero-titles">
-    <div class="hero-title">Calculadora de presupuesto <span class="tip-wrap" style="vertical-align:middle"><button class="tip-btn" style="background:#0F6E56"><i class="ti ti-info-circle" style="color:#9FE1CB;font-size:10px"></i></button><div class="tipbox">Muchos negocios creen que son rentables… hasta que revisan sus números. Esta calculadora te ayuda a ver con claridad si realmente estás ganando dinero o solo trabajas para cubrir gastos.</div></span></div>
+    <div class="hero-title">Calculadora de presupuesto <span class="tip-wrap" style="vertical-align:middle"><button class="tip-btn" style="background:#0F6E56" data-tip="Muchos negocios creen que son rentables… hasta que revisan sus números. Esta calculadora te ayuda a ver con claridad si realmente estás ganando dinero o solo trabajas para cubrir gastos."><i class="ti ti-info-circle" style="color:#9FE1CB;font-size:10px"></i></button></span></div>
     <div class="hero-sub">CAC · Rentabilidad · Costos operativos</div>
   </div>
   <div class="cpill"><span id="cFlag">🇵🇪</span><select id="currencySelect" onchange="setCurrency()"><option value="PEN">Sol peruano S/.</option><option value="USD">Dólar USD $</option><option value="COP">Peso COP</option><option value="MXN">Peso MXN</option><option value="ARS">Peso ARS</option><option value="CLP">Peso CLP</option><option value="BOB">Boliviano Bs.</option><option value="PYG">Guaraní ₲</option><option value="UYU">Peso UYU</option><option value="VES">Bolívar Bs.</option><option value="GTQ">Quetzal Q</option><option value="HNL">Lempira L</option><option value="NIO">Córdoba C$</option><option value="CRC">Colón ₡</option><option value="DOP">Peso RD$</option><option value="EUR">Euro €</option></select></div>
@@ -132,8 +137,8 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f0ec;min-heigh
     <div class="card-head"><div class="snum">1</div><div class="stitle">Producto o servicio</div><i class="ti ti-package sicon"></i></div>
     <div class="fg">
       <div class="f"><div class="flabel"><span id="lPrice">Precio de venta (S/.)</span></div><input type="number" id="price" value="500" min="0" step="1"></div>
-      <div class="f"><div class="flabel"><span id="lCogs">Costo del producto (S/.)</span><span class="tip-wrap"><button class="tip-btn"><i class="ti ti-info-circle"></i></button><div class="tipbox">Es lo que te cuesta producir o comprar tu producto. Ejemplo: vendes a $100 pero lo compras a $30 → tu costo es $30.</div></span></div><input type="number" id="cogs" value="150" min="0" step="1"></div>
-      <div class="f"><div class="flabel"><span>Unidades a vender</span><span class="tip-wrap"><button class="tip-btn"><i class="ti ti-info-circle"></i></button><div class="tipbox">Tu proyección de ventas del mes. Sé realista: no lo que desearías vender, sino lo que realmente puedes lograr.</div></span></div><input type="number" id="units" value="30" min="1" step="1"></div>
+      <div class="f"><div class="flabel"><span id="lCogs">Costo del producto (S/.)</span><span class="tip-wrap"><button class="tip-btn" data-tip="Es lo que te cuesta producir o comprar tu producto. Ejemplo: vendes a $100 pero lo compras a $30 → tu costo es $30."><i class="ti ti-info-circle"></i></button></span></div><input type="number" id="cogs" value="150" min="0" step="1"></div>
+      <div class="f"><div class="flabel"><span>Unidades a vender</span><span class="tip-wrap"><button class="tip-btn" data-tip="Tu proyección de ventas del mes. Sé realista: no lo que desearías vender, sino lo que realmente puedes lograr."><i class="ti ti-info-circle"></i></button></span></div><input type="number" id="units" value="30" min="1" step="1"></div>
     </div>
     <div class="divider"></div>
     <div class="flabel" style="margin-bottom:8px"><span>Impuesto</span></div>
@@ -142,8 +147,8 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f0ec;min-heigh
   <div class="card" style="display:flex;flex-direction:column;gap:0">
     <div class="card-head"><div class="snum">2</div><div class="stitle">Costo publicitario</div><i class="ti ti-speakerphone sicon"></i></div>
     <div class="fg" style="margin-bottom:12px">
-      <div class="f"><div class="flabel"><span>Mensajes para cerrar 1 venta</span><span class="tip-wrap"><button class="tip-btn"><i class="ti ti-info-circle"></i></button><div class="tipbox">No todos los que te contactan compran. ¿Cuántos mensajes necesitas para cerrar una venta? Si de cada 17 contactos 1 compra, coloca 17.</div></span></div><input type="number" id="msgsPerSale" value="17" min="1" step="1"></div>
-      <div class="f"><div class="flabel"><span id="lMsgCost">Costo por mensaje (S/.)</span><span class="tip-wrap"><button class="tip-btn"><i class="ti ti-info-circle"></i></button><div class="tipbox">¿Cuánto pagas por cada persona que te contacta? Definir este límite te ayuda a saber si tu publicidad es rentable.</div></span></div><input type="number" id="msgCost" value="0.80" min="0" step="0.01"></div>
+      <div class="f"><div class="flabel"><span>Mensajes para cerrar 1 venta</span><span class="tip-wrap"><button class="tip-btn" data-tip="No todos los que te contactan compran. ¿Cuántos mensajes necesitas para cerrar una venta? Si de cada 17 contactos 1 compra, coloca 17."><i class="ti ti-info-circle"></i></button></span></div><input type="number" id="msgsPerSale" value="17" min="1" step="1"></div>
+      <div class="f"><div class="flabel"><span id="lMsgCost">Costo por mensaje (S/.)</span><span class="tip-wrap"><button class="tip-btn" data-tip="¿Cuánto pagas por cada persona que te contacta? Definir este límite te ayuda a saber si tu publicidad es rentable."><i class="ti ti-info-circle"></i></button></span></div><input type="number" id="msgCost" value="0.80" min="0" step="0.01"></div>
     </div>
     <div style="background:#F4FAF7;border:.5px solid #C3E8DA;border-radius:10px;padding:.75rem .9rem;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto">
       <div>
@@ -152,7 +157,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f0ec;min-heigh
         <div style="font-size:9px;color:#1D9E75;margin-top:1px" id="previewConvSub">—</div>
       </div>
       <div>
-        <div style="font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:#0F6E56;margin-bottom:3px">CAC estimado</div>
+        <div style="font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:#0F6E56;margin-bottom:3px;display:flex;align-items:center;gap:4px">CAC estimado<span class="tip-wrap"><button class="tip-btn" style="width:13px;height:13px" data-tip="El CAC (Costo de Adquisición de Cliente) es cuánto te cuesta conseguir un solo comprador. Si este número es mayor a tu ganancia por venta, estás perdiendo dinero en cada cliente que consigues."><i class="ti ti-info-circle" style="font-size:9px"></i></button></span></div>
         <div style="font-size:18px;font-weight:600;color:#085041" id="previewCac">—</div>
         <div style="font-size:9px;color:#1D9E75;margin-top:1px">por cliente nuevo</div>
       </div>
@@ -178,16 +183,16 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f0ec;min-heigh
 <div style="margin-top:.9rem">
   <div class="rlabel"><i class="ti ti-chart-pie" style="font-size:13px"></i>Resultados</div>
   <div class="top3">
-    <div class="mc-big green"><div class="bicon"><i class="ti ti-trending-up"></i></div><div class="blrow"><div class="bl">Ingresos brutos</div><span class="tip-wrap"><button class="tip-btn"><i class="ti ti-info-circle"></i></button><div class="tipbox left">Total que entra por ventas. Precio × unidades, antes de descontar cualquier costo.</div></span></div><div class="bv" id="rRevenue">—</div><div class="bs">ventas × precio</div></div>
-    <div class="mc-big red"><div class="bicon"><i class="ti ti-trending-down"></i></div><div class="blrow"><div class="bl">Egresos totales</div><span class="tip-wrap"><button class="tip-btn"><i class="ti ti-info-circle"></i></button><div class="tipbox left">Todo lo que gastas: producto, publicidad, vendedor y costos fijos.</div></span></div><div class="bv" id="rEgresos">—</div><div class="bs">Todos los costos incl. publicidad</div></div>
-    <div class="mc-big purple"><div class="bicon"><i class="ti ti-speakerphone"></i></div><div class="blrow"><div class="bl">Inv. publicitaria</div><span class="tip-wrap"><button class="tip-btn"><i class="ti ti-info-circle"></i></button><div class="tipbox left">Cuánto gastas para conseguir clientes: mensajes × costo × unidades.</div></span></div><div class="bv" id="rMsgInv">—</div><div class="bs">costo de contacto</div></div>
+    <div class="mc-big green"><div class="bicon"><i class="ti ti-trending-up"></i></div><div class="blrow"><div class="bl">Ingresos brutos</div><span class="tip-wrap"><button class="tip-btn" data-tip="Total de dinero que entra por tus ventas. Precio × unidades vendidas, antes de descontar cualquier costo."><i class="ti ti-info-circle"></i></button><div class="tipbox left">Total que entra por ventas. Precio × unidades, antes de descontar cualquier costo.</div></span></div><div class="bv" id="rRevenue">—</div><div class="bs">ventas × precio</div></div>
+    <div class="mc-big red"><div class="bicon"><i class="ti ti-trending-down"></i></div><div class="blrow"><div class="bl">Egresos totales</div><span class="tip-wrap"><button class="tip-btn" data-tip="Todo lo que gastas para vender: producto, publicidad, vendedor y costos fijos. Si supera tus ingresos, estás perdiendo dinero."><i class="ti ti-info-circle"></i></button><div class="tipbox left">Todo lo que gastas: producto, publicidad, vendedor y costos fijos.</div></span></div><div class="bv" id="rEgresos">—</div><div class="bs">Todos los costos incl. publicidad</div></div>
+    <div class="mc-big purple"><div class="bicon"><i class="ti ti-speakerphone"></i></div><div class="blrow"><div class="bl">Inv. publicitaria</div><span class="tip-wrap"><button class="tip-btn" data-tip="Cuánto gastas en total para conseguir tus clientes: mensajes × costo por mensaje × unidades vendidas."><i class="ti ti-info-circle"></i></button><div class="tipbox left">Cuánto gastas para conseguir clientes: mensajes × costo × unidades.</div></span></div><div class="bv" id="rMsgInv">—</div><div class="bs">costo de contacto</div></div>
   </div>
   <div class="rg">
-    <div class="mc red2"><div class="mc-lrow"><div class="ml">Costo producto</div><span class="tip-wrap"><button class="tip-btn"><i class="ti ti-info-circle"></i></button><div class="tipbox">Costo de fabricar o comprar todos los productos del mes. Costo unitario × unidades a vender.</div></span></div><div class="mv" id="rTotalCogs">—</div><div class="ms" id="rTotalCogsSub">—</div></div>
-    <div class="mc slate"><div class="mc-lrow"><div class="ml">Costo vendedor</div><span class="tip-wrap"><button class="tip-btn"><i class="ti ti-info-circle"></i></button><div class="tipbox">Lo que pagas a tu equipo de ventas. Un sueldo fijo existe aunque no vendas nada.</div></span></div><div class="mv" id="rOpCost">—</div><div class="ms" id="rOpCostSub">—</div></div>
+    <div class="mc red2"><div class="mc-lrow"><div class="ml">Costo producto</div><span class="tip-wrap"><button class="tip-btn" data-tip="Costo de fabricar o comprar todos los productos del mes. Costo unitario × unidades a vender."><i class="ti ti-info-circle"></i></button></span></div><div class="mv" id="rTotalCogs">—</div><div class="ms" id="rTotalCogsSub">—</div></div>
+    <div class="mc slate"><div class="mc-lrow"><div class="ml">Costo vendedor</div><span class="tip-wrap"><button class="tip-btn" data-tip="Lo que pagas a tu equipo de ventas. Un sueldo fijo existe aunque no vendas nada."><i class="ti ti-info-circle"></i></button></span></div><div class="mv" id="rOpCost">—</div><div class="ms" id="rOpCostSub">—</div></div>
   </div>
   <div class="rg" id="taxRow" style="display:none">
-    <div class="mc amber"><div class="mc-lrow"><div class="ml" id="taxLbl">Impuesto</div><span class="tip-wrap"><button class="tip-btn"><i class="ti ti-info-circle"></i></button><div class="tipbox">Impuesto sobre tus ventas, calculado incluido dentro del precio (forma estándar en la mayoría de países).</div></span></div><div class="mv" id="rTax">—</div><div class="ms">incluido en precio</div></div>
+    <div class="mc amber"><div class="mc-lrow"><div class="ml" id="taxLbl">Impuesto</div><span class="tip-wrap"><button class="tip-btn" data-tip="Impuesto sobre tus ventas, calculado incluido dentro del precio (forma estándar en la mayoría de países)."><i class="ti ti-info-circle"></i></button></span></div><div class="mv" id="rTax">—</div><div class="ms">incluido en precio</div></div>
   </div>
   <div class="final win" id="finalCard">
     <div class="ficon"><i id="finalIcon" class="ti ti-trending-up"></i></div>
@@ -199,17 +204,54 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f0ec;min-heigh
 </div>
 
 <script>
-// Tooltip simple: toggle clase .on, CSS hace el resto
-document.querySelectorAll('.tip-btn').forEach(btn=>{
-  btn.addEventListener('click',e=>{
-    e.stopPropagation();
-    const isOn=btn.classList.contains('on');
-    document.querySelectorAll('.tip-btn.on').forEach(b=>b.classList.remove('on'));
-    if(!isOn) btn.classList.add('on');
+// TOOLTIP GLOBAL - simple y robusto
+(function(){
+  var tip=document.getElementById('tooltip-global');
+  var hideTimer=null;
+
+  function show(btn){
+    clearTimeout(hideTimer);
+    var text=btn.getAttribute('data-tip');
+    if(!text)return;
+    tip.textContent=text;
+    tip.style.display='block';
+    // Posicionar relativo al botón
+    var br=btn.getBoundingClientRect();
+    var tw=250;
+    tip.style.width=tw+'px';
+    var th=tip.offsetHeight||80;
+    // Centro horizontal del botón, arriba
+    var left=br.left+(br.width/2)-(tw/2);
+    var top=br.top-th-10;
+    // Si se sale por arriba, va abajo
+    if(top<5) top=br.bottom+10;
+    // No salirse por lados
+    if(left<5) left=5;
+    if(left+tw>window.innerWidth-5) left=window.innerWidth-tw-5;
+    tip.style.left=left+'px';
+    tip.style.top=top+'px';
+  }
+
+  function hide(){
+    hideTimer=setTimeout(function(){tip.style.display='none';},150);
+  }
+
+  document.querySelectorAll('.tip-btn').forEach(function(btn){
+    btn.addEventListener('mouseenter',function(){show(btn);});
+    btn.addEventListener('mouseleave',function(){hide();});
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      if(tip.style.display==='block'&&tip._lastBtn===btn){
+        tip.style.display='none';tip._lastBtn=null;
+      } else {
+        show(btn);tip._lastBtn=btn;
+      }
+    });
   });
-});
-document.addEventListener('click',()=>document.querySelectorAll('.tip-btn.on').forEach(b=>b.classList.remove('on')));
-document.addEventListener('touchstart',e=>{if(!e.target.closest('.tip-btn'))document.querySelectorAll('.tip-btn.on').forEach(b=>b.classList.remove('on'));},{passive:true});
+  tip.addEventListener('mouseenter',function(){clearTimeout(hideTimer);});
+  tip.addEventListener('mouseleave',function(){hide();});
+  document.addEventListener('click',function(){tip.style.display='none';});
+})();
 
 const CURR={PEN:{s:'S/.',f:'🇵🇪',l:'es-PE',d:2},USD:{s:'$',f:'🇺🇸',l:'en-US',d:2},COP:{s:'$',f:'🇨🇴',l:'es-CO',d:0},MXN:{s:'$',f:'🇲🇽',l:'es-MX',d:2},ARS:{s:'$',f:'🇦🇷',l:'es-AR',d:2},CLP:{s:'$',f:'🇨🇱',l:'es-CL',d:0},BOB:{s:'Bs.',f:'🇧🇴',l:'es-BO',d:2},PYG:{s:'₲',f:'🇵🇾',l:'es-PY',d:0},UYU:{s:'$U',f:'🇺🇾',l:'es-UY',d:2},VES:{s:'Bs.',f:'🇻🇪',l:'es-VE',d:2},GTQ:{s:'Q',f:'🇬🇹',l:'es-GT',d:2},HNL:{s:'L',f:'🇭🇳',l:'es-HN',d:2},NIO:{s:'C$',f:'🇳🇮',l:'es-NI',d:2},CRC:{s:'₡',f:'🇨🇷',l:'es-CR',d:0},DOP:{s:'RD$',f:'🇩🇴',l:'es-DO',d:2},EUR:{s:'€',f:'🇪🇸',l:'es-ES',d:2}};
 let cc='PEN',taxMode='none',sellerMode='fixed',extraId=0;
