@@ -3,314 +3,384 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora de Presupuesto — Zetup Academy</title>
+<title>Califika - Home</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,-apple-system,sans-serif;background:#f0f0ec;min-height:100vh;padding:2rem 1.25rem}
-.app{max-width:860px;margin:0 auto}
-.hero{background:#085041;border-radius:14px;padding:1.2rem 1.5rem;margin-bottom:.9rem;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.hero-icon{width:46px;height:46px;background:#0F6E56;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.hero-icon i{font-size:24px;color:#5DCAA5}
-.hero-titles{flex:1}
-.hero-title{font-size:18px;font-weight:600;color:#E1F5EE}
-.hero-sub{font-size:12px;color:#5DCAA5;margin-top:2px}
-.cpill{display:flex;align-items:center;gap:7px;background:#0F6E56;border-radius:10px;padding:6px 10px}
-.cpill select{background:transparent;border:none;color:#9FE1CB;font-size:12px;font-weight:500;cursor:pointer;outline:none}
-.cpill select option{background:#085041;color:#E1F5EE}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:.7rem}
-@media(max-width:560px){.grid2{grid-template-columns:1fr}}
-.card{background:#fff;border:.5px solid #ddddd5;border-radius:14px;padding:1rem 1.15rem}
-.card-head{display:flex;align-items:center;gap:8px;margin-bottom:.85rem}
-.snum{width:24px;height:24px;border-radius:50%;background:#E1F5EE;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#085041;flex-shrink:0}
-.stitle{font-size:15px;font-weight:600;color:#1a1a18}
-.sicon{font-size:16px;color:#1D9E75;margin-left:auto}
-.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:9px}
-.f{display:flex;flex-direction:column;gap:3px}
-.f input{width:100%;padding:6px 9px;border:.5px solid #d3d1c7;border-radius:8px;font-size:14px;color:#1a1a18;background:#fff;outline:none;transition:border-color .15s,box-shadow .15s;font-family:inherit}
-.f input:focus{border-color:#1D9E75;box-shadow:0 0 0 3px #E1F5EE}
-.flabel{display:flex;align-items:center;gap:5px;font-size:12px;color:#888780}
-.divider{border:none;border-top:.5px solid #ddddd5;margin:10px 0}
-
-
-
-
-.tipbox{display:none;position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 8px);z-index:9999;background:#085041;color:#E1F5EE;font-size:13px;line-height:1.65;padding:13px 15px;border-radius:12px;width:250px;max-width:80vw;white-space:normal;box-shadow:0 4px 16px rgba(0,0,0,.25)}
-.tipbox::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#085041}
-.tip-wrap:hover .tipbox,.tip-btn.on+.tipbox{display:block !important}
-.tipbox.left{left:auto;right:20px}
-.seg{display:flex;border:.5px solid #d3d1c7;border-radius:10px;overflow:hidden;flex-wrap:wrap}
-.seg button{padding:6px 12px;font-size:12px;background:transparent;border:none;cursor:pointer;color:#888780;transition:all .12s;white-space:nowrap;line-height:1.5;font-family:inherit}
-.seg button.on{background:#0F6E56;color:#E1F5EE;font-weight:500}
-.seg button:hover:not(.on){background:#f0f0ec}
-.trow{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
-.tpct{display:flex;align-items:center;gap:6px;font-size:12px;color:#888780}
-.tpct input{width:72px;padding:6px 8px;border:.5px solid #d3d1c7;border-radius:8px;font-size:14px;color:#1a1a18;background:#fff;outline:none;font-family:inherit}
-.tpct input:focus{border-color:#1D9E75;box-shadow:0 0 0 3px #E1F5EE}
-.hint{font-size:11px;color:#b4b2a9;margin-top:2px}
-.sx{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:9px;margin-top:10px}
-.extra-row{display:grid;grid-template-columns:1fr 90px 28px;gap:7px;align-items:center;margin-bottom:7px}
-.extra-row input[type=text]{padding:5px 8px;border:.5px solid #d3d1c7;border-radius:8px;font-size:12px;color:#1a1a18;background:#fff;outline:none;font-family:inherit;width:100%}
-.extra-row input[type=text]:focus{border-color:#1D9E75}
-.extra-row input[type=number]{width:100%;padding:5px 8px;border:.5px solid #d3d1c7;border-radius:8px;font-size:12px;color:#1a1a18;background:#fff;outline:none;font-family:inherit}
-.extra-row input[type=number]:focus{border-color:#1D9E75}
-.del-btn{width:26px;height:26px;border-radius:8px;background:#FCEBEB;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#A32D2D;font-size:13px;flex-shrink:0}
-.del-btn:hover{background:#F09595}
-.add-btn{display:flex;align-items:center;gap:5px;font-size:11px;color:#1D9E75;background:#E1F5EE;border:none;border-radius:8px;padding:5px 10px;cursor:pointer;font-weight:500;margin-top:3px}
-.add-btn:hover{background:#C3E8DA}
-.add-btn i{font-size:13px}
-.extra-total{font-size:11px;color:#888780;margin-top:5px}
-.rlabel{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#888780;margin-bottom:10px;display:flex;align-items:center;gap:5px}
-.top3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-bottom:9px;overflow:visible}
-@media(max-width:520px){.top3{grid-template-columns:1fr 1fr}}
-.mc-big{border-radius:14px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:5px;position:relative;overflow:visible}
-.mc-big.green{background:#2D7D2A;border:.5px solid #3B9C38}
-.mc-big.red{background:#C0392B;border:.5px solid #E74C3C}
-.mc-big.purple{background:#534AB7;border:.5px solid #7B72D8}
-.mc-big .bicon{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;margin-bottom:3px}
-.mc-big .bicon i{font-size:15px;color:rgba(255,255,255,.95)}
-.mc-big .blrow{display:flex;align-items:center;gap:5px}
-.mc-big .bl{font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.7)}
-.mc-big .bv{font-size:19px;font-weight:600;color:#fff;line-height:1.2}
-.mc-big .bs{font-size:9px;color:rgba(255,255,255,.6);margin-top:1px}
-.mc-big .tip-btn{background:rgba(255,255,255,.2);width:14px;height:14px}
-.mc-big .tip-btn i{color:rgba(255,255,255,.85);font-size:9px}
-.mc-big .tip-btn:hover,.mc-big .tip-btn.on{background:rgba(255,255,255,.4)}
-.mc-big .tip-btn:hover i,.mc-big .tip-btn.on i{color:#fff}
-.rg{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:9px;overflow:visible}
-
-.mc{border-radius:12px;padding:.8rem .9rem;position:relative;transition:transform .1s;overflow:visible}
-.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:12px 12px 0 0}
-.mc:hover{transform:translateY(-2px)}
-.mc-lrow{display:flex;align-items:center;gap:4px;margin-bottom:4px}
-.mc .ml{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
-.mc .mv{font-size:16px;font-weight:600;line-height:1.2}
-.mc .ms{font-size:9px;margin-top:2px}
-.mc.teal{background:#E1F5EE;border:.5px solid #5DCAA5}.mc.teal::before{background:#0F6E56}
-.mc.teal .ml{color:#0F6E56}.mc.teal .mv{color:#085041}.mc.teal .ms{color:#1D9E75}
-.mc.sky{background:#E0F2FE;border:.5px solid #7DD3FC}.mc.sky::before{background:#0369A1}
-.mc.sky .ml{color:#075985}.mc.sky .mv{color:#0C4A6E}.mc.sky .ms{color:#0284C7}
-.mc.red2{background:#FCEBEB;border:.5px solid #F09595}.mc.red2::before{background:#A32D2D}
-.mc.red2 .ml{color:#A32D2D}.mc.red2 .mv{color:#791F1F}.mc.red2 .ms{color:#E24B4A}
-.mc.slate{background:#F1F5F9;border:.5px solid #94A3B8}.mc.slate::before{background:#475569}
-.mc.slate .ml{color:#334155}.mc.slate .mv{color:#1E293B}.mc.slate .ms{color:#64748B}
-.mc.amber{background:#FAEEDA;border:.5px solid #EF9F27}.mc.amber::before{background:#854F0B}
-.mc.amber .ml{color:#854F0B}.mc.amber .mv{color:#633806}.mc.amber .ms{color:#BA7517}
-.final{border-radius:14px;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:14px;margin-top:.7rem;border:.5px solid #ddddd5}
-.final.win{background:#EAF3DE;border-color:#97C459}
-.final.lose{background:#FCEBEB;border-color:#F09595}
-.final.even{background:#FAEEDA;border-color:#EF9F27}
-.ficon{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.final.win .ficon{background:#3B9C38}.final.lose .ficon{background:#C0392B}.final.even .ficon{background:#E67E22}
-.ficon i{font-size:22px;color:#fff}
-.fbody{flex:1;min-width:0}
-.ftag{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase}
-.final.win .ftag{color:#3B6D11}.final.lose .ftag{color:#A32D2D}.final.even .ftag{color:#854F0B}
-.famt{font-size:26px;font-weight:700;line-height:1.2}
-.final.win .famt{color:#27500A}.final.lose .famt{color:#791F1F}.final.even .famt{color:#633806}
-.fdesc{font-size:11px;margin-top:2px}
-.final.win .fdesc{color:#3B6D11}.final.lose .fdesc{color:#A32D2D}.final.even .fdesc{color:#854F0B}
-.byline{text-align:center;margin-top:1.5rem;padding-top:1.25rem;border-top:.5px solid #ddddd5}
-.byline-name{font-size:14px;font-weight:600;color:#5F5E5A}
-.byline-url{font-size:12px;color:#1D9E75;margin-top:3px}
-.tip-wrap{position:relative;display:inline-flex;align-items:center;flex-shrink:0}
-.tip-btn{width:16px;height:16px;border-radius:50%;background:#C3E8DA;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0;flex-shrink:0;vertical-align:middle}
-.tip-btn i{font-size:10px;color:#0F6E56;pointer-events:none}
-#tooltip-global{display:none;position:fixed;background:#085041;color:#fff;font-size:13px;line-height:1.6;padding:13px 15px;border-radius:12px;width:250px;max-width:80vw;white-space:normal;box-shadow:0 6px 24px rgba(0,0,0,.3);z-index:99999;pointer-events:none}
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;color-scheme:light;background:#CCC;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+  .ck{font-family:'DM Sans',sans-serif;color-scheme:light;}
+  .wrap{background:#EEECEA;border-radius:44px;padding:10px;max-width:360px;margin:0 auto;position:relative;}
+  .phone{background:#FAFAF8;border-radius:40px;overflow:hidden;max-width:340px;margin:0 auto;border:1px solid #E4E2DC;color-scheme:light;}
+  .status-bar{padding:14px 22px 6px;display:flex;justify-content:space-between;align-items:center;background:#FAFAF8;}
+  .status-bar span{font-size:12px;font-weight:700;color:#1C1C1C;}
+  .status-bar div{display:flex;gap:5px;}
+  .status-bar i{font-size:12px;color:#1C1C1C;}
+  .topbar{padding:8px 20px 12px;display:flex;justify-content:space-between;align-items:center;background:#FAFAF8;}
+  .logo{font-family:'DM Serif Display',serif;font-size:26px;color:#1C1C1C;letter-spacing:-0.5px;}
+  .logo em{color:#D94F2B;font-style:normal;}
+  .topbar-right{display:flex;gap:8px;align-items:center;}
+  .icon-pill{height:34px;padding:0 11px;border-radius:20px;background:#EEECEA;border:none;display:flex;align-items:center;gap:5px;cursor:pointer;}
+  .icon-pill i{font-size:14px;color:#666;}
+  .icon-pill span{font-size:12px;font-weight:600;color:#444;}
+  .notif-btn{width:34px;height:34px;border-radius:50%;background:#EEECEA;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;flex-shrink:0;transition:background 0.2s;}
+  .notif-btn i{font-size:17px;color:#555;transition:color 0.2s;}
+  .notif-btn.active{background:#FEF5F2;}
+  .notif-btn.active i{color:#D94F2B;}
+  .notif-dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:#D94F2B;border:1.5px solid #FAFAF8;}
+  .av-wrap{position:relative;cursor:pointer;flex-shrink:0;}
+  .av{width:34px;height:34px;border-radius:50%;background:#D94F2B;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;overflow:hidden;}
+  .av-edit-badge{position:absolute;bottom:-2px;right:-2px;width:14px;height:14px;border-radius:50%;background:#D94F2B;border:1.5px solid #FAFAF8;display:flex;align-items:center;justify-content:center;}
+  .av-edit-badge i{font-size:8px;color:#fff;}
+  .notif-popup{display:none;position:absolute;top:108px;right:10px;width:268px;background:#fff;border-radius:20px;border:1px solid #E4E2DC;box-shadow:0 12px 40px rgba(0,0,0,0.13);z-index:200;overflow:hidden;}
+  .notif-popup.open{display:block;}
+  .notif-popup-hdr{padding:11px 14px 9px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #F0EEE8;}
+  .notif-popup-hdr b{font-size:13px;font-weight:700;color:#1C1C1C;}
+  .notif-popup-hdr span{font-size:11px;color:#D94F2B;font-weight:600;cursor:pointer;}
+  .notif-item{padding:10px 13px;display:flex;gap:9px;align-items:flex-start;border-bottom:1px solid #F4F2EE;cursor:pointer;}
+  .notif-item:last-child{border:none;}
+  .notif-item.unread{background:#FEF9F7;}
+  .notif-ico{width:34px;height:34px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .notif-ico i{font-size:16px;}
+  .notif-txt{flex:1;min-width:0;}
+  .notif-txt p{font-size:11px;color:#333;font-weight:500;line-height:1.4;margin-bottom:2px;}
+  .notif-txt p strong{font-weight:700;color:#1C1C1C;}
+  .notif-txt time{font-size:10px;color:#BBB;font-weight:600;}
+  .notif-dot-item{width:7px;height:7px;border-radius:50%;background:#D94F2B;flex-shrink:0;margin-top:3px;}
+  .photo-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,0.45);z-index:300;border-radius:40px;align-items:flex-end;justify-content:center;}
+  .photo-overlay.open{display:flex;}
+  .photo-sheet{background:#fff;border-radius:24px 24px 0 0;padding:20px 16px 24px;width:100%;}
+  .photo-sheet-title{font-size:15px;font-weight:700;color:#1C1C1C;margin-bottom:16px;text-align:center;}
+  .photo-options{display:flex;gap:12px;justify-content:center;margin-bottom:14px;}
+  .photo-opt{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;}
+  .photo-opt-ico{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;}
+  .photo-opt span{font-size:11px;font-weight:600;color:#555;}
+  .photo-avatars{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:14px;}
+  .photo-av-opt{width:46px;height:46px;border-radius:50%;cursor:pointer;border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;}
+  .photo-av-opt.selected{border-color:#D94F2B;}
+  .photo-cancel{width:100%;padding:12px;border-radius:14px;border:none;background:#EEECEA;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#555;cursor:pointer;}
+  .img-popup-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,0.75);z-index:400;border-radius:40px;align-items:center;justify-content:center;padding:20px;}
+  .img-popup-overlay.open{display:flex;}
+  .img-popup{background:#1C1C2E;border-radius:22px;overflow:hidden;width:100%;max-width:290px;}
+  .img-popup-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:rgba(255,255,255,0.05);}
+  .img-popup-user{display:flex;align-items:center;gap:8px;}
+  .img-popup-av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;}
+  .img-popup-name{font-size:12px;font-weight:700;color:#fff;}
+  .img-popup-close{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .img-popup-close i{font-size:15px;color:#fff;}
+  .img-popup-img{width:100%;height:200px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+  .img-popup-img i{font-size:80px;opacity:0.2;position:absolute;color:#fff;}
+  .img-popup-caption{padding:12px 14px 16px;background:rgba(255,255,255,0.04);}
+  .img-popup-caption p{font-size:12px;color:rgba(255,255,255,0.8);line-height:1.5;font-weight:500;}
+  .img-popup-caption .img-tag{display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.5);}
+  .img-popup-caption .img-tag i{font-size:12px;}
+  .ver-contenido{display:flex;align-items:center;gap:6px;padding:9px 12px;background:#F4F2EE;border-radius:12px;cursor:pointer;margin-bottom:10px;border:1px dashed #D0CDC7;}
+  .ver-contenido i{font-size:16px;color:#888;}
+  .ver-contenido span{font-size:12px;font-weight:700;color:#666;}
+  .ver-contenido .vc-badge{margin-left:auto;background:#EEECEA;border-radius:8px;padding:2px 7px;font-size:10px;font-weight:700;color:#888;}
+  .city-dd{display:none;margin:0 16px 12px;background:#FAFAF8;border:1px solid #E8E5DF;border-radius:16px;overflow:hidden;}
+  .city-dd.open{display:block;}
+  .city-search{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid #EEECEA;}
+  .city-search i{font-size:15px;color:#CCC;flex-shrink:0;}
+  .city-search input{flex:1;border:none;outline:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:13px;color:#1C1C1C;}
+  .city-search input::placeholder{color:#CCC;}
+  .city-list{max-height:150px;overflow-y:auto;}
+  .city-opt{padding:10px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;border-bottom:1px solid #F4F2EE;font-size:13px;font-weight:600;color:#333;}
+  .city-opt:last-child{border:none;}
+  .city-opt i{font-size:14px;color:#D94F2B;flex-shrink:0;}
+  .city-opt.sel{background:#FEF5F2;color:#D94F2B;}
+  .city-opt.hidden{display:none;}
+  .search-wrap{padding:0 16px 4px;}
+  .search-box{display:flex;align-items:center;gap:10px;background:#FFFFFF;border:1.5px solid #E0DDD7;border-radius:16px;padding:0 16px;height:48px;}
+  .search-box i{color:#CCCCCC;font-size:18px;flex-shrink:0;}
+  .search-fake{flex:1;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:#CCCCCC;min-width:0;white-space:nowrap;overflow:hidden;outline:none;}
+  .cats-wrap{padding:12px 16px 4px;}
+  .cats-row{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;margin-bottom:7px;}
+  .cats-row::-webkit-scrollbar{display:none;}
+  .qbtn{display:flex;align-items:center;gap:6px;padding:8px 13px;border-radius:20px;border:1.5px solid #E0DDD7;background:#FFFFFF;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:#555;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+  .qbtn i{font-size:14px;color:#AAAAAA;}
+  .qbtn.active{background:#FEF5F2;border-color:#D94F2B;color:#D94F2B;}
+  .qbtn.active i{color:#D94F2B;}
+  .sec{padding:0 16px 16px;background:#FAFAF8;}
+  .sec-hdr{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;margin-top:14px;}
+  .sec-title{font-size:16px;font-weight:700;color:#1C1C1C;}
+  .sec-link{font-size:12px;font-weight:600;color:#D94F2B;}
+  .cards-scroll{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;}
+  .cards-scroll::-webkit-scrollbar{display:none;}
+  .card{background:#FFFFFF;border-radius:20px;min-width:148px;max-width:148px;flex-shrink:0;border:1px solid #EEEAE4;overflow:hidden;}
+  .card-cover{height:86px;display:flex;align-items:center;justify-content:center;}
+  .card-cover i{font-size:28px;}
+  .card-body{padding:10px 12px 12px;background:#FFFFFF;}
+  .card-name{font-size:13px;font-weight:700;color:#1C1C1C;margin-bottom:2px;}
+  .card-dist{font-size:10px;color:#BBBBBB;font-weight:600;margin-bottom:8px;}
+  .card-rating{display:flex;align-items:center;gap:2px;}
+  .card-rating i{font-size:10px;color:#E8A020;}
+  .card-rating span{font-size:12px;font-weight:700;color:#E8A020;margin-left:3px;}
+  .card-reviews{font-size:10px;color:#CCCCCC;font-weight:600;margin-top:2px;}
+  .divider{height:8px;background:#EEECEA;}
+  .feed-item{background:#FFFFFF;border-radius:18px;padding:14px;margin:12px 16px;border:1px solid #EEEAE4;}
+  .feed-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .feed-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;}
+  .feed-user{flex:1;}
+  .feed-name{font-size:13px;font-weight:700;color:#1C1C1C;}
+  .feed-time{font-size:11px;color:#BBBBBB;}
+  .feed-badge{padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;}
+  .badge-poll{background:#EEF2FF;color:#3B6FD4;}
+  .feed-text{font-size:13px;color:#333;line-height:1.5;font-weight:500;margin-bottom:10px;}
+  .feed-text strong{color:#1C1C1C;font-weight:700;}
+  .feed-poll{background:#F8F7F4;border-radius:12px;overflow:hidden;margin-bottom:10px;}
+  .poll-opt{padding:10px 14px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600;color:#444;position:relative;cursor:pointer;border-bottom:1px solid #EEEAE4;}
+  .poll-opt:last-child{border:none;}
+  .poll-opt.voted-opt{background:#F0F4FF;}
+  .poll-bar{position:absolute;left:0;top:0;height:100%;border-radius:12px;opacity:0.15;transition:width 0.4s ease;}
+  .poll-label{position:relative;z-index:1;}
+  .poll-pct{position:relative;z-index:1;font-weight:700;color:#1C1C1C;}
+  .vote-badge{display:inline-flex;align-items:center;gap:4px;margin-bottom:8px;font-size:11px;font-weight:700;color:#3B6FD4;background:#EEF2FF;padding:3px 8px;border-radius:8px;}
+  .vote-badge i{font-size:12px;}
+  .feed-top-card{background:#FFF8E6;border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .feed-top-card i{font-size:22px;color:#D4A017;}
+  .feed-top-info{flex:1;}
+  .feed-top-name{font-size:13px;font-weight:700;color:#1C1C1C;}
+  .feed-top-sub{font-size:11px;color:#BBBBBB;font-weight:600;}
+  .feed-top-score{font-size:20px;font-weight:700;color:#D4A017;}
+  .feed-foot{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid #F4F2EE;}
+  .feed-action{display:flex;align-items:center;gap:4px;font-size:11px;color:#BBBBBB;font-weight:600;cursor:pointer;}
+  .feed-action i{font-size:15px;}
+  .feed-action.liked i,.feed-action.liked span{color:#D94F2B;}
+  .feed-action.saved i,.feed-action.saved span{color:#D94F2B;}
+  .navbar{background:#FFFFFF;border-top:1px solid #EEEAE4;padding:10px 0 18px;display:flex;justify-content:space-around;align-items:center;}
+  .nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;}
+  .nav-item i{font-size:22px;color:#CCCCCC;}
+  .nav-item.active i{color:#D94F2B;}
+  .nav-lbl{font-size:10px;color:#CCCCCC;font-weight:600;font-family:'DM Sans',sans-serif;}
+  .nav-item.active .nav-lbl{color:#D94F2B;}
+  .fab{width:48px;height:48px;border-radius:50%;background:#D94F2B;display:flex;align-items:center;justify-content:center;margin-top:-20px;border:3px solid #FAFAF8;}
+  .fab i{color:#fff;font-size:22px;}
+  .toast{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:#1C1C1C;color:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:8px 16px;border-radius:20px;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;z-index:500;}
+  .toast.show{opacity:1;}
 </style>
 </head>
 <body>
-<div id="tooltip-global"></div>
-<div class="app">
+<div class="ck">
+<div class="wrap">
 
-<div class="hero">
-  <div class="hero-icon"><i class="ti ti-chart-bar"></i></div>
-  <div class="hero-titles">
-    <div class="hero-title">Calculadora de presupuesto <span class="tip-wrap" style="vertical-align:middle"><button class="tip-btn" style="background:#0F6E56" data-tip="Muchos negocios creen que son rentables… hasta que revisan sus números. Esta calculadora te ayuda a ver con claridad si realmente estás ganando dinero o solo trabajas para cubrir gastos."><i class="ti ti-info-circle" style="color:#9FE1CB;font-size:10px"></i></button></span></div>
-    <div class="hero-sub">CAC · Rentabilidad · Costos operativos</div>
+  <!-- POPUP NOTIFICACIONES -->
+  <div class="notif-popup" id="notifPopup">
+    <div class="notif-popup-hdr"><b>Notificaciones</b><span onclick="markAllRead()">Marcar leído</span></div>
+    <div class="notif-item unread"><div class="notif-ico" style="background:#FFF8E6;"><i class="ti ti-book" style="color:#D4A017;"></i></div><div class="notif-txt"><p><strong>Libro de negocios</strong> — Este es el libro de negocios mejor calificado de la semana.</p><time>hace 5 min</time></div><div class="notif-dot-item"></div></div>
+    <div class="notif-item unread"><div class="notif-ico" style="background:#EEF2FF;"><i class="ti ti-trending-up" style="color:#3B6FD4;"></i></div><div class="notif-txt"><p><strong>Dune: Parte Dos</strong> que califkaste subió al Top 1 esta semana.</p><time>hace 3 horas</time></div><div class="notif-dot-item"></div></div>
+    <div class="notif-item"><div class="notif-ico" style="background:#FEF5F2;"><i class="ti ti-heart" style="color:#D94F2B;"></i></div><div class="notif-txt"><p><strong>María Alvarado</strong> le dio like a tu comentario.</p><time>hace 1 hora</time></div></div>
   </div>
-  <div class="cpill"><span id="cFlag">🇵🇪</span><select id="currencySelect" onchange="setCurrency()"><option value="PEN">Sol peruano S/.</option><option value="USD">Dólar USD $</option><option value="COP">Peso COP</option><option value="MXN">Peso MXN</option><option value="ARS">Peso ARS</option><option value="CLP">Peso CLP</option><option value="BOB">Boliviano Bs.</option><option value="PYG">Guaraní ₲</option><option value="UYU">Peso UYU</option><option value="VES">Bolívar Bs.</option><option value="GTQ">Quetzal Q</option><option value="HNL">Lempira L</option><option value="NIO">Córdoba C$</option><option value="CRC">Colón ₡</option><option value="DOP">Peso RD$</option><option value="EUR">Euro €</option></select></div>
-</div>
 
-<div class="grid2">
-  <div class="card">
-    <div class="card-head"><div class="snum">1</div><div class="stitle">Producto o servicio</div><i class="ti ti-package sicon"></i></div>
-    <div class="fg">
-      <div class="f"><div class="flabel"><span id="lPrice">Precio de venta (S/.)</span></div><input type="number" id="price" value="500" min="0" step="1"></div>
-      <div class="f"><div class="flabel"><span id="lCogs">Costo del producto (S/.)</span><span class="tip-wrap"><button class="tip-btn" data-tip="Es lo que te cuesta producir o comprar tu producto. Ejemplo: vendes a $100 pero lo compras a $30 → tu costo es $30."><i class="ti ti-info-circle"></i></button></span></div><input type="number" id="cogs" value="150" min="0" step="1"></div>
-      <div class="f"><div class="flabel"><span>Unidades a vender</span><span class="tip-wrap"><button class="tip-btn" data-tip="Tu proyección de ventas del mes. Sé realista: no lo que desearías vender, sino lo que realmente puedes lograr."><i class="ti ti-info-circle"></i></button></span></div><input type="number" id="units" value="30" min="1" step="1"></div>
+  <!-- PHOTO PICKER -->
+  <div class="photo-overlay" id="photoOverlay">
+    <div class="photo-sheet">
+      <div class="photo-sheet-title">Cambiar foto de perfil</div>
+      <div class="photo-options">
+        <div class="photo-opt"><div class="photo-opt-ico" style="background:#FEF5F2;"><i class="ti ti-camera" style="color:#D94F2B;font-size:22px;"></i></div><span>Cámara</span></div>
+        <div class="photo-opt"><div class="photo-opt-ico" style="background:#EEF2FF;"><i class="ti ti-photo" style="color:#3B6FD4;font-size:22px;"></i></div><span>Galería</span></div>
+      </div>
+      <div style="font-size:11px;font-weight:700;color:#AAA;text-align:center;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;">O elige un color</div>
+      <div class="photo-avatars">
+        <div class="photo-av-opt selected" style="background:#D94F2B;" onclick="pickColor('#D94F2B')">DC</div>
+        <div class="photo-av-opt" style="background:#3B6FD4;" onclick="pickColor('#3B6FD4')">DC</div>
+        <div class="photo-av-opt" style="background:#2A9D70;" onclick="pickColor('#2A9D70')">DC</div>
+        <div class="photo-av-opt" style="background:#D4A017;" onclick="pickColor('#D4A017')">DC</div>
+        <div class="photo-av-opt" style="background:#9C59D1;" onclick="pickColor('#9C59D1')">DC</div>
+        <div class="photo-av-opt" style="background:#1C1C1C;" onclick="pickColor('#1C1C1C')">DC</div>
+      </div>
+      <button class="photo-cancel" onclick="closePhoto()">Cancelar</button>
     </div>
+  </div>
+
+  <!-- POPUP VER IMAGEN -->
+  <div class="img-popup-overlay" id="imgPopup" onclick="closeImgPopup(event)">
+    <div class="img-popup" id="imgPopupBox">
+      <div class="img-popup-header">
+        <div class="img-popup-user">
+          <div class="img-popup-av" id="imgPopupAv" style="background:#3B6FD4;">MA</div>
+          <span class="img-popup-name" id="imgPopupName">María Alvarado</span>
+        </div>
+        <div class="img-popup-close" onclick="closeImgPopupDirect()"><i class="ti ti-x"></i></div>
+      </div>
+      <div class="img-popup-img" id="imgPopupImg"></div>
+      <div class="img-popup-caption">
+        <p id="imgPopupCaption"></p>
+        <div class="img-tag"><i class="ti ti-map-pin"></i><span id="imgPopupTag"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phone">
+    <div class="status-bar"><span>9:41</span><div><i class="ti ti-signal-4g"></i><i class="ti ti-wifi"></i><i class="ti ti-battery"></i></div></div>
+
+    <div class="topbar">
+      <div class="logo">Califi<em>ka</em></div>
+      <div class="topbar-right">
+        <div class="icon-pill" onclick="toggleCity()"><i class="ti ti-map-pin"></i><span id="cityShort">Lima</span><i class="ti ti-chevron-down" id="cc"></i></div>
+        <div class="notif-btn" id="notifBtn" onclick="toggleNotif()"><i class="ti ti-bell"></i><div class="notif-dot" id="notifDot"></div></div>
+        <div class="av-wrap" onclick="openPhoto()"><div class="av" id="mainAv">DC</div><div class="av-edit-badge"><i class="ti ti-pencil"></i></div></div>
+      </div>
+    </div>
+
+    <div class="city-dd" id="cityDd">
+      <div class="city-search"><i class="ti ti-search"></i><input type="text" id="cityInput" placeholder="Busca tu ciudad..." oninput="filterCities(this.value)"/></div>
+      <div class="city-list">
+        <div class="city-opt sel" onclick="pick('Lima, Perú','Lima')" data-name="lima perú"><i class="ti ti-map-pin"></i>Lima, Perú</div>
+        <div class="city-opt" onclick="pick('Bogotá, Colombia','Bogotá')" data-name="bogotá colombia"><i class="ti ti-map-pin"></i>Bogotá, Colombia</div>
+        <div class="city-opt" onclick="pick('Ciudad de México','CDMX')" data-name="ciudad de méxico cdmx"><i class="ti ti-map-pin"></i>Ciudad de México</div>
+        <div class="city-opt" onclick="pick('Buenos Aires','Bs As')" data-name="buenos aires argentina"><i class="ti ti-map-pin"></i>Buenos Aires</div>
+        <div class="city-opt" onclick="pick('Santiago, Chile','Santiago')" data-name="santiago chile"><i class="ti ti-map-pin"></i>Santiago, Chile</div>
+        <div class="city-opt" onclick="pick('Moquegua, Perú','Moquegua')" data-name="moquegua perú"><i class="ti ti-map-pin"></i>Moquegua, Perú</div>
+      </div>
+    </div>
+
+    <div class="search-wrap">
+      <div class="search-box"><i class="ti ti-search"></i><div id="sf" contenteditable="true" class="search-fake">Busca restaurantes, servicios...</div></div>
+    </div>
+
+    <div class="cats-wrap">
+      <div class="cats-row">
+        <button class="qbtn active"><i class="ti ti-tools-kitchen-2"></i>Restaurantes</button>
+        <button class="qbtn"><i class="ti ti-bolt"></i>Servicios</button>
+        <button class="qbtn"><i class="ti ti-shopping-bag"></i>Productos</button>
+        <button class="qbtn"><i class="ti ti-map-pin"></i>Lugares</button>
+      </div>
+      <div class="cats-row">
+        <button class="qbtn"><i class="ti ti-building"></i>Empresas</button>
+        <button class="qbtn"><i class="ti ti-heart"></i>Salud</button>
+        <button class="qbtn"><i class="ti ti-device-mobile"></i>Tecnología</button>
+        <button class="qbtn"><i class="ti ti-school"></i>Educación</button>
+        <button class="qbtn"><i class="ti ti-plane"></i>Viajes</button>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hdr"><span class="sec-title">Destacados cerca de ti</span><span class="sec-link">Ver todos</span></div>
+      <div class="cards-scroll">
+        <div class="card"><div class="card-cover" style="background:#FEF5F2;"><i class="ti ti-tools-kitchen-2" style="color:#D94F2B;"></i></div><div class="card-body"><div class="card-name">La Italiana</div><div class="card-dist">Restaurante · 0.3 km</div><div class="card-rating"><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-half-filled"></i><span>4.5</span></div><div class="card-reviews">1.2k reseñas</div></div></div>
+        <div class="card"><div class="card-cover" style="background:#F0FAF5;"><i class="ti ti-tools-kitchen-2" style="color:#2A9D70;"></i></div><div class="card-body"><div class="card-name">Tokyo Fresh</div><div class="card-dist">Restaurante · 0.7 km</div><div class="card-rating"><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><span>4.9</span></div><div class="card-reviews">876 reseñas</div></div></div>
+        <div class="card"><div class="card-cover" style="background:#FEF9EE;"><i class="ti ti-tools-kitchen-2" style="color:#D4A017;"></i></div><div class="card-body"><div class="card-name">Taquería MX</div><div class="card-dist">Restaurante · 1.1 km</div><div class="card-rating"><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star"></i><span>4.1</span></div><div class="card-reviews">543 reseñas</div></div></div>
+      </div>
+    </div>
+
     <div class="divider"></div>
-    <div class="flabel" style="margin-bottom:8px"><span>Impuesto</span></div>
-    <div class="trow"><div class="seg"><button class="on" id="btn-none" onclick="setTax('none')">Sin impuesto</button><button id="btn-tax" onclick="setTax('tax')">Con impuesto</button></div><div class="tpct" id="taxPctWrap" style="display:none"><input type="number" id="taxPct" value="18" min="0" max="100" step="0.1" placeholder="18"><span>%</span></div></div>
-  </div>
-  <div class="card" style="display:flex;flex-direction:column;gap:0">
-    <div class="card-head"><div class="snum">2</div><div class="stitle">Costo publicitario</div><i class="ti ti-speakerphone sicon"></i></div>
-    <div class="fg" style="margin-bottom:12px">
-      <div class="f"><div class="flabel"><span>Mensajes para cerrar 1 venta</span><span class="tip-wrap"><button class="tip-btn" data-tip="No todos los que te contactan compran. ¿Cuántos mensajes necesitas para cerrar una venta? Si de cada 17 contactos 1 compra, coloca 17."><i class="ti ti-info-circle"></i></button></span></div><input type="number" id="msgsPerSale" value="17" min="1" step="1"></div>
-      <div class="f"><div class="flabel"><span id="lMsgCost">Costo por mensaje (S/.)</span><span class="tip-wrap"><button class="tip-btn" data-tip="¿Cuánto pagas por cada persona que te contacta? Definir este límite te ayuda a saber si tu publicidad es rentable."><i class="ti ti-info-circle"></i></button></span></div><input type="number" id="msgCost" value="0.80" min="0" step="0.01"></div>
-    </div>
-    <div style="background:#F4FAF7;border:.5px solid #C3E8DA;border-radius:10px;padding:.75rem .9rem;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto">
-      <div>
-        <div style="font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:#0F6E56;margin-bottom:3px">% Conversión estimada</div>
-        <div style="font-size:18px;font-weight:600;color:#085041" id="previewConv">—</div>
-        <div style="font-size:9px;color:#1D9E75;margin-top:1px" id="previewConvSub">—</div>
+    <div style="padding:14px 16px 4px;display:flex;justify-content:space-between;"><span class="sec-title">Comunidad</span><span class="sec-link">Ver todo</span></div>
+
+    <div class="feed-item">
+      <div class="feed-top"><div class="feed-av" style="background:#3B6FD4;">MA</div><div class="feed-user"><div class="feed-name">María Alvarado</div><div class="feed-time">hace 12 min</div></div><div class="feed-badge badge-poll"><i class="ti ti-chart-bar" style="font-size:10px;vertical-align:-1px;"></i> Encuesta</div></div>
+      <div class="feed-text">¿Cuál es el mejor delivery de comida en Lima? Llevo semanas probando 😅</div>
+      <div class="ver-contenido" onclick="openImg('#3B6FD4','MA','María Alvarado','Foto de los distintos empaques de delivery que he probado esta semana. ¡Rappi gana por presentación!','Lima, Perú','ti-tools-kitchen-2','linear-gradient(135deg,#1a1a2e,#16213e)')">
+        <i class="ti ti-photo"></i><span>Ver contenido</span><span class="vc-badge">1 foto</span>
       </div>
-      <div>
-        <div style="font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:#0F6E56;margin-bottom:3px;display:flex;align-items:center;gap:4px">CAC estimado<span class="tip-wrap"><button class="tip-btn" style="width:13px;height:13px" data-tip="El CAC (Costo de Adquisición de Cliente) es cuánto te cuesta conseguir un solo comprador. Si este número es mayor a tu ganancia por venta, estás perdiendo dinero en cada cliente que consigues."><i class="ti ti-info-circle" style="font-size:9px"></i></button></span></div>
-        <div style="font-size:18px;font-weight:600;color:#085041" id="previewCac">—</div>
-        <div style="font-size:9px;color:#1D9E75;margin-top:1px">por cliente nuevo</div>
+      <div class="feed-poll" id="poll1">
+        <div class="poll-opt" onclick="doVote('poll1',0)"><div class="poll-bar" style="width:62%;background:#3B6FD4;"></div><span class="poll-label">Rappi</span><span class="poll-pct">62%</span></div>
+        <div class="poll-opt" onclick="doVote('poll1',1)"><div class="poll-bar" style="width:24%;background:#3B6FD4;"></div><span class="poll-label">PedidosYa</span><span class="poll-pct">24%</span></div>
+        <div class="poll-opt" onclick="doVote('poll1',2)"><div class="poll-bar" style="width:14%;background:#3B6FD4;"></div><span class="poll-label">Uber Eats</span><span class="poll-pct">14%</span></div>
       </div>
+      <div id="poll1-badge" style="display:none;"><div class="vote-badge"><i class="ti ti-check"></i> Votaste</div></div>
+      <div class="feed-foot">
+        <div class="feed-action" id="like1" onclick="toggleLike('like1','lc1')"><i class="ti ti-heart"></i><span id="lc1">42</span></div>
+        <div class="feed-action"><i class="ti ti-message-circle"></i><span>24</span></div>
+        <div class="feed-action" id="save1" onclick="toggleSave('save1','si1','st1')"><i class="ti ti-bookmark" id="si1"></i><span id="st1">Guardar</span></div>
+        <div class="feed-action"><i class="ti ti-share"></i><span>Compartir</span></div>
+      </div>
+    </div>
+
+    <div class="feed-item">
+      <div class="feed-top"><div class="feed-av" style="background:#9C59D1;">LP</div><div class="feed-user"><div class="feed-name">Laura Pérez</div><div class="feed-time">hace 30 min</div></div><div class="feed-badge" style="background:#F5F0FF;color:#9C59D1;"><i class="ti ti-photo" style="font-size:10px;vertical-align:-1px;"></i> Foto</div></div>
+      <div class="feed-text">Fui a <strong>Tokyo Fresh</strong> y la experiencia fue increíble. ¡100% recomendado!</div>
+      <div class="ver-contenido" onclick="openImg('#9C59D1','LP','Laura Pérez','Vista del sashimi que pedí en Tokyo Fresh. Presentación impecable y sabor inigualable 🍣','Miraflores, Lima','ti-fish','linear-gradient(135deg,#0f3460,#533483)')">
+        <i class="ti ti-photo"></i><span>Ver contenido</span><span class="vc-badge">1 foto</span>
+      </div>
+      <div class="feed-foot">
+        <div class="feed-action" id="like4" onclick="toggleLike('like4','lc4')"><i class="ti ti-heart"></i><span id="lc4">63</span></div>
+        <div class="feed-action"><i class="ti ti-message-circle"></i><span>12</span></div>
+        <div class="feed-action" id="save4" onclick="toggleSave('save4','si4','st4')"><i class="ti ti-bookmark" id="si4"></i><span id="st4">Guardar</span></div>
+        <div class="feed-action"><i class="ti ti-share"></i><span>Compartir</span></div>
+      </div>
+    </div>
+
+    <div class="feed-item">
+      <div class="feed-top"><div class="feed-av" style="background:#D4A017;">CK</div><div class="feed-user"><div class="feed-name">Califika Trends</div><div class="feed-time">hace 1 hora</div></div><div class="feed-badge" style="background:#FFF8E6;color:#D4A017;"><i class="ti ti-flame" style="font-size:10px;vertical-align:-1px;"></i> Top 1</div></div>
+      <div class="feed-text"><strong>Dune: Parte Dos</strong> escaló al <strong>#1</strong> en películas más califkadas con 9.4 puntos.</div>
+      <div class="feed-top-card"><i class="ti ti-movie"></i><div class="feed-top-info"><div class="feed-top-name">Dune: Parte Dos</div><div class="feed-top-sub">Película · 14.2k califkas</div></div><div class="feed-top-score">9.4</div></div>
+      <div class="feed-foot">
+        <div class="feed-action" id="like2" onclick="toggleLike('like2','lc2')"><i class="ti ti-heart"></i><span id="lc2">89</span></div>
+        <div class="feed-action"><i class="ti ti-message-circle"></i><span>31</span></div>
+        <div class="feed-action" id="save2" onclick="toggleSave('save2','si2','st2')"><i class="ti ti-bookmark" id="si2"></i><span id="st2">Guardar</span></div>
+        <div class="feed-action"><i class="ti ti-share"></i><span>Compartir</span></div>
+      </div>
+    </div>
+
+    <div class="feed-item">
+      <div class="feed-top"><div class="feed-av" style="background:#2A9D70;">JR</div><div class="feed-user"><div class="feed-name">Juan Ramos</div><div class="feed-time">hace 2 horas</div></div><div class="feed-badge badge-poll"><i class="ti ti-chart-bar" style="font-size:10px;vertical-align:-1px;"></i> Encuesta</div></div>
+      <div class="feed-text">Estuve en el <strong>Mirador El Ángel</strong> ayer. ¿Vale la pena el viaje desde Lima?</div>
+      <div class="ver-contenido" onclick="openImg('#2A9D70','JR','Juan Ramos','Vista desde el Mirador El Ángel al amanecer. Una experiencia que no se olvida 🏔️','Mirador El Ángel, Perú','ti-mountain','linear-gradient(135deg,#134e5e,#71b280)')">
+        <i class="ti ti-photo"></i><span>Ver contenido</span><span class="vc-badge">3 fotos</span>
+      </div>
+      <div class="feed-poll" id="poll2">
+        <div class="poll-opt" onclick="doVote('poll2',0)"><div class="poll-bar" style="width:78%;background:#2A9D70;"></div><span class="poll-label">Sí, definitivamente</span><span class="poll-pct">78%</span></div>
+        <div class="poll-opt" onclick="doVote('poll2',1)"><div class="poll-bar" style="width:14%;background:#2A9D70;"></div><span class="poll-label">Solo si tienes tiempo</span><span class="poll-pct">14%</span></div>
+        <div class="poll-opt" onclick="doVote('poll2',2)"><div class="poll-bar" style="width:8%;background:#2A9D70;"></div><span class="poll-label">No vale la pena</span><span class="poll-pct">8%</span></div>
+      </div>
+      <div id="poll2-badge" style="display:none;"><div class="vote-badge"><i class="ti ti-check"></i> Votaste</div></div>
+      <div class="feed-foot">
+        <div class="feed-action" id="like3" onclick="toggleLike('like3','lc3')"><i class="ti ti-heart"></i><span id="lc3">34</span></div>
+        <div class="feed-action"><i class="ti ti-message-circle"></i><span>17</span></div>
+        <div class="feed-action" id="save3" onclick="toggleSave('save3','si3','st3')"><i class="ti ti-bookmark" id="si3"></i><span id="st3">Guardar</span></div>
+        <div class="feed-action"><i class="ti ti-share"></i><span>Compartir</span></div>
+      </div>
+    </div>
+
+    <div style="height:8px;"></div>
+    <div class="navbar">
+      <div class="nav-item active"><i class="ti ti-home"></i><span class="nav-lbl">Inicio</span></div>
+      <div class="nav-item"><i class="ti ti-search"></i><span class="nav-lbl">Buscar</span></div>
+      <div class="nav-item"><div class="fab"><i class="ti ti-plus"></i></div><span class="nav-lbl" style="margin-top:4px;">Califika</span></div>
+      <div class="nav-item"><i class="ti ti-heart"></i><span class="nav-lbl">Guardados</span></div>
+      <div class="nav-item"><i class="ti ti-user"></i><span class="nav-lbl">Perfil</span></div>
     </div>
   </div>
 </div>
-
-<div class="card" style="margin-bottom:.7rem">
-  <div class="card-head"><div class="snum">3</div><div class="stitle">Costos operativos</div><i class="ti ti-users sicon"></i></div>
-  <div class="flabel" style="margin-bottom:8px"><span>Tipo de sueldo del vendedor</span></div>
-  <div class="seg"><button class="on" id="btn-fixed" onclick="setSellerMode('fixed')">Fijo / mes</button><button id="btn-commission" onclick="setSellerMode('commission')">Por venta</button><button id="btn-both" onclick="setSellerMode('both')">Ambos</button><button id="btn-noseller" onclick="setSellerMode('none')">Sin vendedor</button></div>
-  <div id="sellerInputs" class="sx">
-    <div class="f" id="fixedWrap"><div class="flabel"><span id="lSalary">Sueldo fijo / mes (S/.)</span></div><input type="number" id="sellerSalary" value="1200" min="0" step="50"></div>
-    <div class="f" id="commissionWrap" style="display:none"><div class="flabel"><span id="lComm">Comisión por venta (S/.)</span></div><input type="number" id="commissionPerSale" value="30" min="0" step="1"><span class="hint" id="commissionTotal"></span></div>
-  </div>
-  <div class="divider"></div>
-  <div class="flabel" style="margin-bottom:8px"><span>Otros costos fijos del mes</span></div>
-  <div id="extraList"></div>
-  <button class="add-btn" onclick="addExtra()"><i class="ti ti-plus"></i> Agregar costo</button>
-  <div class="extra-total" id="extraTotal"></div>
 </div>
 
-<div style="margin-top:.9rem">
-  <div class="rlabel"><i class="ti ti-chart-pie" style="font-size:13px"></i>Resultados</div>
-  <div class="top3">
-    <div class="mc-big green"><div class="bicon"><i class="ti ti-trending-up"></i></div><div class="blrow"><div class="bl">Ingresos brutos</div><span class="tip-wrap"><button class="tip-btn" data-tip="Total de dinero que entra por tus ventas. Precio × unidades vendidas, antes de descontar cualquier costo."><i class="ti ti-info-circle"></i></button><div class="tipbox left">Total que entra por ventas. Precio × unidades, antes de descontar cualquier costo.</div></span></div><div class="bv" id="rRevenue">—</div><div class="bs">ventas × precio</div></div>
-    <div class="mc-big red"><div class="bicon"><i class="ti ti-trending-down"></i></div><div class="blrow"><div class="bl">Egresos totales</div><span class="tip-wrap"><button class="tip-btn" data-tip="Todo lo que gastas para vender: producto, publicidad, vendedor y costos fijos. Si supera tus ingresos, estás perdiendo dinero."><i class="ti ti-info-circle"></i></button><div class="tipbox left">Todo lo que gastas: producto, publicidad, vendedor y costos fijos.</div></span></div><div class="bv" id="rEgresos">—</div><div class="bs">Todos los costos incl. publicidad</div></div>
-    <div class="mc-big purple"><div class="bicon"><i class="ti ti-speakerphone"></i></div><div class="blrow"><div class="bl">Inv. publicitaria</div><span class="tip-wrap"><button class="tip-btn" data-tip="Cuánto gastas en total para conseguir tus clientes: mensajes × costo por mensaje × unidades vendidas."><i class="ti ti-info-circle"></i></button><div class="tipbox left">Cuánto gastas para conseguir clientes: mensajes × costo × unidades.</div></span></div><div class="bv" id="rMsgInv">—</div><div class="bs">costo de contacto</div></div>
-  </div>
-  <div class="rg">
-    <div class="mc red2"><div class="mc-lrow"><div class="ml">Costo producto</div><span class="tip-wrap"><button class="tip-btn" data-tip="Costo de fabricar o comprar todos los productos del mes. Costo unitario × unidades a vender."><i class="ti ti-info-circle"></i></button></span></div><div class="mv" id="rTotalCogs">—</div><div class="ms" id="rTotalCogsSub">—</div></div>
-    <div class="mc slate"><div class="mc-lrow"><div class="ml">Costo vendedor</div><span class="tip-wrap"><button class="tip-btn" data-tip="Lo que pagas a tu equipo de ventas. Un sueldo fijo existe aunque no vendas nada."><i class="ti ti-info-circle"></i></button></span></div><div class="mv" id="rOpCost">—</div><div class="ms" id="rOpCostSub">—</div></div>
-  </div>
-  <div class="rg" id="taxRow" style="display:none">
-    <div class="mc amber"><div class="mc-lrow"><div class="ml" id="taxLbl">Impuesto</div><span class="tip-wrap"><button class="tip-btn" data-tip="Impuesto sobre tus ventas, calculado incluido dentro del precio (forma estándar en la mayoría de países)."><i class="ti ti-info-circle"></i></button></span></div><div class="mv" id="rTax">—</div><div class="ms">incluido en precio</div></div>
-  </div>
-  <div class="final win" id="finalCard">
-    <div class="ficon"><i id="finalIcon" class="ti ti-trending-up"></i></div>
-    <div class="fbody"><div class="ftag" id="finalTag">Resultado neto del mes</div><div class="famt" id="finalAmount">—</div><div class="fdesc" id="finalDesc"></div></div>
-  </div>
-</div>
-
-<div class="byline"><div class="byline-name">By Zetup Academy</div><div class="byline-url">www.zetupacademy.com</div></div>
-</div>
+<div class="toast" id="toast"></div>
 
 <script>
-// TOOLTIP GLOBAL - simple y robusto
-(function(){
-  var tip=document.getElementById('tooltip-global');
-  var hideTimer=null;
-
-  function show(btn){
-    clearTimeout(hideTimer);
-    var text=btn.getAttribute('data-tip');
-    if(!text)return;
-    tip.textContent=text;
-    tip.style.display='block';
-    // Posicionar relativo al botón
-    var br=btn.getBoundingClientRect();
-    var tw=250;
-    tip.style.width=tw+'px';
-    var th=tip.offsetHeight||80;
-    // Centro horizontal del botón, arriba
-    var left=br.left+(br.width/2)-(tw/2);
-    var top=br.top-th-10;
-    // Si se sale por arriba, va abajo
-    if(top<5) top=br.bottom+10;
-    // No salirse por lados
-    if(left<5) left=5;
-    if(left+tw>window.innerWidth-5) left=window.innerWidth-tw-5;
-    tip.style.left=left+'px';
-    tip.style.top=top+'px';
-  }
-
-  function hide(){
-    hideTimer=setTimeout(function(){tip.style.display='none';},150);
-  }
-
-  document.querySelectorAll('.tip-btn').forEach(function(btn){
-    btn.addEventListener('mouseenter',function(){show(btn);});
-    btn.addEventListener('mouseleave',function(){hide();});
-    btn.addEventListener('click',function(e){
-      e.stopPropagation();
-      if(tip.style.display==='block'&&tip._lastBtn===btn){
-        tip.style.display='none';tip._lastBtn=null;
-      } else {
-        show(btn);tip._lastBtn=btn;
-      }
-    });
-  });
-  tip.addEventListener('mouseenter',function(){clearTimeout(hideTimer);});
-  tip.addEventListener('mouseleave',function(){hide();});
-  document.addEventListener('click',function(){tip.style.display='none';});
-})();
-
-const CURR={PEN:{s:'S/.',f:'🇵🇪',l:'es-PE',d:2},USD:{s:'$',f:'🇺🇸',l:'en-US',d:2},COP:{s:'$',f:'🇨🇴',l:'es-CO',d:0},MXN:{s:'$',f:'🇲🇽',l:'es-MX',d:2},ARS:{s:'$',f:'🇦🇷',l:'es-AR',d:2},CLP:{s:'$',f:'🇨🇱',l:'es-CL',d:0},BOB:{s:'Bs.',f:'🇧🇴',l:'es-BO',d:2},PYG:{s:'₲',f:'🇵🇾',l:'es-PY',d:0},UYU:{s:'$U',f:'🇺🇾',l:'es-UY',d:2},VES:{s:'Bs.',f:'🇻🇪',l:'es-VE',d:2},GTQ:{s:'Q',f:'🇬🇹',l:'es-GT',d:2},HNL:{s:'L',f:'🇭🇳',l:'es-HN',d:2},NIO:{s:'C$',f:'🇳🇮',l:'es-NI',d:2},CRC:{s:'₡',f:'🇨🇷',l:'es-CR',d:0},DOP:{s:'RD$',f:'🇩🇴',l:'es-DO',d:2},EUR:{s:'€',f:'🇪🇸',l:'es-ES',d:2}};
-let cc='PEN',taxMode='none',sellerMode='fixed',extraId=0;
-
-function fmt(n){const c=CURR[cc];return(n<0?'-':'')+c.s+' '+Math.abs(n).toLocaleString(c.l,{minimumFractionDigits:c.d,maximumFractionDigits:c.d});}
-function fmtI(n){return n.toLocaleString(CURR[cc].l);}
-
-function setCurrency(){cc=document.getElementById('currencySelect').value;const c=CURR[cc];document.getElementById('cFlag').textContent=c.f;const s=c.s;const ids=['lPrice','lCogs','lMsgCost','lSalary','lComm'];const labels=['Precio de venta','Costo del producto','Costo por mensaje','Sueldo fijo / mes','Comisión por venta'];ids.forEach((id,i)=>{const el=document.getElementById(id);if(el)el.textContent=labels[i]+' ('+s+')';});calc();}
-function setTax(m){taxMode=m;document.getElementById('btn-none').classList.toggle('on',m==='none');document.getElementById('btn-tax').classList.toggle('on',m==='tax');document.getElementById('taxPctWrap').style.display=m==='tax'?'flex':'none';calc();}
-function setSellerMode(m){sellerMode=m;['fixed','commission','both','noseller'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('on',x===m));const si=document.getElementById('sellerInputs');if(m==='none'){si.style.display='none';const s=document.getElementById('sellerSalary');const c=document.getElementById('commissionPerSale');if(s)s.value=0;if(c)c.value=0;}else{si.style.display='grid';document.getElementById('fixedWrap').style.display=(m==='fixed'||m==='both')?'flex':'none';document.getElementById('commissionWrap').style.display=(m==='commission'||m==='both')?'flex':'none';}calc();}
-
-function addExtra(concept,amount){const id='ex'+extraId++;const list=document.getElementById('extraList');const row=document.createElement('div');row.className='extra-row';row.id=id;row.innerHTML='<input type="text" placeholder="Concepto (ej. local, internet…)" value="'+(concept||'')+'"><input type="number" placeholder="Monto" min="0" step="1" value="'+(amount||'')+'"><button class="del-btn" onclick="delExtra(\''+id+'\')"><i class="ti ti-x"></i></button>';list.appendChild(row);row.querySelectorAll('input').forEach(el=>el.addEventListener('input',calc));calc();}
-function delExtra(id){const el=document.getElementById(id);if(el)el.remove();calc();}
-function getExtra(){let t=0;document.querySelectorAll('#extraList .extra-row input[type=number]').forEach(el=>t+=parseFloat(el.value)||0);return t;}
-
-function calc(){
-  const price=parseFloat(document.getElementById('price').value)||0;
-  const cogs=parseFloat(document.getElementById('cogs').value)||0;
-  const units=parseInt(document.getElementById('units').value)||0;
-  const msgs=parseFloat(document.getElementById('msgsPerSale').value)||1;
-  const msgCost=parseFloat(document.getElementById('msgCost').value)||0;
-  const taxPct=taxMode==='none'?0:(parseFloat(document.getElementById('taxPct').value)||0);
-  const extra=getExtra();
-  document.getElementById('extraTotal').textContent=extra>0?'Total otros costos: '+fmt(extra):'';
-  let sellerCost=0,opSub='sin vendedor';
-  if(sellerMode==='fixed'){sellerCost=parseFloat(document.getElementById('sellerSalary').value)||0;opSub='sueldo fijo';}
-  else if(sellerMode==='commission'){const c=parseFloat(document.getElementById('commissionPerSale').value)||0;sellerCost=c*units;document.getElementById('commissionTotal').textContent='Total: '+fmt(sellerCost);opSub='comisión';}
-  else if(sellerMode==='both'){const sal=parseFloat(document.getElementById('sellerSalary').value)||0;const c=parseFloat(document.getElementById('commissionPerSale').value)||0;sellerCost=sal+c*units;document.getElementById('commissionTotal').textContent='Comisión total: '+fmt(c*units);opSub='fijo + comisión';}
-  const conv=(1/msgs)*100;
-  const cac=msgs*msgCost;
-  const msgInv=units*msgs*msgCost;
-  const opCost=sellerCost+extra;
-  const revenue=units*price;
-  const totalCogs=cogs*units;
-  const tax=taxMode==='none'?0:(revenue*taxPct/(100+taxPct));
-  const margin=price-cogs;
-  const net=(margin*units)-tax-msgInv-opCost;
-  const egresos=totalCogs+msgInv+opCost+tax;
-  document.getElementById('rRevenue').textContent=fmt(revenue);
-  document.getElementById('rEgresos').textContent=fmt(egresos);
-  document.getElementById('rMsgInv').textContent=fmt(msgInv);
-  if(document.getElementById('previewConv')){document.getElementById('previewConv').textContent=conv.toFixed(2)+'%';document.getElementById('previewConvSub').textContent='1 de cada '+Math.round(msgs)+' te compra';document.getElementById('previewCac').textContent=fmt(cac);}
-  document.getElementById('rTotalCogs').textContent=fmt(totalCogs);
-  document.getElementById('rTotalCogsSub').textContent=fmt(cogs)+' × '+fmtI(units);
-  document.getElementById('rOpCost').textContent=fmt(sellerCost);
-  document.getElementById('rOpCostSub').textContent=opSub;
-  if(taxMode==='tax'&&taxPct>0){document.getElementById('taxRow').style.display='grid';document.getElementById('taxLbl').textContent='Impuesto ('+taxPct+'%)';document.getElementById('rTax').textContent=fmt(tax);}
-  else document.getElementById('taxRow').style.display='none';
-  const fc=document.getElementById('finalCard'),fa=document.getElementById('finalAmount'),fd=document.getElementById('finalDesc'),ft=document.getElementById('finalTag'),fi=document.getElementById('finalIcon');
-  fa.textContent=fmt(net);
-  if(net>0){fc.className='final win';ft.textContent='Ganancia neta del mes';fi.className='ti ti-trending-up';fd.textContent='Margen neto: '+((net/revenue)*100).toFixed(1)+'% sobre ingresos totales';}
-  else if(net===0){fc.className='final even';ft.textContent='Punto de equilibrio';fi.className='ti ti-equal';fd.textContent='Cubres exactamente todos tus costos.';}
-  else{fc.className='final lose';ft.textContent='Pérdida neta del mes';fi.className='ti ti-trending-down';const need=margin>0?Math.ceil((opCost+msgInv+tax)/margin):'∞';fd.textContent='Necesitas vender al menos '+(typeof need==='number'?fmtI(need):need)+' unidades para no perder.';}
+const sf=document.getElementById('sf'),ph='Busca restaurantes, servicios...';
+sf.addEventListener('focus',function(){if(this.textContent===ph){this.textContent='';this.style.color='#1C1C1C';}});
+sf.addEventListener('blur',function(){if(this.textContent.trim()===''){this.textContent=ph;this.style.color='#CCCCCC';}});
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
+function toggleCity(){const dd=document.getElementById('cityDd'),ch=document.getElementById('cc');const open=dd.classList.toggle('open');ch.style.transform=open?'rotate(180deg)':'rotate(0deg)';ch.style.transition='transform 0.2s';if(open){setTimeout(()=>document.getElementById('cityInput').focus(),100);closeNotif();}}
+function filterCities(val){const q=val.toLowerCase();document.querySelectorAll('.city-opt').forEach(o=>o.classList.toggle('hidden',q!==''&&!o.getAttribute('data-name').includes(q)));}
+function pick(full,short){document.getElementById('cityShort').textContent=short;document.getElementById('cityDd').classList.remove('open');document.getElementById('cc').style.transform='rotate(0deg)';document.getElementById('cityInput').value='';filterCities('');document.querySelectorAll('.city-opt').forEach(o=>o.classList.toggle('sel',o.textContent.trim()===full));}
+document.querySelectorAll('.qbtn').forEach(b=>{b.addEventListener('click',function(){document.querySelectorAll('.qbtn').forEach(x=>x.classList.remove('active'));this.classList.add('active');});});
+function toggleNotif(){const p=document.getElementById('notifPopup'),btn=document.getElementById('notifBtn');const open=p.classList.toggle('open');btn.classList.toggle('active',open);if(open){document.getElementById('notifDot').style.display='none';closeCity();}}
+function closeNotif(){document.getElementById('notifPopup').classList.remove('open');document.getElementById('notifBtn').classList.remove('active');}
+function closeCity(){document.getElementById('cityDd').classList.remove('open');document.getElementById('cc').style.transform='rotate(0deg)';}
+function markAllRead(){document.querySelectorAll('.notif-item.unread').forEach(n=>n.classList.remove('unread'));document.querySelectorAll('.notif-dot-item').forEach(d=>d.remove());}
+function openPhoto(){closeNotif();document.getElementById('photoOverlay').classList.add('open');}
+function closePhoto(){document.getElementById('photoOverlay').classList.remove('open');}
+function pickColor(color){const av=document.getElementById('mainAv');av.style.background=color;document.querySelectorAll('.photo-av-opt').forEach(o=>o.classList.toggle('selected',o.style.background===color));setTimeout(()=>{closePhoto();showToast('Foto actualizada');},300);}
+function openImg(color,initials,name,caption,tag,icon,bg){
+  document.getElementById('imgPopupAv').style.background=color;
+  document.getElementById('imgPopupAv').textContent=initials;
+  document.getElementById('imgPopupName').textContent=name;
+  document.getElementById('imgPopupCaption').textContent=caption;
+  document.getElementById('imgPopupTag').textContent=tag;
+  const imgDiv=document.getElementById('imgPopupImg');
+  imgDiv.style.background=bg;
+  imgDiv.innerHTML=`<i class="ti ${icon}" style="color:#fff;font-size:80px;opacity:0.2;position:absolute;"></i>`;
+  document.getElementById('imgPopup').classList.add('open');
 }
-
-document.querySelectorAll('input').forEach(el=>el.addEventListener('input',calc));
-addExtra('Otros fijos','300');
-calc();
+function closeImgPopup(e){if(e.target===document.getElementById('imgPopup'))closeImgPopupDirect();}
+function closeImgPopupDirect(){document.getElementById('imgPopup').classList.remove('open');}
+const pollVoted={};
+function doVote(pollId,idx){if(pollVoted[pollId])return;pollVoted[pollId]=true;const opts=document.querySelectorAll('#'+pollId+' .poll-opt');const base={poll1:[62,24,14],poll2:[78,14,8]};const vals=[...base[pollId]];vals[idx]+=1;const total=vals.reduce((a,b)=>a+b,0);opts.forEach((opt,i)=>{const pct=Math.round(vals[i]/total*100);opt.querySelector('.poll-bar').style.width=pct+'%';opt.querySelector('.poll-pct').textContent=pct+'%';if(i===idx)opt.classList.add('voted-opt');opt.style.cursor='default';});document.getElementById(pollId+'-badge').style.display='block';showToast('Voto registrado');}
+function toggleLike(id,cntId){const el=document.getElementById(id),cnt=document.getElementById(cntId);const liked=el.classList.toggle('liked');cnt.textContent=parseInt(cnt.textContent)+(liked?1:-1);}
+function toggleSave(id,iconId,txtId){const el=document.getElementById(id),icon=document.getElementById(iconId),txt=document.getElementById(txtId);const saved=el.classList.toggle('saved');icon.className=saved?'ti ti-bookmark-filled':'ti ti-bookmark';txt.textContent=saved?'Guardado':'Guardar';showToast(saved?'Guardado en tu colección':'Eliminado de guardados');}
+document.addEventListener('click',function(e){const p=document.getElementById('notifPopup'),nb=document.getElementById('notifBtn');if(p.classList.contains('open')&&!p.contains(e.target)&&!nb.contains(e.target))closeNotif();});
 </script>
-
 </body>
 </html>
