@@ -3,365 +3,531 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Califika — Calificar</title>
+<title>Califika — Encuesta</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'DM Sans',sans-serif;background:#E8E4DF;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;color-scheme:light;}
-  .wrap{background:#E8E4DF;border-radius:44px;padding:10px;max-width:360px;width:100%;margin:0 auto;}
-  .phone{background:#FAFAF8;border-radius:40px;overflow:hidden;max-width:340px;margin:0 auto;border:1px solid #E4E2DC;color-scheme:light;max-height:720px;overflow-y:auto;scrollbar-width:none;}
-  .phone::-webkit-scrollbar{display:none;}
-  .screen{display:none;flex-direction:column;min-height:680px;}
-  .screen.active{display:flex;}
-  .topbar{padding:44px 18px 14px;display:flex;align-items:center;justify-content:space-between;background:#FAFAF8;position:sticky;top:0;z-index:20;}
-  .icon-btn{width:36px;height:36px;border-radius:50%;background:#EEECEA;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;}
-  .icon-btn i{font-size:18px;color:#555;}
-  .top-title{font-size:15px;font-weight:800;color:#1C1C1C;}
-  .header-row{display:flex;gap:8px;padding:0 18px 16px;}
-  .ht-trigger{flex:1;display:flex;align-items:center;gap:7px;background:#fff;border:1.5px solid #EEEAE4;border-radius:14px;padding:11px 13px;cursor:pointer;overflow:hidden;}
-  .ht-trigger.active{border-color:#D94F2B;background:#FEF5F2;}
-  .ht-hash{font-size:16px;font-weight:900;color:#D94F2B;flex-shrink:0;}
-  .ht-label{font-size:13px;font-weight:700;color:#AAA;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .ht-trigger.active .ht-label{color:#D94F2B;font-weight:800;}
-  .ht-trigger i{font-size:14px;color:#CCC;flex-shrink:0;}
-  .ht-trigger.active i{color:#D94F2B;}
-  .search-trigger{width:46px;height:46px;border-radius:14px;background:#fff;border:1.5px solid #EEEAE4;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
-  .search-trigger i{font-size:20px;color:#888;}
-  .search-trigger.active{border-color:#1C1C2E;background:#1C1C2E;}
-  .search-trigger.active i{color:#fff;}
-  .ht-panel{background:#fff;border-radius:18px;border:1px solid #EEEAE4;overflow:hidden;margin:0 18px 16px;}
-  .ht-search-row{display:flex;align-items:center;gap:8px;padding:11px 14px;border-bottom:1px solid #F5F3EF;}
-  .ht-search-hash{font-size:16px;font-weight:900;color:#D94F2B;}
-  .ht-search-inp{flex:1;font-family:'DM Sans',sans-serif;font-size:14px;color:#1C1C1C;border:none;outline:none;background:transparent;}
-  .ht-search-inp::placeholder{color:#CCC;}
-  .ht-create{align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid #F5F3EF;cursor:pointer;display:none;}
-  .ht-create:hover{background:#FAFAF8;}
-  .ht-create-ico{width:32px;height:32px;border-radius:10px;background:#FEF5F2;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .ht-create-ico i{font-size:15px;color:#D94F2B;}
-  .ht-create-body{flex:1;}
-  .ht-create-label{font-size:13px;font-weight:800;color:#D94F2B;}
-  .ht-create-sub{font-size:11px;color:#BBB;font-weight:600;}
-  .ht-lbl{font-size:10px;font-weight:700;color:#BBB;letter-spacing:.7px;text-transform:uppercase;padding:10px 14px 6px;}
-  .ht-sug{display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer;border-bottom:1px solid #F5F3EF;}
-  .ht-sug:last-child{border:none;}
-  .ht-sug:hover{background:#FAFAF8;}
-  .ht-sug.sel{background:#FEF5F2;}
-  .ht-sug-ico{width:32px;height:32px;border-radius:10px;background:#FAFAF8;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .ht-sug-ico i{font-size:15px;color:#AAA;}
-  .ht-sug-body{flex:1;}
-  .ht-sug-name{font-size:13px;font-weight:800;color:#1C1C1C;}
-  .ht-sug-name span{color:#D94F2B;}
-  .ht-sug-count{font-size:10px;color:#BBB;font-weight:600;}
-  .entity-panel{background:#fff;border-radius:18px;border:1px solid #EEEAE4;overflow:hidden;margin:0 18px 16px;}
-  .ep-search{display:flex;align-items:center;gap:8px;padding:11px 14px;border-bottom:1px solid #F5F3EF;}
-  .ep-search i{font-size:16px;color:#CCC;}
-  .ep-search input{flex:1;font-family:'DM Sans',sans-serif;font-size:14px;color:#1C1C1C;border:none;outline:none;background:transparent;}
-  .ep-search input::placeholder{color:#CCC;}
-  .ep-item{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;border-bottom:1px solid #F5F3EF;}
-  .ep-item:last-child{border:none;}
-  .ep-item:hover{background:#FAFAF8;}
-  .ep-ico{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .ep-ico i{font-size:16px;}
-  .ep-body{flex:1;}
-  .ep-name{font-size:13px;font-weight:800;color:#1C1C1C;}
-  .ep-sub{font-size:10px;color:#BBB;font-weight:600;}
-  .ep-score{font-size:12px;font-weight:800;color:#1C1C1C;display:flex;align-items:center;gap:2px;flex-shrink:0;}
-  .ep-score i{font-size:11px;color:#E8A020;}
-  .entity-sel{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid #1C1C2E;border-radius:14px;padding:11px 14px;margin:0 18px 16px;}
-  .esel-ico{width:34px;height:34px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .esel-ico i{font-size:17px;}
-  .esel-body{flex:1;}
-  .esel-name{font-size:13px;font-weight:800;color:#1C1C1C;}
-  .esel-sub{font-size:11px;color:#BBB;font-weight:600;}
-  .esel-change{font-size:11px;font-weight:700;color:#D94F2B;cursor:pointer;flex-shrink:0;}
-  .divider{height:1px;background:#F0EEE8;margin:0 18px 16px;}
-  .score-section{padding:0 18px 20px;text-align:center;}
-  .score-q{font-size:14px;font-weight:800;color:#1C1C1C;margin-bottom:16px;}
-  .score-nums{display:flex;gap:6px;justify-content:center;margin-bottom:10px;}
-  .snum{width:44px;height:44px;border-radius:14px;background:#EEECEA;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#BBB;cursor:pointer;border:2px solid transparent;}
-  .snum.s1{background:#FFEAEA;color:#D94F2B;border-color:#D94F2B;}
-  .snum.s2{background:#FFF0E6;color:#E86020;border-color:#E86020;}
-  .snum.s3{background:#FFF8E0;color:#D4A017;border-color:#D4A017;}
-  .snum.s4{background:#F0F9E6;color:#5A9E20;border-color:#5A9E20;}
-  .snum.s5{background:#E6F9EE;color:#2A9D70;border-color:#2A9D70;}
-  .score-mood{font-size:13px;font-weight:700;color:#BBB;height:18px;}
-  .text-section{padding:0 18px 16px;}
-  .rev-wrap{background:#fff;border-radius:16px;border:1.5px solid #EEEAE4;overflow:hidden;}
-  .rev-wrap:focus-within{border-color:#1C1C2E;}
-  .rev-ta{width:100%;padding:13px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:#1C1C1C;border:none;outline:none;background:transparent;resize:none;height:90px;color-scheme:light;}
-  .rev-ta::placeholder{color:#CCC;}
-  .rev-foot{display:flex;justify-content:flex-end;padding:7px 12px;border-top:1px solid #F5F3EF;}
-  .rev-char{font-size:11px;color:#CCC;font-weight:600;}
-  .foto-btn-wrap{padding:0 18px 16px;}
-  .foto-btn{display:flex;align-items:center;gap:6px;padding:9px 14px;border-radius:12px;border:1.5px solid #E0DDD7;background:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:#666;cursor:pointer;}
-  .foto-btn i{font-size:15px;color:#AAA;}
-  .foto-btn.on{background:#F5F3EF;border-color:#1C1C2E;color:#1C1C1C;}
-  .foto-btn.on i{color:#1C1C2E;}
-  .fotos-section{padding:0 18px 14px;}
-  .fotos-row{display:flex;gap:8px;flex-wrap:wrap;}
-  .foto-add{width:60px;height:60px;border-radius:14px;border:2px dashed #E0DDD7;background:#FAFAF8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;}
-  .foto-add i{font-size:18px;color:#CCC;}
-  .foto-add span{font-size:9px;color:#CCC;font-weight:700;}
-  .foto-thumb{width:60px;height:60px;border-radius:14px;overflow:hidden;position:relative;}
-  .foto-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
-  .foto-bg i{font-size:20px;color:#AAA;}
-  .foto-rm{position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;cursor:pointer;}
-  .foto-rm i{font-size:9px;color:#fff;}
-  .pub-section{padding:4px 18px 28px;margin-top:auto;}
-  .pub-btn{width:100%;padding:16px;border-radius:18px;border:none;background:#1C1C2E;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:800;color:#fff;cursor:pointer;}
-  .pub-btn:disabled{background:#EEECEA;color:#BBB;cursor:default;}
-  .ok-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 28px;text-align:center;}
-  .ok-ico{width:80px;height:80px;border-radius:26px;background:#F0FAF5;display:flex;align-items:center;justify-content:center;margin-bottom:24px;}
-  .ok-ico i{font-size:40px;color:#2A9D70;}
-  .ok-title{font-size:24px;font-weight:900;color:#1C1C1C;letter-spacing:-.5px;margin-bottom:8px;}
-  .ok-sub{font-size:14px;color:#AAA;font-weight:500;line-height:1.65;margin-bottom:32px;}
-  .ok-btn{width:100%;padding:16px;border-radius:18px;border:none;background:#1C1C2E;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:800;color:#fff;cursor:pointer;}
-  .toast{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:#1C1C2E;color:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;padding:9px 18px;border-radius:20px;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;z-index:999;}
-  .toast.show{opacity:1;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:#E8E4DF;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;color-scheme:light;}
+.wrap{background:#E8E4DF;border-radius:44px;padding:10px;max-width:360px;width:100%;margin:0 auto;}
+.phone{background:#FAFAF8;border-radius:40px;overflow:hidden;border:1px solid #E4E2DC;color-scheme:light;max-height:720px;overflow-y:auto;scrollbar-width:none;}
+.phone::-webkit-scrollbar{display:none;}
+.screen{display:none;flex-direction:column;}
+.screen.active{display:flex;}
+
+/* TOPBAR */
+.topbar{padding:42px 18px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;background:#FAFAF8;}
+.icon-btn{width:36px;height:36px;border-radius:50%;background:#EEECEA;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;}
+.icon-btn i{font-size:18px;color:#555;}
+.top-title{font-size:15px;font-weight:800;color:#1C1C1C;}
+
+/* AUTOR */
+.author-row{display:flex;align-items:center;gap:10px;padding:0 18px 14px;}
+.av{width:40px;height:40px;border-radius:50%;background:#D94F2B;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;flex-shrink:0;}
+.av-name{font-size:14px;font-weight:800;color:#1C1C1C;}
+.av-sub{font-size:11px;color:#BBB;font-weight:600;margin-top:1px;}
+
+/* PREGUNTA */
+.question-section{padding:0 18px 14px;}
+.question-text{font-size:17px;font-weight:900;color:#1C1C1C;line-height:1.35;letter-spacing:-0.3px;margin-bottom:8px;}
+.question-desc{font-size:13px;color:#888;font-weight:500;line-height:1.65;}
+
+/* VER CONTENIDO */
+.ver-wrap{margin:0 18px 14px;}
+.ver-btn{width:100%;display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid #EEEAE4;border-radius:18px;padding:14px 16px;cursor:pointer;font-family:'DM Sans',sans-serif;border:none;border:1.5px solid #EEEAE4;}
+.ver-btn-ico{width:40px;height:40px;border-radius:13px;background:#EEECEA;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ver-btn-ico i{font-size:20px;color:#888;}
+.ver-btn-body{flex:1;text-align:left;}
+.ver-btn-title{font-size:13px;font-weight:800;color:#1C1C1C;margin-bottom:2px;}
+.ver-btn-sub{font-size:11px;color:#BBB;font-weight:600;}
+.ver-btn-arr i{font-size:18px;color:#CCC;}
+.foto-revealed{width:100%;height:170px;border-radius:18px;background:linear-gradient(135deg,#2A6B3C 0%,#4CB87A 60%,#8ABF2A 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
+.foto-revealed i{font-size:48px;color:rgba(255,255,255,0.55);}
+.foto-revealed span{font-size:11px;font-weight:700;color:rgba(255,255,255,0.65);letter-spacing:0.3px;}
+
+/* META */
+.meta-row{display:flex;gap:7px;padding:0 18px 14px;flex-wrap:wrap;}
+.mpill{display:flex;align-items:center;gap:4px;padding:5px 11px;border-radius:20px;font-size:11px;font-weight:700;}
+.mpill i{font-size:12px;}
+.mpill-live{background:#FEF5F2;color:#D94F2B;}
+.mpill-time{background:#EEECEA;color:#666;}
+.mpill-part{background:#F0FAF5;color:#2A9D70;}
+.live-dot{width:6px;height:6px;border-radius:50%;background:#D94F2B;animation:pulse 1.2s infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.divider{height:1px;background:#F0EEE8;margin:0 18px 14px;}
+
+/* OPCIONES */
+.options-section{padding:0 18px 14px;}
+.sec-label{font-size:11px;font-weight:700;color:#BBB;letter-spacing:.6px;text-transform:uppercase;margin-bottom:12px;}
+.option-btn{width:100%;display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid #EEEAE4;border-radius:16px;padding:13px 16px;margin-bottom:10px;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:left;}
+.option-ico{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.option-ico i{font-size:18px;}
+.option-text{font-size:14px;font-weight:700;color:#1C1C1C;flex:1;}
+.option-arr i{font-size:16px;color:#DDD;}
+.result-option{background:#fff;border-radius:16px;border:1.5px solid #EEEAE4;padding:13px 16px;margin-bottom:10px;position:relative;overflow:hidden;}
+.result-option.my-vote{border-color:#1C1C2E;}
+.result-option.winner{border-color:#2A9D70;}
+.result-bg{position:absolute;left:0;top:0;height:100%;border-radius:14px;transition:width 0.8s cubic-bezier(.4,0,.2,1);}
+.result-row{position:relative;z-index:1;display:flex;align-items:center;gap:10px;}
+.result-ico{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.result-ico i{font-size:18px;}
+.result-body{flex:1;}
+.result-text{font-size:13px;font-weight:800;color:#1C1C1C;margin-bottom:2px;display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+.my-badge{font-size:9px;font-weight:700;color:#1C1C2E;background:#E8E6F0;padding:2px 6px;border-radius:6px;}
+.win-badge{font-size:9px;font-weight:700;color:#2A9D70;background:#F0FAF5;padding:2px 6px;border-radius:6px;}
+.result-votes{font-size:11px;color:#BBB;font-weight:600;}
+.result-pct{font-size:18px;font-weight:900;color:#1C1C1C;letter-spacing:-0.5px;flex-shrink:0;}
+
+/* COMENTARIOS */
+.comments-section{padding:0 18px 16px;}
+.comments-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.sec-link{font-size:12px;font-weight:700;color:#D94F2B;cursor:pointer;}
+
+/* TABS COMENTARIOS */
+.tab-row{display:flex;gap:0;background:#EEECEA;border-radius:14px;padding:3px;margin-bottom:14px;}
+.tab-btn{flex:1;padding:8px 0;border-radius:11px;border:none;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;color:#888;cursor:pointer;background:transparent;display:flex;align-items:center;justify-content:center;gap:4px;}
+.tab-btn i{font-size:12px;}
+.tab-btn.active{background:#fff;color:#1C1C1C;box-shadow:0 1px 4px rgba(0,0,0,0.08);}
+.tab-count{font-size:10px;font-weight:700;background:rgba(0,0,0,0.07);border-radius:8px;padding:1px 5px;}
+.tab-btn.active .tab-count{background:#F0EEE8;color:#555;}
+
+/* AGREGAR OPINIÓN TRIGGER */
+.add-op-btn{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid #EEEAE4;border-radius:16px;padding:11px 14px;margin-bottom:14px;cursor:pointer;}
+.add-op-av{width:32px;height:32px;border-radius:50%;background:#D94F2B;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0;}
+.add-op-ph{font-size:13px;color:#CCC;font-weight:600;flex:1;}
+.add-op-ico i{font-size:18px;color:#D94F2B;}
+
+/* COMENTARIO */
+.comment{background:#fff;border-radius:18px;padding:13px 14px;margin-bottom:10px;border:1px solid #EEEAE4;}
+.c-top{display:flex;align-items:flex-start;gap:9px;margin-bottom:8px;}
+.c-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0;position:relative;}
+.c-check{position:absolute;bottom:-1px;right:-1px;width:14px;height:14px;border-radius:50%;background:#3B6FD4;display:flex;align-items:center;justify-content:center;border:2px solid #fff;}
+.c-check i{font-size:8px;color:#fff;}
+.c-meta{flex:1;}
+.c-name{font-size:13px;font-weight:800;color:#1C1C1C;margin-bottom:1px;display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+.c-badge-v{font-size:9px;font-weight:700;color:#3B6FD4;background:#EEF2FF;padding:2px 6px;border-radius:6px;}
+.c-time{font-size:10px;color:#CCC;font-weight:600;}
+.c-vote{padding:4px 9px;border-radius:10px;font-size:10px;font-weight:800;display:flex;align-items:center;gap:3px;flex-shrink:0;}
+.c-vote i{font-size:11px;}
+.cv0{background:#F0FAF5;color:#2A9D70;}
+.cv1{background:#FFF8E6;color:#D4A017;}
+.cv2{background:#FEF5F2;color:#D94F2B;}
+.c-text{font-size:12px;color:#555;line-height:1.65;font-weight:500;margin-bottom:10px;}
+.c-foot{display:flex;gap:12px;align-items:center;}
+.c-act{display:flex;align-items:center;gap:4px;font-size:11px;color:#CCC;font-weight:600;cursor:pointer;}
+.c-act i{font-size:13px;}
+.c-act.liked i,.c-act.liked span{color:#D94F2B;}
+.trend{font-size:10px;font-weight:700;color:#E8A020;display:flex;align-items:center;gap:3px;margin-left:auto;}
+.trend i{font-size:11px;}
+
+/* RESPUESTAS */
+.reply-section{margin-top:10px;border-top:1px solid #F5F3EF;padding-top:10px;}
+.reply-list{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
+.reply-item{display:flex;gap:8px;}
+.r-av{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;flex-shrink:0;}
+.r-body{flex:1;background:#F5F3EF;border-radius:12px;padding:8px 10px;}
+.r-name{font-size:11px;font-weight:800;color:#1C1C1C;margin-bottom:2px;}
+.r-text{font-size:11px;color:#666;line-height:1.5;}
+.r-foot{display:flex;gap:10px;margin-top:5px;}
+.r-act{font-size:10px;color:#CCC;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:3px;}
+.r-act i{font-size:11px;}
+.r-act.liked i,.r-act.liked span{color:#D94F2B;}
+.reply-inp-row{display:flex;align-items:center;gap:8px;}
+.ri-av{width:26px;height:26px;border-radius:50%;background:#D94F2B;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;flex-shrink:0;}
+.ri-inp{flex:1;font-family:'DM Sans',sans-serif;font-size:12px;color:#1C1C1C;border:1.5px solid #EEEAE4;border-radius:20px;padding:7px 12px;outline:none;background:#FAFAF8;}
+.ri-inp::placeholder{color:#CCC;}
+.ri-inp:focus{border-color:#1C1C2E;}
+.ri-send{width:28px;height:28px;border-radius:50%;background:#1C1C2E;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;}
+.ri-send i{font-size:13px;color:#fff;}
+
+/* PANTALLA 2 — AGREGAR OPINIÓN */
+.op-input-box{margin:0 18px 14px;background:#fff;border-radius:18px;border:1.5px solid #EEEAE4;overflow:hidden;}
+.op-header{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid #F0EEE8;}
+.op-av{width:36px;height:36px;border-radius:50%;background:#D94F2B;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0;}
+.op-name{font-size:14px;font-weight:800;color:#1C1C1C;}
+.op-sub{font-size:11px;color:#BBB;font-weight:600;margin-top:1px;}
+.op-ta-wrap{padding:12px 14px;}
+.op-ta{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;color:#1C1C1C;border:none;outline:none;background:transparent;resize:none;min-height:80px;color-scheme:light;line-height:1.7;}
+.op-ta::placeholder{color:#CCC;}
+.op-foot{display:flex;align-items:center;gap:8px;padding:10px 14px;border-top:1px solid #F0EEE8;}
+.op-ico-btn{width:34px;height:34px;border-radius:11px;background:#EEECEA;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;}
+.op-ico-btn i{font-size:17px;color:#888;}
+.op-char{font-size:11px;color:#CCC;font-weight:600;flex:1;text-align:right;}
+/* Encuesta context preview */
+.op-context{margin:0 18px 14px;background:#F5F3EF;border-radius:14px;padding:11px 14px;display:flex;align-items:center;gap:10px;}
+.op-ctx-ico{width:32px;height:32px;border-radius:10px;background:#EEECEA;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.op-ctx-ico i{font-size:16px;color:#888;}
+.op-ctx-body{flex:1;}
+.op-ctx-title{font-size:12px;font-weight:800;color:#1C1C1C;margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.op-ctx-sub{font-size:10px;color:#BBB;font-weight:600;}
+/* Voto en publicar */
+.op-vote-section{padding:0 18px 14px;}
+.op-vote-label{font-size:11px;font-weight:700;color:#BBB;letter-spacing:.6px;text-transform:uppercase;margin-bottom:10px;}
+.op-vote-row{display:flex;gap:7px;}
+.op-vote-opt{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 4px;border-radius:14px;border:1.5px solid #EEEAE4;background:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.op-vote-opt i{font-size:20px;color:#AAA;}
+.op-vote-opt span{font-size:10px;font-weight:700;color:#AAA;text-align:center;line-height:1.3;}
+.op-vote-opt.sel0{border-color:#2A9D70;background:#F0FAF5;}
+.op-vote-opt.sel0 i,.op-vote-opt.sel0 span{color:#2A9D70;}
+.op-vote-opt.sel1{border-color:#D4A017;background:#FFF8E6;}
+.op-vote-opt.sel1 i,.op-vote-opt.sel1 span{color:#D4A017;}
+.op-vote-opt.sel2{border-color:#D94F2B;background:#FEF5F2;}
+.op-vote-opt.sel2 i,.op-vote-opt.sel2 span{color:#D94F2B;}
+/* Publicar bottom */
+.pub-section{padding:0 18px 24px;}
+.pub-btn{width:100%;padding:16px;border-radius:18px;border:none;background:#1C1C2E;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:800;color:#fff;cursor:pointer;}
+.pub-btn:disabled{background:#EEECEA;color:#BBB;cursor:default;}
+
+.toast{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:#1C1C2E;color:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;padding:9px 18px;border-radius:20px;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;z-index:999;}
+.toast.show{opacity:1;}
 </style>
 </head>
 <body>
 <div class="wrap"><div class="phone">
 
-  <div class="screen active" id="s1">
-    <div class="topbar">
-      <div class="icon-btn"><i class="ti ti-x"></i></div>
-      <span class="top-title">Nueva califika</span>
-      <div style="width:36px;"></div>
-    </div>
+<!-- ===== PANTALLA 1: ENCUESTA ===== -->
+<div class="screen active" id="s1">
+  <div class="topbar">
+    <div class="icon-btn"><i class="ti ti-arrow-left"></i></div>
+    <div class="icon-btn"><i class="ti ti-share"></i></div>
+  </div>
 
-    <div class="header-row">
-      <div class="ht-trigger" id="htTrigger" onclick="toggleHt()">
-        <span class="ht-hash">#</span>
-        <span class="ht-label" id="htLabel">Agregar hashtag</span>
-        <i class="ti ti-chevron-down" id="htChevron"></i>
-      </div>
-      <div class="search-trigger" id="searchTrigger" onclick="toggleSearch()">
-        <i class="ti ti-search"></i>
-      </div>
-    </div>
+  <div class="author-row">
+    <div class="av">DC</div>
+    <div><div class="av-name">David Cruz</div><div class="av-sub">Preguntando a la comunidad</div></div>
+  </div>
 
-    <div class="ht-panel" id="htPanel" style="display:none;">
-      <div class="ht-search-row">
-        <span class="ht-search-hash">#</span>
-        <input class="ht-search-inp" id="htInp" type="text" placeholder="Busca o crea un hashtag..." oninput="filterHt(this.value)" onkeydown="htKey(event)"/>
-      </div>
-      <div class="ht-create" id="htCreate" onclick="createHt()">
-        <div class="ht-create-ico"><i class="ti ti-plus"></i></div>
-        <div class="ht-create-body">
-          <div class="ht-create-label">Crear <span id="htCreateName">#Nuevo</span></div>
-          <div class="ht-create-sub">Publicar este hashtag en la comunidad</div>
-        </div>
-        <i class="ti ti-arrow-right" style="font-size:14px;color:#D94F2B;"></i>
-      </div>
-      <div class="ht-lbl">Tendencias</div>
-      <div class="ht-sug" id="hs1" onclick="pickHt('TransportePublicoLima')"><div class="ht-sug-ico"><i class="ti ti-bus"></i></div><div class="ht-sug-body"><div class="ht-sug-name"><span>#</span>TransportePublicoLima</div><div class="ht-sug-count">2.4k califkas · Tendencia</div></div><i class="ti ti-chevron-right" style="font-size:14px;color:#DDD;"></i></div>
-      <div class="ht-sug" id="hs2" onclick="pickHt('RestaurantesLima')"><div class="ht-sug-ico"><i class="ti ti-tools-kitchen-2"></i></div><div class="ht-sug-body"><div class="ht-sug-name"><span>#</span>RestaurantesLima</div><div class="ht-sug-count">1.8k califkas · Gastronomía</div></div><i class="ti ti-chevron-right" style="font-size:14px;color:#DDD;"></i></div>
-      <div class="ht-sug" id="hs3" onclick="pickHt('Torata')"><div class="ht-sug-ico"><i class="ti ti-map-pin"></i></div><div class="ht-sug-body"><div class="ht-sug-name"><span>#</span>Torata</div><div class="ht-sug-count">1.2k califkas · Moquegua</div></div><i class="ti ti-chevron-right" style="font-size:14px;color:#DDD;"></i></div>
-      <div class="ht-sug" id="hs4" onclick="pickHt('TecnologiaPerú')"><div class="ht-sug-ico"><i class="ti ti-device-mobile"></i></div><div class="ht-sug-body"><div class="ht-sug-name"><span>#</span>TecnologiaPerú</div><div class="ht-sug-count">987 califkas · Tech</div></div><i class="ti ti-chevron-right" style="font-size:14px;color:#DDD;"></i></div>
-      <div class="ht-sug" id="hs5" onclick="pickHt('EducaciónOnline')"><div class="ht-sug-ico"><i class="ti ti-school"></i></div><div class="ht-sug-body"><div class="ht-sug-name"><span>#</span>EducaciónOnline</div><div class="ht-sug-count">743 califkas · Educación</div></div><i class="ti ti-chevron-right" style="font-size:14px;color:#DDD;"></i></div>
-    </div>
+  <div class="question-section">
+    <div class="question-text">¿En Moquegua hay buenos restaurantes donde comer bien y a buen precio?</div>
+    <div class="question-desc">Comparte tu experiencia gastronómica. Tu opinión ayuda a otros a descubrir los mejores lugares.</div>
+  </div>
 
-    <div class="entity-sel" id="entitySel" style="display:none;">
-      <div class="esel-ico" id="eselIco"></div>
-      <div class="esel-body"><div class="esel-name" id="eselName">—</div><div class="esel-sub" id="eselSub">—</div></div>
-      <span class="esel-change" onclick="changeEntity()">Cambiar</span>
-    </div>
-
-    <div class="entity-panel" id="entityPanel" style="display:none;">
-      <div class="ep-search"><i class="ti ti-search"></i><input type="text" placeholder="Busca empresa, lugar o producto..." oninput="filterEntities(this.value)" id="epInp"/></div>
-      <div id="epList">
-        <div class="ep-item" onclick="pickEntity('VAFTEC Software','Empresa · Lima','ti-code','#EEF2FF','#3B6FD4')"><div class="ep-ico" style="background:#EEF2FF;"><i class="ti ti-code" style="color:#3B6FD4;"></i></div><div class="ep-body"><div class="ep-name">VAFTEC Software</div><div class="ep-sub">Empresa · Lima</div></div><div class="ep-score"><i class="ti ti-star-filled"></i>3.2</div></div>
-        <div class="ep-item" onclick="pickEntity('Zetup Academy','Educación · Online','ti-school','#FFF8E6','#D4A017')"><div class="ep-ico" style="background:#FFF8E6;"><i class="ti ti-school" style="color:#D4A017;"></i></div><div class="ep-body"><div class="ep-name">Zetup Academy</div><div class="ep-sub">Educación · Online</div></div><div class="ep-score"><i class="ti ti-star-filled"></i>4.5</div></div>
-        <div class="ep-item" onclick="pickEntity('La Italiana','Restaurante · 0.3 km','ti-tools-kitchen-2','#FEF5F2','#D94F2B')"><div class="ep-ico" style="background:#FEF5F2;"><i class="ti ti-tools-kitchen-2" style="color:#D94F2B;"></i></div><div class="ep-body"><div class="ep-name">La Italiana</div><div class="ep-sub">Restaurante · 0.3 km</div></div><div class="ep-score"><i class="ti ti-star-filled"></i>4.5</div></div>
-        <div class="ep-item" onclick="pickEntity('Torata','Lugar turístico · Moquegua','ti-map-pin','#F0FAF5','#2A9D70')"><div class="ep-ico" style="background:#F0FAF5;"><i class="ti ti-map-pin" style="color:#2A9D70;"></i></div><div class="ep-body"><div class="ep-name">Torata</div><div class="ep-sub">Lugar turístico · Moquegua</div></div><div class="ep-score"><i class="ti ti-star-filled"></i>4.3</div></div>
-        <div class="ep-item" onclick="pickEntity('iPhone 15 Pro','Producto · Tecnología','ti-device-mobile','#EEF2FF','#3B6FD4')"><div class="ep-ico" style="background:#EEF2FF;"><i class="ti ti-device-mobile" style="color:#3B6FD4;"></i></div><div class="ep-body"><div class="ep-name">iPhone 15 Pro</div><div class="ep-sub">Producto · Tecnología</div></div><div class="ep-score"><i class="ti ti-star-filled"></i>4.7</div></div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="score-section">
-      <div class="score-q">¿Cómo fue tu experiencia?</div>
-      <div class="score-nums">
-        <div class="snum" id="n1" onclick="setScore(1)">1</div>
-        <div class="snum" id="n2" onclick="setScore(2)">2</div>
-        <div class="snum" id="n3" onclick="setScore(3)">3</div>
-        <div class="snum" id="n4" onclick="setScore(4)">4</div>
-        <div class="snum" id="n5" onclick="setScore(5)">5</div>
-      </div>
-      <div class="score-mood" id="scoreMood">Toca para calificar</div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="text-section">
-      <div class="rev-wrap">
-        <textarea class="rev-ta" id="revTa" placeholder="Comparte tu experiencia..." maxlength="500" oninput="updateChar()"></textarea>
-        <div class="rev-foot"><span class="rev-char"><span id="charN">0</span>/500</span></div>
-      </div>
-    </div>
-
-    <div class="foto-btn-wrap">
-      <button class="foto-btn" id="btnFoto" onclick="toggleFotos()"><i class="ti ti-camera"></i>Agregar foto</button>
-    </div>
-    <div class="fotos-section" id="fotosSection" style="display:none;">
-      <div class="fotos-row" id="fotosRow">
-        <div class="foto-add" onclick="addFoto()"><i class="ti ti-plus"></i><span>Añadir</span></div>
-      </div>
-    </div>
-
-    <div class="pub-section">
-      <button class="pub-btn" id="pubBtn" onclick="publicar()" disabled>Publicar califika</button>
+  <!-- VER CONTENIDO -->
+  <div class="ver-wrap">
+    <button class="ver-btn" id="verBtn" onclick="revelarFoto()">
+      <div class="ver-btn-ico"><i class="ti ti-photo"></i></div>
+      <div class="ver-btn-body"><div class="ver-btn-title">Ver contenido</div><div class="ver-btn-sub">1 foto adjunta · Toca para ver</div></div>
+      <div class="ver-btn-arr"><i class="ti ti-chevron-right"></i></div>
+    </button>
+    <div id="fotoReveal" style="display:none;">
+      <div class="foto-revealed"><i class="ti ti-tools-kitchen-2"></i><span>Restaurantes en Moquegua</span></div>
     </div>
   </div>
 
-  <div class="screen" id="s2">
-    <div class="ok-screen">
-      <div class="ok-ico"><i class="ti ti-check"></i></div>
-      <div class="ok-title">¡Califika publicada!</div>
-      <div class="ok-sub">Tu reseña ya es visible para la comunidad.<br>Gracias por compartir tu opinión.</div>
-      <button class="ok-btn" onclick="reset()">Volver al inicio</button>
+  <div class="meta-row">
+    <span class="mpill mpill-live"><div class="live-dot"></div>En vivo</span>
+    <span class="mpill mpill-time"><i class="ti ti-clock"></i>2 días restantes</span>
+    <span class="mpill mpill-part"><i class="ti ti-users"></i><span id="totalVotes">1,284</span> votos</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- OPCIONES / RESULTADOS -->
+  <div class="options-section">
+    <div class="sec-label" id="optLabel">Elige una opción</div>
+    <div id="preVote">
+      <button class="option-btn" onclick="castVote(0)"><div class="option-ico" style="background:#F0FAF5;"><i class="ti ti-thumb-up" style="color:#2A9D70;"></i></div><span class="option-text">Sí, hay muy buenos lugares</span><div class="option-arr"><i class="ti ti-chevron-right"></i></div></button>
+      <button class="option-btn" onclick="castVote(1)"><div class="option-ico" style="background:#FFF8E6;"><i class="ti ti-minus" style="color:#D4A017;"></i></div><span class="option-text">Algunos, pero faltan más opciones</span><div class="option-arr"><i class="ti ti-chevron-right"></i></div></button>
+      <button class="option-btn" onclick="castVote(2)"><div class="option-ico" style="background:#FEF5F2;"><i class="ti ti-thumb-down" style="color:#D94F2B;"></i></div><span class="option-text">No, la oferta es muy limitada</span><div class="option-arr"><i class="ti ti-chevron-right"></i></div></button>
+    </div>
+    <div id="postVote" style="display:none;">
+      <div class="result-option winner" id="res0"><div class="result-bg" id="bg0" style="width:0%;background:rgba(42,157,112,0.08);"></div><div class="result-row"><div class="result-ico" style="background:#F0FAF5;"><i class="ti ti-thumb-up" style="color:#2A9D70;"></i></div><div class="result-body"><div class="result-text" id="lbl0">Sí, hay muy buenos lugares <span class="win-badge">Más votado</span></div><div class="result-votes" id="votes0">628 votos</div></div><div class="result-pct" id="pct0">49%</div></div></div>
+      <div class="result-option" id="res1"><div class="result-bg" id="bg1" style="width:0%;background:rgba(232,160,32,0.08);"></div><div class="result-row"><div class="result-ico" style="background:#FFF8E6;"><i class="ti ti-minus" style="color:#D4A017;"></i></div><div class="result-body"><div class="result-text" id="lbl1">Algunos, pero faltan más opciones</div><div class="result-votes" id="votes1">449 votos</div></div><div class="result-pct" id="pct1">35%</div></div></div>
+      <div class="result-option" id="res2"><div class="result-bg" id="bg2" style="width:0%;background:rgba(217,79,43,0.08);"></div><div class="result-row"><div class="result-ico" style="background:#FEF5F2;"><i class="ti ti-thumb-down" style="color:#D94F2B;"></i></div><div class="result-body"><div class="result-text" id="lbl2">No, la oferta es muy limitada</div><div class="result-votes" id="votes2">207 votos</div></div><div class="result-pct" id="pct2">16%</div></div></div>
     </div>
   </div>
+
+  <div class="divider"></div>
+
+  <!-- COMENTARIOS -->
+  <div class="comments-section">
+    <div class="comments-hdr"><span class="sec-label" style="margin:0;">Comentarios</span><span class="sec-link">Ver todos</span></div>
+
+    <!-- TABS -->
+    <div class="tab-row">
+      <button class="tab-btn active" id="tabAll" onclick="switchTab('all')"><i class="ti ti-message-circle"></i>Todos<span class="tab-count" id="cntAll">6</span></button>
+      <button class="tab-btn" id="tabV" onclick="switchTab('v')"><i class="ti ti-shield-check"></i>Verificados<span class="tab-count" id="cntV">3</span></button>
+      <button class="tab-btn" id="tabN" onclick="switchTab('n')"><i class="ti ti-user"></i>No verif.<span class="tab-count" id="cntN">3</span></button>
+    </div>
+
+    <!-- AGREGAR OPINIÓN -->
+    <div class="add-op-btn" onclick="goTo('s2')">
+      <div class="add-op-av">DC</div>
+      <span class="add-op-ph">Agrega tu opinión...</span>
+      <div class="add-op-ico"><i class="ti ti-edit"></i></div>
+    </div>
+
+    <!-- LISTA COMENTARIOS -->
+    <div id="commentsList"></div>
+  </div>
+  <div style="height:16px;"></div>
+</div>
+
+<!-- ===== PANTALLA 2: AGREGAR OPINIÓN ===== -->
+<div class="screen" id="s2">
+  <div class="topbar">
+    <div class="icon-btn" onclick="goTo('s1')"><i class="ti ti-x"></i></div>
+    <span class="top-title">Agregar opinión</span>
+    <div style="width:36px;"></div>
+  </div>
+
+  <!-- CONTEXTO -->
+  <div class="op-context">
+    <div class="op-ctx-ico"><i class="ti ti-help-circle"></i></div>
+    <div class="op-ctx-body">
+      <div class="op-ctx-title">¿En Moquegua hay buenos restaurantes?</div>
+      <div class="op-ctx-sub">Encuesta de David Cruz · 1,284 votos</div>
+    </div>
+  </div>
+
+  <!-- TEXTAREA -->
+  <div class="op-input-box">
+    <div class="op-header">
+      <div class="op-av">DC</div>
+      <div><div class="op-name">David Cruz</div><div class="op-sub">Comentando en público</div></div>
+    </div>
+    <div class="op-ta-wrap">
+      <textarea class="op-ta" id="opTa" placeholder="¿Qué opinas sobre la gastronomía en Moquegua?" maxlength="500" oninput="updateOp()"></textarea>
+    </div>
+    <div class="op-foot">
+      <button class="op-ico-btn" title="Foto"><i class="ti ti-camera"></i></button>
+      <button class="op-ico-btn" title="Emoji"><i class="ti ti-mood-smile"></i></button>
+      <span class="op-char"><span id="opChar">0</span>/500</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- VOTO -->
+  <div class="op-vote-section">
+    <div class="op-vote-label">Tu voto en la encuesta</div>
+    <div class="op-vote-row">
+      <div class="op-vote-opt" id="vopt0" onclick="selectVote(0)">
+        <i class="ti ti-thumb-up"></i>
+        <span>Sí, muy buenos</span>
+      </div>
+      <div class="op-vote-opt" id="vopt1" onclick="selectVote(1)">
+        <i class="ti ti-minus"></i>
+        <span>Algunos, faltan más</span>
+      </div>
+      <div class="op-vote-opt" id="vopt2" onclick="selectVote(2)">
+        <i class="ti ti-thumb-down"></i>
+        <span>Oferta limitada</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="pub-section">
+    <button class="pub-btn" id="pubBtn" disabled onclick="publicarOp()">Publicar opinión</button>
+  </div>
+</div>
 
 </div></div>
 <div class="toast" id="toast"></div>
 <script>
-let scoreVal=0,fotoN=0,fotosOn=false,htOpen=false,searchOpen=false,selHt='',entityPicked=false;
-const moods=['','Muy malo','Malo','Regular','Bueno','Excelente'];
-const moodC=['','#D94F2B','#E86020','#D4A017','#5A9E20','#2A9D70'];
+/* ---- DATA ---- */
+var VOTE_LABELS=['Sí, muy buenos','Algunos, faltan','Oferta limitada'];
+var VOTE_ICONS=['ti-thumb-up','ti-minus','ti-thumb-down'];
+var VOTE_CLS=['cv0','cv1','cv2'];
+var STATS={all:{c:6,t:'1,284'},v:{c:3,t:'743'},n:{c:3,t:'541'}};
 
-function checkPub(){document.getElementById('pubBtn').disabled=!(scoreVal>0);}
+var COMMENTS=[
+  {id:1,type:'v',av:'MR',color:'#3B6FD4',name:'María Ríos',verified:true,time:'hace 2 h',voto:0,text:'El restaurante El Mirador en Torata es increíble. Trucha fresca del río y porciones generosas. Muy asequible para lo que ofrecen.',likes:214,relevance:98,replies:[{av:'LP',color:'#2A9D70',name:'Luis P.',text:'Totalmente de acuerdo, lo visité el mes pasado.',likes:12},{av:'DC',color:'#D94F2B',name:'David Cruz',text:'¡Gracias por el dato!',likes:5}]},
+  {id:2,type:'v',av:'LV',color:'#9C59D1',name:'Lucía Vargas',verified:true,time:'hace 5 h',voto:0,text:'La camaronada es la especialidad de Moquegua. Los menús del mercado son una joya escondida — baratos y deliciosos.',likes:189,relevance:95,replies:[]},
+  {id:3,type:'v',av:'AP',color:'#E86020',name:'Ana Paredes',verified:true,time:'hace 1 d',voto:1,text:'Hay buenos lugares pero la variedad es limitada. Faltan opciones vegetarianas y cocina internacional.',likes:87,relevance:72,replies:[{av:'JM',color:'#AAA',name:'Jorge M.',text:'Comparto tu opinión, necesitan diversificar.',likes:8}]},
+  {id:4,type:'n',av:'CP',color:'#2A9D70',name:'Carlos Pinto',verified:false,time:'hace 3 h',voto:0,text:'Encontré un restaurante familiar que me sorprendió. Precios justos y sazón casero. No lo esperaba.',likes:134,relevance:88,replies:[]},
+  {id:5,type:'n',av:'JT',color:'#D4A017',name:'Jorge Torres',verified:false,time:'hace 8 h',voto:2,text:'La oferta es muy limitada comparado con otras ciudades. Solo pollería, cevicherías y menús básicos.',likes:76,relevance:61,replies:[{av:'MR',color:'#3B6FD4',name:'María R.',text:'Discrepo, hay mucho más si uno busca bien.',likes:31}]},
+  {id:6,type:'n',av:'SM',color:'#D94F2B',name:'Sofía M.',verified:false,time:'hace 1 d',voto:1,text:'Hay opciones interesantes pero no están bien difundidas. Hay que preguntar a los locales.',likes:42,relevance:55,replies:[]},
+];
 
-function clearHt(){
-  selHt='';
-  document.getElementById('htLabel').textContent='Agregar hashtag';
-  document.getElementById('htTrigger').classList.remove('active');
-  document.querySelectorAll('.ht-sug').forEach(s=>{
-    s.classList.remove('sel');
-    const ic=s.querySelector('i:last-child');
-    if(ic){ic.className='ti ti-chevron-right';ic.style.color='#DDD';}
+var currentTab='all', liked={}, replyOpen={}, likedR={}, userComments=[];
+var selectedVote=-1, fotoVisible=false, baseVotes=[628,449,207], voted=false;
+
+/* ---- NAV ---- */
+function goTo(id){
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+  if(id==='s1'){var ph=document.getElementById(id).querySelector('.phone');if(ph)ph.scrollTop=0;}
+}
+
+/* ---- VER CONTENIDO ---- */
+function revelarFoto(){
+  fotoVisible=!fotoVisible;
+  document.getElementById('verBtn').style.display=fotoVisible?'none':'flex';
+  document.getElementById('fotoReveal').style.display=fotoVisible?'block':'none';
+}
+
+/* ---- VOTAR ENCUESTA ---- */
+function castVote(idx){
+  if(voted){showToast('Ya votaste en esta encuesta');return;}
+  voted=true; baseVotes[idx]++;
+  var total=baseVotes.reduce(function(a,b){return a+b;},0);
+  var pcts=baseVotes.map(function(v){return Math.round(v/total*100);});
+  document.getElementById('preVote').style.display='none';
+  document.getElementById('postVote').style.display='block';
+  document.getElementById('optLabel').textContent='Resultados';
+  document.getElementById('totalVotes').textContent=total.toLocaleString('es');
+  setTimeout(function(){
+    [0,1,2].forEach(function(i){
+      document.getElementById('bg'+i).style.width=pcts[i]+'%';
+      document.getElementById('pct'+i).textContent=pcts[i]+'%';
+      document.getElementById('votes'+i).textContent=baseVotes[i].toLocaleString('es')+' votos';
+    });
+    var myRes=document.getElementById('res'+idx);
+    myRes.classList.add('my-vote');
+    var lbl=document.getElementById('lbl'+idx);
+    if(!lbl.querySelector('.my-badge')){var b=document.createElement('span');b.className='my-badge';b.textContent='Tu voto';lbl.appendChild(b);}
+  },100);
+  updateResults(currentTab);
+  showToast('¡Voto registrado!');
+}
+
+/* ---- TABS ---- */
+function switchTab(t){
+  currentTab=t;
+  ['All','V','N'].forEach(function(x){document.getElementById('tab'+x).classList.toggle('active',t===x.toLowerCase());});
+  document.getElementById('totalVotes').textContent=STATS[t].t;
+  renderComments();
+  updateResults(t);
+}
+
+function updateResults(t){
+  // Calcular votos según el tab activo
+  var all=userComments.concat(COMMENTS);
+  var filtered=t==='all'?all:all.filter(function(c){return c.type===t;});
+  var counts=[0,0,0];
+  filtered.forEach(function(c){if(c.voto>=0&&c.voto<=2)counts[c.voto]++;});
+  var total=counts.reduce(function(a,b){return a+b;},0);
+  if(total===0){
+    [0,1,2].forEach(function(i){
+      document.getElementById('bg'+i).style.width='0%';
+      document.getElementById('pct'+i).textContent='0%';
+      document.getElementById('votes'+i).textContent='0 votos';
+    });
+    return;
+  }
+  var pcts=counts.map(function(v){return Math.round(v/total*100);});
+  var maxIdx=pcts.indexOf(Math.max.apply(null,pcts));
+  [0,1,2].forEach(function(i){
+    var w=pcts[i]+'%';
+    document.getElementById('bg'+i).style.width=w;
+    document.getElementById('pct'+i).textContent=w;
+    document.getElementById('votes'+i).textContent=counts[i].toLocaleString('es')+' votos';
+    var res=document.getElementById('res'+i);
+    res.classList.toggle('winner',i===maxIdx&&!voted);
+    // Actualizar badge "Más votado"
+    var lbl=document.getElementById('lbl'+i);
+    var wb=lbl.querySelector('.win-badge');
+    if(i===maxIdx){if(!wb){var b=document.createElement('span');b.className='win-badge';b.textContent='Más votado';lbl.appendChild(b);}}
+    else{if(wb)wb.remove();}
   });
-}
-
-function toggleHt(){
-  htOpen=!htOpen;
-  document.getElementById('htPanel').style.display=htOpen?'block':'none';
-  document.getElementById('htTrigger').classList.toggle('active',htOpen||!!selHt);
-  document.getElementById('htChevron').className=htOpen?'ti ti-chevron-up':'ti ti-chevron-down';
-  if(htOpen){
-    searchOpen=false;
-    document.getElementById('entityPanel').style.display='none';
-    document.getElementById('searchTrigger').classList.remove('active');
-    setTimeout(()=>document.getElementById('htInp').focus(),50);
+  // Solo actualizar barras si ya votó — si no, mantener opciones ocultas
+  if(voted){
+    document.getElementById('preVote').style.display='none';
+    document.getElementById('postVote').style.display='block';
   }
 }
 
-function filterHt(q){
-  const c=document.getElementById('htCreate');
-  c.style.display=q.length>0?'flex':'none';
-  if(q.length>0)document.getElementById('htCreateName').textContent='#'+q.replace(/^#/,'');
+/* ---- RENDER COMENTARIOS ---- */
+function renderComments(){
+  var all=userComments.concat(COMMENTS);
+  var filtered=currentTab==='all'?all:all.filter(function(c){return c.type===currentTab;});
+  filtered.sort(function(a,b){return b.relevance-a.relevance;});
+  var list=document.getElementById('commentsList');
+  list.innerHTML='';
+  filtered.forEach(function(c){list.appendChild(buildComment(c));});
 }
-function htKey(e){if(e.key==='Enter'){const v=document.getElementById('htInp').value.trim().replace(/^#/,'');if(v)pickHt(v);e.preventDefault();}}
-function createHt(){const v=document.getElementById('htInp').value.trim().replace(/^#/,'');if(v){pickHt(v);showToast('#'+v+' creado');}}
 
-function pickHt(v){
-  selHt=v;
-  document.getElementById('htLabel').textContent='#'+v;
-  document.getElementById('htTrigger').classList.add('active');
-  document.querySelectorAll('.ht-sug').forEach(s=>{
-    const nm=s.querySelector('.ht-sug-name').textContent.trim().replace(/^#/,'');
-    const isSel=nm===v;
-    s.classList.toggle('sel',isSel);
-    const ic=s.querySelector('i:last-child');
-    if(ic){ic.className=isSel?'ti ti-check':'ti ti-chevron-right';ic.style.color=isSel?'#2A9D70':'#DDD';}
+function buildComment(c){
+  var isLiked=liked[c.id];
+  var isOpen=replyOpen[c.id];
+  var checkHTML=c.verified?'<div class="c-check"><i class="ti ti-check"></i></div>':'';
+  var badgeHTML=c.verified?'<span class="c-badge-v">Verificado</span>':'';
+  var trendHTML=c.relevance>=90?'<div class="trend"><i class="ti ti-flame"></i>Tendencia</div>':'';
+
+  var repliesHTML='';
+  if(c.replies&&c.replies.length){
+    repliesHTML='<div class="reply-list">';
+    c.replies.forEach(function(r,ri){
+      var rk=c.id+'-'+ri;
+      var rLiked=likedR[rk];
+      repliesHTML+='<div class="reply-item"><div class="r-av" style="background:'+r.color+';">'+r.av+'</div><div class="r-body"><div class="r-name">'+r.name+'</div><div class="r-text">'+r.text+'</div><div class="r-foot"><div class="r-act'+(rLiked?' liked':'')+'" onclick="likeReply('+c.id+','+ri+')"><i class="ti ti-thumb-up"></i><span>'+(r.likes+(rLiked?1:0))+'</span></div></div></div></div>';
+    });
+    repliesHTML+='</div>';
+  }
+
+  var div=document.createElement('div');
+  div.className='comment';
+  div.innerHTML='<div class="c-top"><div class="c-av" style="background:'+c.color+';">'+c.av+checkHTML+'</div><div class="c-meta"><div class="c-name">'+c.name+badgeHTML+'</div><div class="c-time">'+c.time+'</div></div><div class="c-vote '+VOTE_CLS[c.voto]+'"><i class="ti '+VOTE_ICONS[c.voto]+'"></i>'+VOTE_LABELS[c.voto]+'</div></div>'
+    +'<div class="c-text">'+c.text+'</div>'
+    +'<div class="c-foot"><div class="c-act'+(isLiked?' liked':'')+'" onclick="likeC('+c.id+')"><i class="ti ti-thumb-up"></i><span>'+(c.likes+(isLiked?1:0))+'</span></div><div class="c-act" onclick="toggleReply('+c.id+')"><i class="ti ti-message-circle"></i><span>Responder</span></div><div class="c-act" onclick="showToast(\'Enlace copiado\')"><i class="ti ti-share"></i><span>Compartir</span></div>'+trendHTML+'</div>'
+    +'<div class="reply-section" id="rs-'+c.id+'" style="display:'+(isOpen?'block':'none')+';">'
+    +repliesHTML
+    +'<div class="reply-inp-row"><div class="ri-av">DC</div><input class="ri-inp" type="text" placeholder="Escribe una respuesta..." id="ri-'+c.id+'" onkeydown="sendReplyKey(event,'+c.id+')"/><button class="ri-send" onclick="sendReplyBtn('+c.id+')"><i class="ti ti-send"></i></button></div>'
+    +'</div>';
+  return div;
+}
+
+function likeC(id){liked[id]=!liked[id];renderComments();}
+function likeReply(cid,ri){likedR[cid+'-'+ri]=!likedR[cid+'-'+ri];renderComments();}
+function toggleReply(id){
+  replyOpen[id]=!replyOpen[id];
+  renderComments();
+  if(replyOpen[id])setTimeout(function(){var i=document.getElementById('ri-'+id);if(i)i.focus();},50);
+}
+function sendReplyKey(e,id){if(e.key==='Enter')sendReplyBtn(id);}
+function sendReplyBtn(id){
+  var inp=document.getElementById('ri-'+id);
+  var txt=inp?inp.value.trim():'';
+  if(!txt)return;
+  var all=userComments.concat(COMMENTS);
+  for(var i=0;i<all.length;i++){if(all[i].id===id){all[i].replies.push({av:'DC',color:'#D94F2B',name:'David Cruz',text:txt,likes:0});break;}}
+  renderComments();
+  showToast('Respuesta publicada');
+}
+
+/* ---- PANTALLA 2: OPINIÓN ---- */
+function updateOp(){
+  var len=document.getElementById('opTa').value.length;
+  document.getElementById('opChar').textContent=len;
+  checkPubBtn();
+}
+function selectVote(idx){
+  selectedVote=idx;
+  [0,1,2].forEach(function(i){
+    var el=document.getElementById('vopt'+i);
+    el.className='op-vote-opt'+(i===idx?' sel'+i:'');
   });
-  htOpen=false;
-  document.getElementById('htPanel').style.display='none';
-  document.getElementById('htChevron').className='ti ti-chevron-down';
-  document.getElementById('htInp').value='';
-  document.getElementById('htCreate').style.display='none';
-  if(entityPicked){
-    entityPicked=false;
-    document.getElementById('entitySel').style.display='none';
-    document.getElementById('searchTrigger').classList.remove('active');
-  }
+  checkPubBtn();
 }
-
-function toggleSearch(){
-  searchOpen=!searchOpen;
-  document.getElementById('entityPanel').style.display=searchOpen?'block':'none';
-  document.getElementById('searchTrigger').classList.toggle('active',searchOpen);
-  if(searchOpen){
-    htOpen=false;
-    document.getElementById('htPanel').style.display='none';
-    document.getElementById('htChevron').className='ti ti-chevron-down';
-    setTimeout(()=>document.getElementById('epInp').focus(),50);
-  }
+function checkPubBtn(){
+  var hasTxt=document.getElementById('opTa').value.trim().length>0;
+  document.getElementById('pubBtn').disabled=!(hasTxt&&selectedVote>=0);
 }
-function filterEntities(q){document.querySelectorAll('.ep-item').forEach(it=>{it.style.display=it.querySelector('.ep-name').textContent.toLowerCase().includes(q.toLowerCase())?'flex':'none';});}
-
-function pickEntity(name,sub,ico,bg,color){
-  entityPicked=true;
-  document.getElementById('entitySel').style.display='flex';
-  document.getElementById('eselName').textContent=name;
-  document.getElementById('eselSub').textContent=sub;
-  document.getElementById('eselIco').style.background=bg;
-  document.getElementById('eselIco').innerHTML=`<i class="ti ${ico}" style="color:${color};font-size:17px;"></i>`;
-  searchOpen=false;
-  document.getElementById('entityPanel').style.display='none';
-  document.getElementById('searchTrigger').classList.remove('active');
-  if(selHt) clearHt();
-}
-function changeEntity(){
-  entityPicked=false;
-  document.getElementById('entitySel').style.display='none';
-  searchOpen=true;
-  document.getElementById('entityPanel').style.display='block';
-  document.getElementById('searchTrigger').classList.add('active');
-  setTimeout(()=>document.getElementById('epInp').focus(),50);
-}
-
-function setScore(n){
-  scoreVal=n;
-  for(let i=1;i<=5;i++)document.getElementById('n'+i).className='snum'+(i===n?' s'+n:'');
-  const m=document.getElementById('scoreMood');
-  m.textContent=moods[n];m.style.color=moodC[n];m.style.fontWeight='800';
-  checkPub();
-}
-function updateChar(){document.getElementById('charN').textContent=document.getElementById('revTa').value.length;}
-function toggleFotos(){fotosOn=!fotosOn;document.getElementById('fotosSection').style.display=fotosOn?'block':'none';document.getElementById('btnFoto').classList.toggle('on',fotosOn);}
-function addFoto(){
-  if(fotoN>=4){showToast('Máximo 4 fotos');return;}fotoN++;
-  const bgs=['#FEF5F2','#F0FAF5','#EEF2FF','#FFF8E6'],ics=['ti-mountain','ti-trees','ti-photo','ti-map-pin'];
-  const d=document.createElement('div');d.className='foto-thumb';
-  d.innerHTML=`<div class="foto-bg" style="background:${bgs[fotoN-1]};"><i class="ti ${ics[fotoN-1]}"></i></div><div class="foto-rm" onclick="rmFoto(this)"><i class="ti ti-x"></i></div>`;
-  document.getElementById('fotosRow').insertBefore(d,document.querySelector('.foto-add'));
-}
-function rmFoto(el){el.parentNode.remove();fotoN--;}
-function publicar(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('s2').classList.add('active');}
-function reset(){
-  scoreVal=0;fotoN=0;fotosOn=false;htOpen=false;searchOpen=false;selHt='';entityPicked=false;
-  for(let i=1;i<=5;i++)document.getElementById('n'+i).className='snum';
-  document.getElementById('scoreMood').textContent='Toca para calificar';document.getElementById('scoreMood').style.color='';
-  document.getElementById('revTa').value='';document.getElementById('charN').textContent='0';
-  document.getElementById('htLabel').textContent='Agregar hashtag';
-  document.getElementById('htTrigger').classList.remove('active');
-  document.getElementById('searchTrigger').classList.remove('active');
-  document.getElementById('htPanel').style.display='none';
-  document.getElementById('entityPanel').style.display='none';
-  document.getElementById('entitySel').style.display='none';
-  document.getElementById('fotosSection').style.display='none';
-  document.getElementById('fotosRow').innerHTML='<div class="foto-add" onclick="addFoto()"><i class="ti ti-plus"></i><span>Añadir</span></div>';
-  document.getElementById('btnFoto').classList.remove('on');
-  document.querySelectorAll('.ht-sug').forEach(s=>{s.classList.remove('sel');const ic=s.querySelector('i:last-child');if(ic){ic.className='ti ti-chevron-right';ic.style.color='#DDD';}});
+function publicarOp(){
+  var txt=document.getElementById('opTa').value.trim();
+  if(!txt||selectedVote<0)return;
+  userComments.unshift({id:Date.now(),type:'v',av:'DC',color:'#D94F2B',name:'David Cruz',verified:true,time:'ahora',voto:selectedVote,text:txt,likes:0,relevance:100,replies:[]});
+  STATS.all.c++;STATS.v.c++;
+  document.getElementById('cntAll').textContent=STATS.all.c;
+  document.getElementById('cntV').textContent=STATS.v.c;
+  document.getElementById('opTa').value='';
+  document.getElementById('opChar').textContent='0';
+  selectedVote=-1;
+  [0,1,2].forEach(function(i){document.getElementById('vopt'+i).className='op-vote-opt';});
   document.getElementById('pubBtn').disabled=true;
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('s1').classList.add('active');
+  goTo('s1');
+  renderComments();
+  updateResults(currentTab);
+  showToast('¡Opinión publicada!');
 }
-function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2300);}
+
+function showToast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2200);}
+
+renderComments();
 </script>
 </body>
 </html>
